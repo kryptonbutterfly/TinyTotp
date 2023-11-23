@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE xml>
+<project default="create_run_jar" name="Create Runnable Jar for Project TinyTotp with Jar-In-Jar Loader">
+	<target name="create_run_jar">
+		<jar destfile="build/TinyTotp.jar">
+			<manifest>
+				<attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+				<attribute name="Rsrc-Main-Class" value="d.t.totp.TinyTotp"/>
+				<attribute name="Class-Path" value="."/>
+				<!-- maybe bounded -->
+				<attribute name="Rsrc-Class-Path" value="./
+					Cache.jar
+					Collections.jar
+					better_functionals-1.0.0.jar
+					linearAlgebra.jar
+					mathUtils.jar
+					tiny_monads-2.0.0.jar
+					reflection_utils-1.0.0.jar
+					SwingUtils.jar
+					System.jar
+					commons-codec-1.16.0.jar
+					gson-2.10.1.jar
+					"/>
+				<attribute name="Add-Opens" value="java.desktop/sun.awt.X11"/>
+			</manifest>
+			<fileset dir="./bin"/>
+			<zipfileset src="dep/jar-in-jar-loader.zip"/>
+			<zipfileset dir="${ws.Cache}/build" includes="Cache.jar"/>
+			<zipfileset dir="${ws.Collections}/build" includes="Collections.jar"/>
+        	<zipfileset dir="${ws.Functional}/target" includes="better_functionals-1.0.0.jar"/>
+			<zipfileset dir="${ws.linearAlgebra}/build" includes="linearAlgebra.jar"/>
+			<zipfileset dir="${ws.mathUtils}/build" includes="mathUtils.jar"/>
+        	<zipfileset dir="${ws.Monads}/target" includes="tiny_monads-2.0.0.jar"/>
+        	<zipfileset dir="${ws.ReflectionUtils}/target" includes="reflection_utils-1.0.0.jar"/>
+        	<zipfileset dir="${ws.SwingUtils}/build" includes="SwingUtils.jar"/>
+        	<zipfileset dir="${ws.System}/build" includes="System.jar"/>
+			<zipfileset dir="./dep" includes="commons-codec-1.16.0.jar"/>
+			<zipfileset dir="./dep" includes="gson-2.10.1.jar"/>
+		</jar>
+	</target>
+	<target name="deploy program">
+		<exec executable="/bin/bash">
+			<arg value="./deb-content/packagedeb.sh"/>
+		</exec>
+	</target>
+</project>

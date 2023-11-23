@@ -1,0 +1,5 @@
+Section: web
+Priority: optional
+Maintainer: tinycodecrank
+Description: Totp Client
+Architecture: all
