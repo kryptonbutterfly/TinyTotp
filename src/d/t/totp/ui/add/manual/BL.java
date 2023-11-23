@@ -18,8 +18,8 @@ import javax.swing.ImageIcon;
 
 import org.apache.commons.codec.binary.Base32;
 
-import d.t.totp.TotpConstants;
 import d.t.totp.TinyTotp;
+import d.t.totp.TotpConstants;
 import d.t.totp.misc.ImageUtils;
 import d.t.totp.prefs.TotpCategory;
 import d.t.totp.prefs.TotpEntry;
@@ -84,7 +84,6 @@ final class BL extends Logic<AddKey, char[]>
 	@SneakyThrows
 	private boolean setIconFromFile(List<File> files)
 	{
-		
 		return setIconFromUrl(files.get(0).toURI().toURL().toString());
 	}
 	

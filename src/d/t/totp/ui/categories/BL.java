@@ -12,8 +12,8 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import d.t.totp.TotpConstants;
 import d.t.totp.TinyTotp;
+import d.t.totp.TotpConstants;
 import d.t.totp.misc.HtmlColors;
 import d.t.totp.prefs.TotpCategory;
 import d.t.totp.ui.misc.KeyTypedAdapter;
@@ -85,7 +85,6 @@ final class BL extends Logic<CategoriesGui, Void>
 								ModalityType.MODELESS,
 								res -> res.getReturnValue().if_(color ->
 								{
-									System.out.println(color);
 									gui.color = color;
 									gui.icon.setIcon(TotpCategory.getColoredIcon(color));
 								}),

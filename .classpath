@@ -6,12 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-20">
-		<attributes>
-			<attribute name="module" value="true"/>
-			<attribute name="add-opens" value="java.desktop/sun.awt.X11=de.tinycodecrank.ReflectionUtils"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/Cache">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -67,6 +61,12 @@
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/TinyTOTP/dep/gson-2.10.1-javadoc.jar!/"/>
 			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-18">
+		<attributes>
+			<attribute name="module" value="true"/>
+			<attribute name="add-opens" value="java.desktop/sun.awt.X11=de.tinycodecrank.ReflectionUtils"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>

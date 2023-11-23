@@ -53,6 +53,7 @@ final class BL extends Logic<MainGui, char[]>
 	
 	void addQrEntry(ActionEvent ae)
 	{
+		// TODO implement
 		System.out.println("add TOTP key via qr code");
 	}
 	
