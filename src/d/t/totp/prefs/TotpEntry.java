@@ -49,7 +49,6 @@ public class TotpEntry implements TotpConstants
 	{
 		final var	seed	= new byte[32];
 		final var	rand	= SecureRandom.getInstanceStrong();
-		rand.reseed();
 		rand.nextBytes(seed);
 		return Base64.getEncoder().encodeToString(seed);
 	}
