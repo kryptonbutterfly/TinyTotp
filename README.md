@@ -2,7 +2,7 @@
 
 # TinyTotp
 
-A TotpClient
+A Totp Client
 
 ## Downloads
 
