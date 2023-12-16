@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.HashSet;
 import java.util.function.Function;
 
-import de.tinycodecrank.math.linalgebra.vector.IVecI;
+import de.tinycodecrank.math.vector._int.IVecI;
 import de.tinycodecrank.monads.opt.Opt;
 import lombok.val;
 

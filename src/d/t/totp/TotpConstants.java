@@ -2,7 +2,7 @@ package d.t.totp;
 
 import java.util.Random;
 
-import de.tinycodecrank.math.linalgebra.vector.Vec2i;
+import de.tinycodecrank.math.vector._int.Vec2i;
 
 public interface TotpConstants
 {

@@ -24,14 +24,14 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 
-import d.t.totp.TotpConstants;
 import d.t.totp.TinyTotp;
+import d.t.totp.TotpConstants;
 import d.t.totp.misc.Assets;
 import d.t.totp.misc.ImageUtils;
 import d.t.totp.misc.TotpGenerator;
 import d.t.totp.prefs.TotpEntry;
 import d.t.totp.ui.add.manual.AddKey;
-import de.tinycodecrank.math.linalgebra.vector.Vec2i;
+import de.tinycodecrank.math.vector._int.Vec2i;
 import de.tinycodecrank.util.swing.events.GuiCloseEvent;
 
 @SuppressWarnings("serial")

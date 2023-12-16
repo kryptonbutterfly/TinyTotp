@@ -5,7 +5,7 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 
 import d.t.totp.prefs.TotpCategory;
-import de.tinycodecrank.math.linalgebra.vector.Vec3i;
+import de.tinycodecrank.math.vector._int.Vec3i;
 import de.tinycodecrank.monads.opt.Opt;
 import lombok.val;
 

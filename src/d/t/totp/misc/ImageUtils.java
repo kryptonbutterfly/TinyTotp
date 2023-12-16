@@ -4,7 +4,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
-import de.tinycodecrank.math.linalgebra.vector.Vec2i;
+import de.tinycodecrank.math.vector._int.Vec2i;
 
 public class ImageUtils
 {

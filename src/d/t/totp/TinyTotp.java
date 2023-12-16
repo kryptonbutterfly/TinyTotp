@@ -16,13 +16,16 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import d.t.totp.misc.Assets;
 import d.t.totp.misc.HtmlColors;
 import d.t.totp.prefs.TotpConfig;
 import d.t.totp.prefs.TotpImageCache;
 import d.t.totp.ui.main.MainGui;
 import d.t.totp.ui.passwd.PasswdGui;
+import de.tinycodecrank.monads.opt.Opt;
 import de.tinycodecrank.os.Platforms;
 import de.tinycodecrank.reflectionUtils.Accessor;
+import de.tinycodecrank.util.swing.ObservableGui;
 import de.tinycodecrank.util.swing.events.GuiCloseEvent;
 import lombok.SneakyThrows;
 
@@ -45,6 +48,7 @@ public class TinyTotp implements TotpConstants
 		backgroundInit();
 		imageCache.loadFromCache();
 		setLookAndFeel();
+		ObservableGui.setDefaultAppImage(Opt.of(Assets.ICON));
 		EventQueue.invokeLater(() -> new PasswdGui(gce ->
 		{
 			gce.getReturnValue()

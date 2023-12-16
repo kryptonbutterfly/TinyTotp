@@ -60,6 +60,8 @@ public class Assets
 	
 	public static final ImageIcon COLOR_PICKER = loadIcon("/assets/color-picker.png");
 	
+	public static final BufferedImage ICON = loadImage("/assets/icon.png");
+	
 	public static ImageIcon getQrByBackground(Color bgColor)
 	{
 		return ColorUtils.getContrasting(bgColor, QR_ICON_LIGHT, QR_ICON_DARK);

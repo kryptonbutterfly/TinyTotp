@@ -2,3 +2,4 @@ bin/
 dep/
 build/
 deb-content/changelog
+/target/

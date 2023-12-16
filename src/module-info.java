@@ -8,12 +8,11 @@ module DesktopTOTP
 	requires com.google.gson;
 	requires lombok;
 	requires de.tinycodecrank.SwingUtils;
-	requires de.tinycodecrank.linearAlgebra;
 	requires org.apache.commons.codec;
 	requires de.tinycodecrank.System;
 	requires java.base;
 	requires de.tinycodecrank.ReflectionUtils;
 	requires de.tinycodecrank.Cache;
 	requires de.tinycodecrank.bounded;
-	
+	requires linear_algebra;
 }
