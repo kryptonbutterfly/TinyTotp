@@ -12,9 +12,10 @@ echo ${pwd}
 VERSION_FILE="version.txt"
 
 APP_NAME="TinyTotp"
+ARTIFACT_NAME="tiny_totp"
 PACKAGE_NAME=$APP_NAME
 PACKAGE_VERSION=$(<$VERSION_FILE) 
-SOURCE_DIR=$PWD/../
+SOURCE_DIR=$PWD/..
 DEPLOY_DIR="/home/$SUDO_USER/ownCloud/Applications"
 BUILD_DIR="/tmp/debian"
 
@@ -32,7 +33,7 @@ cat control >> $BUILD_DIR/DEBIAN/control
 
 cp $APP_NAME.desktop $BUILD_DIR/usr/share/applications/
 
-cp $SOURCE_DIR/build/$APP_NAME.jar $BUILD_DIR/usr/share/$PACKAGE_NAME/
+cp $SOURCE_DIR/target/$ARTIFACT_NAME-$PACKAGE_VERSION.jar $BUILD_DIR/usr/share/$PACKAGE_NAME/$APP_NAME.jar
 
 echo "$PACKAGE_NAME ($PACKAGE_VERSION) trusty; urgency=low" > changelog
 echo "  * Rebuild" >> changelog

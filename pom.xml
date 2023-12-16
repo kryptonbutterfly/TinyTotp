@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.tinycodecrank</groupId>
 	<artifactId>tiny_totp</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<name>TinyTOTP</name>
 	<description>A TOTP client</description>
 
@@ -131,6 +131,24 @@
 								<entryPoint>d.t.topt.TinyTotp</entryPoint>
 							</entryPoints>
 							<outputFile>${project.build.directory}/${project.artifactId}-${project.version}.jar</outputFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-help-plugin</artifactId>
+				<version>3.4.0</version>
+				<executions>
+					<execution>
+						<id>generate-version-file</id>
+						<phase>package</phase>
+						<goals>
+							<goal>evaluate</goal>
+						</goals>
+						<configuration>
+							<expression>project.version</expression>
+							<output>${project.basedir}/deb-content/version.txt</output>
 						</configuration>
 					</execution>
 				</executions>

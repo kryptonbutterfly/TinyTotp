@@ -3,3 +3,4 @@ dep/
 build/
 deb-content/changelog
 /target/
+deb-content/version.txt
