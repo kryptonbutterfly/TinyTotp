@@ -97,7 +97,7 @@ final class BL extends Logic<MainGui, char[]>
 		});
 		clearPassword();
 		
-		gui.if_(TinyTotp.config.mainWindow::persistBoundsAndState);
+		gui.if_(TinyTotp.windowStates.mainWindow::persistBoundsAndState);
 	}
 	
 	private void clearPassword()

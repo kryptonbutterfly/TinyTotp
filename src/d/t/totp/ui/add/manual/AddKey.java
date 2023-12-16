@@ -16,8 +16,8 @@ import javax.swing.SpinnerNumberModel;
 
 import org.apache.commons.codec.binary.Base32;
 
-import d.t.totp.TotpConstants;
 import d.t.totp.TinyTotp;
+import d.t.totp.TotpConstants;
 import d.t.totp.misc.Assets;
 import d.t.totp.prefs.TotpCategory;
 import d.t.totp.prefs.TotpEntry;
@@ -28,14 +28,14 @@ import de.tinycodecrank.util.swing.events.GuiCloseEvent;
 @SuppressWarnings("serial")
 public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implements TotpConstants
 {
-	JTextField			txtAccountname;
-	JTextField			txtSecretkey;
-	JTextField			txtIssuer;
+	JTextField				txtAccountname;
+	JTextField				txtSecretkey;
+	JTextField				txtIssuer;
 	JComboBox<TotpCategory>	comboBoxCategory;
-	JLabel				lblIcon;
-	String				iconName			= null;
-	JSpinner			spinnerTimeFrame	= new JSpinner(new SpinnerNumberModel(30, 0, 180, 5));
-	JSpinner			spinnerTotpLength	= new JSpinner(new SpinnerNumberModel(6, 6, 10, 1));
+	JLabel					lblIcon;
+	String					iconName			= null;
+	JSpinner				spinnerTimeFrame	= new JSpinner(new SpinnerNumberModel(30, 0, 180, 5));
+	JSpinner				spinnerTotpLength	= new JSpinner(new SpinnerNumberModel(6, 6, 10, 1));
 	
 	public AddKey(
 		Window owner,
@@ -56,7 +56,7 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		TotpEntry original)
 	{
 		super(owner, modality, closeListener, password);
-		TinyTotp.config.createDialog.setBounds(this);
+		TinyTotp.windowStates.createDialog.setBounds(this);
 		setTitle(title);
 		
 		businessLogic.if_(this::init);

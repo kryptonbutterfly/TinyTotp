@@ -9,8 +9,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-import d.t.totp.TotpConstants;
 import d.t.totp.TinyTotp;
+import d.t.totp.TotpConstants;
 import d.t.totp.misc.Assets;
 import d.t.totp.misc.HtmlColors;
 import de.tinycodecrank.util.swing.ObservableGui;
@@ -25,7 +25,7 @@ public class MainGui extends ObservableGui<BL, Void, char[]> implements TotpCons
 	public MainGui(Consumer<GuiCloseEvent<Void>> closeListener, char[] password)
 	{
 		super(closeListener, password);
-		TinyTotp.config.mainWindow.setBoundsAndState(this);
+		TinyTotp.windowStates.mainWindow.setBoundsAndState(this);
 		setTitle("Tiny TOTP");
 		
 		businessLogic.if_(this::init);

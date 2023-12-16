@@ -144,7 +144,7 @@ final class BL extends Logic<AddKey, char[]>
 	@Override
 	protected void disposeAction()
 	{
-		gui.if_(TinyTotp.config.createDialog::persistBounds);
+		gui.if_(TinyTotp.windowStates.createDialog::persistBounds);
 		
 		password = null;
 	}

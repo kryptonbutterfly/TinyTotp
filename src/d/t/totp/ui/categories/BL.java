@@ -154,7 +154,7 @@ final class BL extends Logic<CategoriesGui, Void>
 	@Override
 	protected void disposeAction()
 	{
-		gui.if_(TinyTotp.config.categoryDialog::persistBounds);
+		gui.if_(TinyTotp.windowStates.categoryDialog::persistBounds);
 	}
 	
 	private Color randomHTMLColor()

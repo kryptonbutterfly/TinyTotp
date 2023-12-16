@@ -8,7 +8,9 @@ public interface TotpConstants
 {
 	public static final Random FAST_RANDOM = new Random();
 	
-	public static final String PROGRAM_DOCK_NAME = "tiny TOTP";
+	public static final String	PROGRAM_DOCK_NAME	= "tiny TOTP";
+	public static final String	PROGRAM_NAME		= "TinyTotp";
+	public static final String	ORG_NAME			= "tinycodecrank";
 	
 	public static final String	PNG		= "png";
 	public static final String	SHA1	= "SHA1";

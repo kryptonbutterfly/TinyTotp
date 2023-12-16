@@ -20,9 +20,11 @@ import d.t.totp.misc.Assets;
 import d.t.totp.misc.HtmlColors;
 import d.t.totp.prefs.TotpConfig;
 import d.t.totp.prefs.TotpImageCache;
+import d.t.totp.prefs.TotpWindowStates;
 import d.t.totp.ui.main.MainGui;
 import d.t.totp.ui.passwd.PasswdGui;
 import de.tinycodecrank.monads.opt.Opt;
+import de.tinycodecrank.os.BaseDirectory;
 import de.tinycodecrank.os.Platforms;
 import de.tinycodecrank.reflectionUtils.Accessor;
 import de.tinycodecrank.util.swing.ObservableGui;
@@ -33,15 +35,18 @@ public class TinyTotp implements TotpConstants
 {
 	private static Gson GSON = createGson();
 	
-	private static final File CONFIG_FOLDER = new File(
-		Platforms.getAppDataFile(),
-		".config/tinycodecrank/tinyTotp");
+	// private static final File CONFIG_FOLDER = new File(
+	// Platforms.getAppDataFile(),
+	// ".config/tinycodecrank/tinyTotp");
+	private static final BaseDirectory BASE_DIR = Platforms.baseDir(ORG_NAME, PROGRAM_NAME);
 	
-	private static final File	PREFS	= new File(CONFIG_FOLDER, "preferences.json");
-	private static final File	CACHE	= new File(new File(CONFIG_FOLDER, IMG_CACHE), IMG_CACHE_MAPPINGS);
+	private static final File	CONFIG			= new File(BASE_DIR.dataHome(), "config.json");
+	private static final File	CACHE			= new File(BASE_DIR.cacheHome(), IMG_CACHE_MAPPINGS);
+	private static final File	WINDOW_STATES	= new File(BASE_DIR.stateHome(), "windowStates.json");
 	
-	public static final TotpConfig		config		= loadData();
-	public static final TotpImageCache	imageCache	= loadImageCache();
+	public static final TotpConfig			config			= loadData();
+	public static final TotpWindowStates	windowStates	= loadWindowStates();
+	public static final TotpImageCache		imageCache		= loadImageCache();
 	
 	public static void main(String[] args)
 	{
@@ -54,15 +59,23 @@ public class TinyTotp implements TotpConstants
 			gce.getReturnValue()
 				.if_(passwd -> EventQueue.invokeLater(() -> new MainGui(TinyTotp::terminateListener, passwd)))
 				.else_(() -> terminateListener(null));
-		}, config.passwdWindow));
+		}, windowStates.passwdWindow));
 	}
 	
 	@SneakyThrows
 	private static TotpConfig loadData()
 	{
-		if (!PREFS.exists())
+		if (!CONFIG.exists())
 			return new TotpConfig();
-		return GSON.fromJson(Files.readString(PREFS.toPath()), TotpConfig.class);
+		return GSON.fromJson(Files.readString(CONFIG.toPath()), TotpConfig.class);
+	}
+	
+	@SneakyThrows
+	private static TotpWindowStates loadWindowStates()
+	{
+		if (!WINDOW_STATES.exists())
+			return new TotpWindowStates();
+		return GSON.fromJson(Files.readString(WINDOW_STATES.toPath()), TotpWindowStates.class);
 	}
 	
 	@SneakyThrows
@@ -77,7 +90,7 @@ public class TinyTotp implements TotpConstants
 	
 	private static void terminateListener(GuiCloseEvent<Void> gce)
 	{
-		writeToFileAsJson(config, PREFS);
+		writeToFileAsJson(config, CONFIG);
 		writeToFileAsJson(imageCache, imageCache.file());
 	}
 	

@@ -15,8 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-import d.t.totp.TotpConstants;
 import d.t.totp.TinyTotp;
+import d.t.totp.TotpConstants;
 import d.t.totp.misc.HtmlColors;
 import de.tinycodecrank.util.swing.ApplyAbortPanel;
 import de.tinycodecrank.util.swing.ObservableDialog;
@@ -39,7 +39,7 @@ public final class CategoriesGui extends ObservableDialog<BL, HashMap<String, St
 		Consumer<GuiCloseEvent<HashMap<String, String>>> closeListener)
 	{
 		super(owner, modality, closeListener);
-		TinyTotp.config.categoryDialog.setBounds(this);
+		TinyTotp.windowStates.categoryDialog.setBounds(this);
 		setTitle("Categories");
 		
 		businessLogic.if_(this::init);
