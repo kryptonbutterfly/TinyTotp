@@ -14,20 +14,22 @@ public class ImageUtils
 		final int	maxHeight		= maxSize.y();
 		final float	targetAspect	= 1F * maxWidth / maxHeight;
 		final float	imageAspect		= 1F * rawImage.getWidth() / rawImage.getHeight();
+		
+		final float factor;
+		
 		if (targetAspect > imageAspect)
 		{
 			if (rawImage.getHeight() <= maxHeight)
 				return rawImage;
-			final float factor = 1F * maxHeight / rawImage.getHeight();
-			return scale(factor, rawImage);
+			factor = 1F * maxHeight / rawImage.getHeight();
 		}
 		else
 		{
 			if (rawImage.getWidth() <= maxWidth)
 				return rawImage;
-			final float factor = 1F * maxWidth / rawImage.getWidth();
-			return scale(factor, rawImage);
+			factor = 1F * maxWidth / rawImage.getWidth();
 		}
+		return scale(factor, rawImage);
 	}
 	
 	private static final BufferedImage scale(float factor, BufferedImage rawImage)

@@ -99,8 +99,7 @@ public final class TotpComponent extends JPanel implements TotpConstants
 	public void updateCategory(HashMap<String, String> renameMap)
 	{
 		final var newName = renameMap.getOrDefault(entry.category, entry.category);
-		TinyTotp.config.getCategoryByName(newName).if_(cat ->
-		{
+		TinyTotp.config.getCategoryByName(newName).if_(cat -> {
 			entry.category = cat.name;
 			categoryPanel.setToolTipText(cat.name);
 			categoryPanel.setBackground(cat.color);
@@ -156,8 +155,7 @@ public final class TotpComponent extends JPanel implements TotpConstants
 	
 	private ActionListener edit(char[] password)
 	{
-		return ae -> EventQueue.invokeLater(() ->
-		{
+		return ae -> EventQueue.invokeLater(() -> {
 			final var owner = SwingUtilities.getWindowAncestor(this);
 			new AddKey(
 				owner,
