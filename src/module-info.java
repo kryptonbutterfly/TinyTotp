@@ -1,18 +1,18 @@
 module DesktopTOTP
 {
-	exports d.t.totp.prefs to com.google.gson;
+	exports kryptonbutterfly.totp.prefs to com.google.gson;
 	
 	requires transitive java.desktop;
-	requires de.tinycodecrank.mathUtils;
-	requires de.tinycodecrank.Monads;
+	requires kryptonbutterfly.mathUtils;
+	requires kryptonbutterfly.Monads;
+	requires kryptonbutterfly.SwingUtils;
+	requires kryptonbutterfly.System;
+	requires kryptonbutterfly.ReflectionUtils;
+	requires kryptonbutterfly.Cache;
+	requires kryptonbutterfly.bounded;
+	requires kryptonbutterfly.linear_algebra;
+	requires org.apache.commons.codec;
+	requires java.base;
 	requires com.google.gson;
 	requires lombok;
-	requires de.tinycodecrank.SwingUtils;
-	requires org.apache.commons.codec;
-	requires de.tinycodecrank.System;
-	requires java.base;
-	requires de.tinycodecrank.ReflectionUtils;
-	requires de.tinycodecrank.Cache;
-	requires de.tinycodecrank.bounded;
-	requires linear_algebra;
 }

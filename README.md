@@ -1,4 +1,4 @@
-<img width="82" align="left" src="https://raw.githubusercontent.com/tinycodecrank/TinyTotp/master/deb-content/icon.svg"/>
+<img width="82" align="left" src="https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/deb-content/icon.svg"/>
 
 # TinyTotp
 
@@ -8,7 +8,7 @@ A Totp Client
 
 java version | app version | jar | deb
 :----------: | :---------: | :-: | :-:
-18+          | 2.0.0       | [TinyTotp.jar](https://github.com/tinycodecrank/TinyTotp/releases/download/v2.0.0/TinyTotp.jar) | [TinyTotp-2.0.0.deb](https://github.com/tinycodecrank/TinyTotp/releases/download/v2.0.0/TinyTotp-2.0.0.deb)
+18+          | 2.0.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v2.0.0/TinyTotp.jar) | [TinyTotp-2.0.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v2.0.0/TinyTotp-2.0.0.deb)
 
 ## Important
 
@@ -19,5 +19,5 @@ This password is used to encryt/decrypt your totp secrets.
 
 ## Images
 
-![](https://raw.githubusercontent.com/tinycodecrank/TinyTotp/master/md/Main.png)
-![](https://raw.githubusercontent.com/tinycodecrank/TinyTotp/master/md/AddSecret.png)
+![](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Main.png)
+![](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/AddSecret.png)

@@ -1,16 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.tinycodecrank</groupId>
+	<groupId>kryptonbutterfly</groupId>
 	<artifactId>tiny_totp</artifactId>
-	<version>2.0.0</version>
+	<version>3.0.0</version>
 	<name>TinyTOTP</name>
 	<description>A TOTP client</description>
 
 	<distributionManagement>
 		<repository>
 			<id>github</id>
-			<name>GitHub tinycodecrank Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/tinycodecrank/maven-repo</url>
+			<name>GitHub kryptonbutterfly Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/kryptonbutterfly/maven-repo</url>
 		</repository>
 	</distributionManagement>
 
@@ -23,7 +23,7 @@
 	<repositories>
 		<repository>
 			<id>github</id>
-			<url>https://maven.pkg.github.com/tinycodecrank/maven-repo</url>
+			<url>https://maven.pkg.github.com/kryptonbutterfly/maven-repo</url>
 		</repository>
 	</repositories>
 	
@@ -41,29 +41,29 @@
 		    <version>2.10.1</version>
 		</dependency>
 		<dependency>
-			<groupId>de.tinycodecrank</groupId>
+			<groupId>kryptonbutterfly</groupId>
 			<artifactId>reflection_utils</artifactId>
-			<version>1.0.0</version>
+			<version>2.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>de.tinycodecrank</groupId>
+			<groupId>kryptonbutterfly</groupId>
 			<artifactId>tiny_system_utils</artifactId>
-			<version>1.0.0</version>
+			<version>2.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>de.tinycodecrank</groupId>
+			<groupId>kryptonbutterfly</groupId>
 			<artifactId>tiny_cache</artifactId>
-			<version>1.0.0</version>
+			<version>2.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>de.tinycodecrank</groupId>
+			<groupId>kryptonbutterfly</groupId>
 			<artifactId>tiny_swing_utils</artifactId>
-			<version>1.0.0</version>
+			<version>3.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>de.tinycodecrank</groupId>
+			<groupId>kryptonbutterfly</groupId>
 			<artifactId>linear_algebra</artifactId>
-			<version>1.1.0</version>
+			<version>2.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -106,7 +106,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>false</addClasspath>
-							<mainClass>d.t.totp.TinyTotp</mainClass>
+							<mainClass>kryptonbutterfly.totp.TinyTotp</mainClass>
 						</manifest>
 						<manifestEntries>
 							<Add-Opens>java.desktop/sun.awt.X11</Add-Opens>
@@ -128,7 +128,7 @@
 							<minimizeJar>true</minimizeJar>
 							<createDependencyReducedPom>false</createDependencyReducedPom>
 							<entryPoints>
-								<entryPoint>d.t.topt.TinyTotp</entryPoint>
+								<entryPoint>kryptonbutterfly.topt.TinyTotp</entryPoint>
 							</entryPoints>
 							<outputFile>${project.build.directory}/${project.artifactId}-${project.version}.jar</outputFile>
 						</configuration>
