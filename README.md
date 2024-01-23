@@ -8,6 +8,7 @@ A Totp Client
 
 java version | app version | jar | deb
 :----------: | :---------: | :-: | :-:
+18+          | 3.0.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.0.0/TinyTotp.jar) | [TinyTotp-3.0.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.0.0/TinyTotp-3.0.0.deb)
 18+          | 2.0.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v2.0.0/TinyTotp.jar) | [TinyTotp-2.0.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v2.0.0/TinyTotp-2.0.0.deb)
 
 ## Important
