@@ -24,6 +24,7 @@ import com.google.zxing.qrcode.QRCodeReader;
 import kryptonbutterfly.monads.opt.Opt;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.misc.ImageLuminanceSource;
+import kryptonbutterfly.totp.misc.Utils;
 import kryptonbutterfly.util.swing.Logic;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent.Result;
@@ -114,7 +115,7 @@ final class BL extends Logic<QrGui, Void>
 				webcam.open();
 			
 			final var image = webcam.getImage();
-			gui.cameraDisplay.setIcon(new ImageIcon(image));
+			gui.cameraDisplay.setIcon(new ImageIcon(Utils.mirror(image)));
 			final var result = decode(image);
 			
 			keepScanning = false;

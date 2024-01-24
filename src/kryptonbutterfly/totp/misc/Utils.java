@@ -1,5 +1,7 @@
 package kryptonbutterfly.totp.misc;
 
+import static kryptonbutterfly.math.utils.range.Range.*;
+
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -54,5 +56,18 @@ public class Utils
 		transform.scale(factor, factor);
 		return new AffineTransformOp(transform, AffineTransformOp.TYPE_BICUBIC)
 			.filter(rawImage, null);
+	}
+	
+	public static final BufferedImage mirror(BufferedImage src)
+	{
+		final int	width	= src.getWidth();
+		final int	height	= src.getHeight();
+		final var	result	= new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+		
+		for (final int y : range(height))
+			for (final int x : range(width))
+				result.setRGB(width - x - 1, y, src.getRGB(x, y));
+			
+		return result;
 	}
 }
