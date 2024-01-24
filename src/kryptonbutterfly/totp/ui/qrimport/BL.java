@@ -2,6 +2,8 @@ package kryptonbutterfly.totp.ui.qrimport;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
@@ -25,6 +27,7 @@ import kryptonbutterfly.monads.opt.Opt;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.misc.ImageLuminanceSource;
 import kryptonbutterfly.totp.misc.Utils;
+import kryptonbutterfly.totp.ui.misc.KeyTypedAdapter;
 import kryptonbutterfly.util.swing.Logic;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent.Result;
@@ -35,6 +38,9 @@ final class BL extends Logic<QrGui, Void>
 	
 	private boolean			keepScanning	= true;
 	private final Webcam	webcam			= Webcam.getDefault();
+	
+	final KeyListener	escapeScanListener	= new KeyTypedAdapter(c -> abortScan(null), KeyEvent.VK_ESCAPE);
+	final KeyListener	escapeMenuListener	= new KeyTypedAdapter(c -> abort(null), KeyEvent.VK_ESCAPE);
 	
 	BL(QrGui gui)
 	{
@@ -51,13 +57,16 @@ final class BL extends Logic<QrGui, Void>
 		gui.if_(gui -> {
 			gui.cardLayout.show(gui.cardPanel, QrGui.MENU_CARD);
 			keepScanning = false;
+			gui.btnScanCamera.requestFocus();
 		});
 	}
 	
 	void scanCamera(ActionEvent ae)
 	{
 		gui.if_(gui -> {
+			keepScanning = true;
 			gui.cardLayout.show(gui.cardPanel, QrGui.SCAN_CARD);
+			gui.btnAbortScan.requestFocus();
 			EventQueue.invokeLater(() -> scan(gui));
 		});
 	}

@@ -26,10 +26,10 @@ public final class QrGui extends ObservableDialog<BL, String, Void>
 	final JPanel		cardPanel	= new JPanel(cardLayout);
 	
 	private final JButton	btnAbort		= new JButton("abort");
-	private final JButton	btnAbortScan	= new JButton("abort");
+	final JButton			btnAbortScan	= new JButton("abort");
 	
 	private final JButton	btnScanFile		= new JButton("open File");
-	private final JButton	btnScanCamera	= new JButton("scan Camera");
+	final JButton			btnScanCamera	= new JButton("scan Camera");
 	
 	final JLabel cameraDisplay = new JLabel();
 	
@@ -38,7 +38,7 @@ public final class QrGui extends ObservableDialog<BL, String, Void>
 		super(owner, modality, closeListener);
 		TinyTotp.windowStates.qrScan.setBounds(this);
 		setTitle(title);
-		setLayout(new BorderLayout());
+		getContentPane().setLayout(new BorderLayout());
 		
 		getContentPane().add(cardPanel, BorderLayout.CENTER);
 		
@@ -83,9 +83,16 @@ public final class QrGui extends ObservableDialog<BL, String, Void>
 	
 	private void init(BL bl)
 	{
+		btnAbort.addKeyListener(bl.escapeMenuListener);
 		btnAbort.addActionListener(bl::abort);
+		
+		btnAbortScan.addKeyListener(bl.escapeScanListener);
 		btnAbortScan.addActionListener(bl::abortScan);
+		
+		btnScanCamera.addKeyListener(bl.escapeMenuListener);
 		btnScanCamera.addActionListener(bl::scanCamera);
+		
+		btnScanFile.addKeyListener(bl.escapeMenuListener);
 		btnScanFile.addActionListener(bl::scanFile);
 	}
 }
