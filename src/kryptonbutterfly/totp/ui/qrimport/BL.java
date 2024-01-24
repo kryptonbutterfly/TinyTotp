@@ -18,12 +18,12 @@ import com.google.zxing.ChecksumException;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.FormatException;
 import com.google.zxing.NotFoundException;
-import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 
 import kryptonbutterfly.monads.opt.Opt;
 import kryptonbutterfly.totp.TinyTotp;
+import kryptonbutterfly.totp.misc.ImageLuminanceSource;
 import kryptonbutterfly.util.swing.Logic;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent.Result;
@@ -136,7 +136,7 @@ final class BL extends Logic<QrGui, Void>
 		ChecksumException,
 		FormatException
 	{
-		final var	bitmap	= new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(image)));
+		final var	bitmap	= new BinaryBitmap(new HybridBinarizer(new ImageLuminanceSource(image)));
 		final var	res		= new QRCodeReader().decode(bitmap, HINTS);
 		return res.getText();
 	}
