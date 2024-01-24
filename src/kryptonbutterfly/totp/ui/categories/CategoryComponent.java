@@ -81,6 +81,7 @@ public final class CategoryComponent extends JPanel implements TotpConstants
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
+				final var mousePos = e.getLocationOnScreen();
 				EventQueue
 					.invokeLater(
 						() -> new ColorChooserMenu(
@@ -92,7 +93,7 @@ public final class CategoryComponent extends JPanel implements TotpConstants
 								lblIcon.setIcon(category.getIcon());
 							}),
 							category.color,
-							getMousePosition()));
+							mousePos));
 			}
 		};
 	}

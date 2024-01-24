@@ -74,21 +74,19 @@ final class BL extends Logic<CategoriesGui, Void>
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				gui.if_(gui -> {
-					
-					EventQueue
-						.invokeLater(
-							() -> new ColorChooserMenu(
-								gui,
-								ModalityType.MODELESS,
-								res -> res.getReturnValue().if_(color ->
-								{
-									gui.color = color;
-									gui.icon.setIcon(TotpCategory.getColoredIcon(color));
-								}),
-								gui.color,
-								e.getPoint()));
-				});
+				final var mousePos = e.getLocationOnScreen();
+				gui.if_(
+					gui -> EventQueue.invokeLater(
+						() -> new ColorChooserMenu(
+							gui,
+							ModalityType.MODELESS,
+							res -> res.getReturnValue().if_(color ->
+							{
+								gui.color = color;
+								gui.icon.setIcon(TotpCategory.getColoredIcon(color));
+							}),
+							gui.color,
+							mousePos)));
 			}
 		};
 	}

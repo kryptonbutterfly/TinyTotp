@@ -20,6 +20,9 @@ public final class ColorChooserMenu extends ObservableDialog<BL, Color, Color>
 	private static final int	WIDTH	= 320;
 	private static final int	HEIGHT	= 60;
 	
+	private static final int	OFFSET_X	= 20;
+	private static final int	OFFSET_Y	= 0;
+	
 	private final JButton		btnPickColor	= new JButton(Assets.COLOR_PICKER);
 	final JComboBox<HtmlColors>	htmlColor		= new JComboBox<>(HtmlColors.values());
 	
@@ -32,7 +35,7 @@ public final class ColorChooserMenu extends ObservableDialog<BL, Color, Color>
 	{
 		super(owner, modality, closeListener, currentColor);
 		setResizable(false);
-		setBounds(owner.getX() + position.x, owner.getY() + position.y, WIDTH, HEIGHT);
+		setBounds(position.x + OFFSET_X, position.y + OFFSET_Y - HEIGHT, WIDTH, HEIGHT);
 		setUndecorated(true);
 		setLayout(new FlowLayout());
 		add(btnPickColor);
