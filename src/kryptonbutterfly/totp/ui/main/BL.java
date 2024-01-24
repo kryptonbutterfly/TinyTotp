@@ -7,12 +7,17 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import kryptonbutterfly.totp.TinyTotp;
+import kryptonbutterfly.totp.misc.SecretData;
 import kryptonbutterfly.totp.misc.TotpGenerator;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.totp.ui.add.manual.AddKey;
 import kryptonbutterfly.totp.ui.categories.CategoriesGui;
+import kryptonbutterfly.totp.ui.qrimport.QrGui;
 import kryptonbutterfly.util.swing.Logic;
+import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 
 final class BL extends Logic<MainGui, char[]>
 {
@@ -41,19 +46,53 @@ final class BL extends Logic<MainGui, char[]>
 				() -> new AddKey(
 					gui,
 					ModalityType.APPLICATION_MODAL,
-					gce -> gce.getReturnValue().if_(e ->
-					{
-						gui.contentBox.add(new TotpComponent(e, this::remove, password));
-						gui.validate();
-					}),
+					this::addEntry,
 					password,
 					"Add TOTP Secret")));
 	}
 	
 	void addQrEntry(ActionEvent ae)
 	{
-		// TODO implement
-		System.out.println("add TOTP key via qr code");
+		gui.if_(
+			gui -> EventQueue
+				.invokeLater(
+					() -> new QrGui(
+						gui,
+						ModalityType.APPLICATION_MODAL,
+						gce -> gce.getReturnValue().if_(url ->
+						{
+							SecretData.parseUrl(url)
+								.if_(e -> createEntry(gui, e))
+								.else_(
+									() -> JOptionPane.showMessageDialog(
+										gui,
+										"Unable to import secret.\nUnexpected qr content.",
+										"Import failed",
+										JOptionPane.ERROR_MESSAGE));
+						}),
+						"Import Secret")));
+	}
+	
+	private void createEntry(MainGui gui, SecretData entry)
+	{
+		EventQueue.invokeLater(
+			() -> new AddKey(
+				gui,
+				ModalityType.APPLICATION_MODAL,
+				this::addEntry,
+				entry,
+				password,
+				"Add TOTP Secret"));
+	}
+	
+	private void addEntry(GuiCloseEvent<TotpEntry> gce)
+	{
+		gce.getReturnValue().if_(entry -> {
+			gui.if_(gui -> {
+				gui.contentBox.add(new TotpComponent(entry, this::remove, password));
+				gui.validate();
+			});
+		});
 	}
 	
 	void categories(ActionEvent ae)

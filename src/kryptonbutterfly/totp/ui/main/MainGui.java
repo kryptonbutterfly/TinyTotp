@@ -1,12 +1,16 @@
 package kryptonbutterfly.totp.ui.main;
 
 import java.awt.BorderLayout;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.util.function.Consumer;
 
 import javax.swing.Box;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
+import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 
 import kryptonbutterfly.totp.TinyTotp;
@@ -18,7 +22,7 @@ import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 import lombok.val;
 
 @SuppressWarnings("serial")
-public class MainGui extends ObservableGui<BL, Void, char[]> implements TotpConstants
+public final class MainGui extends ObservableGui<BL, Void, char[]> implements TotpConstants
 {
 	final Box contentBox = Box.createVerticalBox();
 	
@@ -40,16 +44,23 @@ public class MainGui extends ObservableGui<BL, Void, char[]> implements TotpCons
 	private void init(BL logic)
 	{
 		val menuBar = new JMenuBar();
-		add(menuBar, BorderLayout.NORTH);
+		getContentPane().add(menuBar, BorderLayout.NORTH);
 		
-		val addQrEntry = new JMenuItem(Assets.getQrByBackground(getBackground()));
-		menuBar.add(addQrEntry);
+		JMenu addMenu = new JMenu(BUTTON_ADD);
+		menuBar.add(addMenu);
+		addMenu.setForeground(HtmlColors.LightGreen.color());
+		addMenu.setToolTipText("Add new Totp key.");
+		
+		JMenuItem addQrEntry = new JMenuItem(Assets.getQr16ByBackground(getBackground()));
+		addQrEntry.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_DOWN_MASK));
+		addQrEntry.setText("import from qr");
+		addMenu.add(addQrEntry);
 		addQrEntry.addActionListener(logic::addQrEntry);
 		
-		val addEntryItem = new JMenuItem(BUTTON_ADD);
-		addEntryItem.setToolTipText("Add new TOTP Key");
-		addEntryItem.setForeground(HtmlColors.LightGreen.color());
-		menuBar.add(addEntryItem);
+		val addEntryItem = new JMenuItem("add manually");
+		addEntryItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.CTRL_DOWN_MASK));
+		addEntryItem.setToolTipText("Manually add new Totp key.");
+		addMenu.add(addEntryItem);
 		addEntryItem.addActionListener(logic::addEntry);
 		
 		val categoriesItem = new JMenuItem("Categories");
@@ -60,10 +71,8 @@ public class MainGui extends ObservableGui<BL, Void, char[]> implements TotpCons
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(TotpConstants.SCROLL_INCREMENT);
-		add(scrollPane, BorderLayout.CENTER);
+		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		logic.populateContent();
-		
-		// add(contentBox, BorderLayout.CENTER);
 	}
 }

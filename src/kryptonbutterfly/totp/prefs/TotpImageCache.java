@@ -14,7 +14,7 @@ import com.google.gson.annotations.Expose;
 
 import kryptonbutterfly.monads.opt.Opt;
 import kryptonbutterfly.totp.TotpConstants;
-import kryptonbutterfly.totp.misc.ImageUtils;
+import kryptonbutterfly.totp.misc.Utils;
 import lombok.SneakyThrows;
 import lombok.val;
 
@@ -84,7 +84,7 @@ public final class TotpImageCache implements TotpConstants
 		try
 		{
 			final var	url		= new URL(address);
-			final var	image	= ImageUtils.scaleDownToMax(ImageIO.read(url), CACHED_IMAGE_MAX_SIZE);
+			final var	image	= Utils.scaleDownToMax(ImageIO.read(url), CACHED_IMAGE_MAX_SIZE);
 			ImageIO.write(image, PNG, imgFile);
 			images.put(name, image);
 			imageMappings.put(address, name);
@@ -99,7 +99,7 @@ public final class TotpImageCache implements TotpConstants
 	
 	public Opt<String> addImage(BufferedImage image)
 	{
-		image = ImageUtils.scaleDownToMax(image, CACHED_IMAGE_MAX_SIZE);
+		image = Utils.scaleDownToMax(image, CACHED_IMAGE_MAX_SIZE);
 		if (!configFile.getParentFile().exists())
 			configFile.getParentFile().mkdirs();
 		

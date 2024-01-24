@@ -13,7 +13,7 @@ import kryptonbutterfly.util.swing.ObservableGui;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 
 @SuppressWarnings("serial")
-public class PasswdGui extends ObservableGui<BL, char[], GuiPrefs>
+public final class PasswdGui extends ObservableGui<BL, char[], GuiPrefs>
 {
 	final JPasswordField passwordField = new JPasswordField();
 	

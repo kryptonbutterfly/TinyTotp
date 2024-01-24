@@ -1,14 +1,30 @@
 package kryptonbutterfly.totp.misc;
 
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import kryptonbutterfly.math.vector._int.Vec2i;
 
-public class ImageUtils
+public class Utils
 {
-	public static final BufferedImage scaleDownToMax(BufferedImage rawImage, Vec2i maxSize)
+	private Utils()
+	{}
+	
+	public static boolean isBright(Color bgColor)
+	{
+		return (bgColor.getRed() + bgColor.getGreen() + bgColor.getBlue()) / 3 > 0x7F;
+	}
+	
+	public static <E> E getContrasting(Color bgColor, E light, E dark)
+	{
+		if (isBright(bgColor))
+			return dark;
+		return light;
+	}
+	
+	public static BufferedImage scaleDownToMax(BufferedImage rawImage, Vec2i maxSize)
 	{
 		final int	maxWidth		= maxSize.x();
 		final int	maxHeight		= maxSize.y();
@@ -32,7 +48,7 @@ public class ImageUtils
 		return scale(factor, rawImage);
 	}
 	
-	private static final BufferedImage scale(float factor, BufferedImage rawImage)
+	private static BufferedImage scale(float factor, BufferedImage rawImage)
 	{
 		final var transform = new AffineTransform();
 		transform.scale(factor, factor);

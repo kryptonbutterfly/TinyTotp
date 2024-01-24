@@ -44,5 +44,7 @@ public interface TotpConstants
 	public static final String	BUTTON_ABORT	= "abort";
 	public static final String	BUTTON_APPLY	= "apply";
 	
-	public static final String BUTTON_ADD = "➕";
+	public static final String BUTTON_ADD = " ➕ ";
+	
+	public static final String TOOLTIP_ADDKEY_IMPORT_ICON = "import from Clipboard";
 }

@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,6 +20,7 @@ import org.apache.commons.codec.binary.Base32;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.misc.Assets;
+import kryptonbutterfly.totp.misc.SecretData;
 import kryptonbutterfly.totp.prefs.TotpCategory;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.util.swing.ApplyAbortPanel;
@@ -28,14 +30,16 @@ import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 @SuppressWarnings("serial")
 public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implements TotpConstants
 {
-	JTextField				txtAccountname;
-	JTextField				txtSecretkey;
-	JTextField				txtIssuer;
+	final JTextField		txtAccountname		= new JTextField();
+	final JTextField		txtSecretkey		= new JTextField();
+	final JTextField		txtIssuer			= new JTextField();
 	JComboBox<TotpCategory>	comboBoxCategory;
-	JLabel					lblIcon;
+	final JLabel			lblIcon				= new JLabel();
 	String					iconName			= null;
-	JSpinner				spinnerTimeFrame	= new JSpinner(new SpinnerNumberModel(30, 0, 180, 5));
-	JSpinner				spinnerTotpLength	= new JSpinner(new SpinnerNumberModel(6, 6, 10, 1));
+	final JSpinner			spinnerTimeFrame	= new JSpinner(new SpinnerNumberModel(30, 0, 180, 5));
+	final JSpinner			spinnerTotpLength	= new JSpinner(new SpinnerNumberModel(6, 6, 10, 1));
+	
+	final JButton btnSecretKey = new JButton();
 	
 	public AddKey(
 		Window owner,
@@ -45,6 +49,27 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		String title)
 	{
 		this(owner, modality, closeListener, password, title, null);
+	}
+	
+	public AddKey(
+		Window owner,
+		ModalityType modality,
+		Consumer<GuiCloseEvent<TotpEntry>> closeListener,
+		SecretData parsed,
+		char[] password,
+		String title)
+	{
+		super(owner, modality, closeListener, password);
+		TinyTotp.windowStates.createDialog.setBounds(this);
+		setTitle(title);
+		
+		businessLogic.if_(this::init);
+		
+		txtAccountname.setText(parsed.account);
+		txtSecretkey.setText(parsed.secretKey);
+		txtIssuer.setText(parsed.issuer);
+		
+		setVisible(true);
 	}
 	
 	public AddKey(
@@ -72,6 +97,8 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 			spinnerTimeFrame.setValue(original.totpValidForSeconds);
 			spinnerTotpLength.setValue(original.totpLength);
 			
+			if (original.icon != null && !original.icon.isBlank())
+				lblIcon.setToolTipText(original.icon);
 		}
 		setVisible(true);
 	}
@@ -89,32 +116,35 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		verticalBox.add(gridPanel);
 		add(verticalBox, BorderLayout.CENTER);
 		
-		JLabel lblAccountName = new JLabel(LABEL_ACCOUNT_NAME);
-		gridPanel.add(lblAccountName);
+		{
+			JLabel lblAccountName = new JLabel(LABEL_ACCOUNT_NAME);
+			gridPanel.add(lblAccountName);
+			
+			gridPanel.add(txtAccountname);
+			txtAccountname.setColumns(10);
+			txtAccountname.addKeyListener(bl.cycleFocus());
+			txtAccountname.addKeyListener(bl.escapeListener());
+		}
 		
-		txtAccountname = new JTextField();
-		gridPanel.add(txtAccountname);
-		txtAccountname.setColumns(10);
-		txtAccountname.addKeyListener(bl.cycleFocus());
-		txtAccountname.addKeyListener(bl.escapeListener());
+		{
+			JLabel lblIssuer = new JLabel(LABEL_ISSUER);
+			gridPanel.add(lblIssuer);
+			
+			gridPanel.add(txtIssuer);
+			txtIssuer.setColumns(10);
+			txtIssuer.addKeyListener(bl.cycleFocus());
+			txtIssuer.addKeyListener(bl.escapeListener());
+		}
 		
-		JLabel lblIssuer = new JLabel(LABEL_ISSUER);
-		gridPanel.add(lblIssuer);
-		
-		txtIssuer = new JTextField();
-		gridPanel.add(txtIssuer);
-		txtIssuer.setColumns(10);
-		txtIssuer.addKeyListener(bl.cycleFocus());
-		txtIssuer.addKeyListener(bl.escapeListener());
-		
-		JLabel lblSecretKey = new JLabel(LABEL_SECRET_KEY);
-		gridPanel.add(lblSecretKey);
-		
-		txtSecretkey = new JTextField();
-		gridPanel.add(txtSecretkey);
-		txtSecretkey.setColumns(10);
-		txtSecretkey.addKeyListener(bl.cycleFocus());
-		txtSecretkey.addKeyListener(bl.escapeListener());
+		{
+			final var lblSecretKey = new JLabel(LABEL_SECRET_KEY);
+			gridPanel.add(lblSecretKey, BorderLayout.CENTER);
+			
+			gridPanel.add(txtSecretkey);
+			txtSecretkey.setColumns(10);
+			txtSecretkey.addKeyListener(bl.cycleFocus());
+			txtSecretkey.addKeyListener(bl.escapeListener());
+		}
 		
 		{
 			gridPanel.add(new JLabel(LABEL_PASSWORD_INTERVAL));
@@ -128,27 +158,31 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 			spinnerTotpLength.addKeyListener(bl.escapeListener());
 		}
 		
-		JLabel lblCategory = new JLabel(LABEL_CATEGORY);
-		gridPanel.add(lblCategory);
-		
-		comboBoxCategory = new JComboBox<>(TinyTotp.config.categories.toArray(TotpCategory[]::new));
-		comboBoxCategory.setRenderer(new CategoryRenderer());
-		gridPanel.add(comboBoxCategory);
+		{
+			JLabel lblCategory = new JLabel(LABEL_CATEGORY);
+			gridPanel.add(lblCategory);
+			
+			comboBoxCategory = new JComboBox<>(TinyTotp.config.categories.toArray(TotpCategory[]::new));
+			comboBoxCategory.setRenderer(new CategoryRenderer());
+			gridPanel.add(comboBoxCategory);
+		}
 		
 		JPanel panel = new JPanel();
 		verticalBox.add(panel);
 		
-		lblIcon = new JLabel(Assets.MISSING_ICON);
+		lblIcon.setIcon(Assets.MISSING_ICON);
 		lblIcon.addMouseListener(bl.iconClickListener());
+		lblIcon.setToolTipText(TOOLTIP_ADDKEY_IMPORT_ICON);
 		panel.add(lblIcon);
 		
 		verticalBox.add(Box.createVerticalGlue());
 		
-		final var applyAbort = new ApplyAbortPanel(BUTTON_ABORT, bl::abort, BUTTON_APPLY, bl::apply);
-		add(applyAbort, BorderLayout.SOUTH);
-		
-		applyAbort.btnButton1.addKeyListener(bl.escapeListener());
-		applyAbort.btnButton2.addKeyListener(bl.escapeListener());
-		
+		{
+			final var applyAbort = new ApplyAbortPanel(BUTTON_ABORT, bl::abort, BUTTON_APPLY, bl::apply);
+			add(applyAbort, BorderLayout.SOUTH);
+			
+			applyAbort.btnButton1.addKeyListener(bl.escapeListener());
+			applyAbort.btnButton2.addKeyListener(bl.escapeListener());
+		}
 	}
 }

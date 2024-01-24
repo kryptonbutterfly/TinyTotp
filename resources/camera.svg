@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32mm"
+   height="32mm"
+   viewBox="0 0 32 32"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="camera.svg"
+   inkscape:export-filename="/home/christian/eclipse-workspaces/Git/Apps/TinyTOTP/src/assets/camera-dark.png"
+   inkscape:export-xdpi="19.049999"
+   inkscape:export-ydpi="19.049999">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8"
+     inkscape:cx="60.379557"
+     inkscape:cy="62.533508"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-265)">
+    <path
+       style="display:inline;opacity:1;fill:#222222;fill-opacity:1;fill-rule:nonzero;stroke:#330054;stroke-width:0;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.8309179"
+       d="m 55.947266,18.898438 c -6.812733,7.95e-4 -6.811524,-9.77e-4 -10.591797,5.667968 -3.780274,5.668945 -3.780694,5.669922 -10.59375,5.669922 H 18.897638 c -8.375434,0 -15.1181104,6.741755 -15.1181104,15.117188 v 37.796875 c 0,8.375433 6.7426764,15.117187 15.1181104,15.117187 h 83.149612 c 8.37543,0 15.11811,-6.741754 15.11811,-15.117187 V 45.353516 c 0,-8.375433 -6.74268,-15.117347 -15.11811,-15.117292 l -15.863656,1.04e-4 c -6.814579,1.04e-4 -6.814453,-9.77e-4 -10.59375,-5.669922 -3.779297,-5.668945 -3.778634,-5.667173 -10.591797,-5.667968 z m 4.52539,18.896841 C 75.084548,37.795092 86.929875,49.640081 86.929688,64.251973 86.929875,78.863866 75.084549,90.708853 60.472656,90.708666 45.860764,90.708853 34.015438,78.863865 34.015625,64.251973 34.015438,49.640081 45.860764,37.795092 60.472656,37.795279 Z m 0,7.559056 C 50.035155,45.353894 41.573778,53.814472 41.574219,64.251973 41.574856,74.688712 50.035917,83.150052 60.472656,83.149611 70.908633,83.148974 79.368504,74.68795 79.369141,64.251973 79.369582,53.815234 70.909395,45.354972 60.472656,45.354335 Z"
+       transform="matrix(0.26458333,0,0,0.26458333,0,265)"
+       id="rect815"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csssssssssscscccccccccccc"
+       inkscape:export-filename="/home/christian/eclipse-workspaces/Git/Apps/TinyTOTP/src/assets/camera-light.png"
+       inkscape:export-xdpi="19"
+       inkscape:export-ydpi="19" />
+  </g>
+</svg>

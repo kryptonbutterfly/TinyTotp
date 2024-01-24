@@ -87,7 +87,8 @@ public class TinyTotp implements TotpConstants
 	private static void terminateListener(GuiCloseEvent<Void> gce)
 	{
 		writeToFileAsJson(config, CONFIG);
-		writeToFileAsJson(imageCache, imageCache.file());
+		writeToFileAsJson(windowStates, WINDOW_STATES);
+		writeToFileAsJson(imageCache, CACHE);
 	}
 	
 	@SneakyThrows

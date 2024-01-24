@@ -49,6 +49,9 @@ public class Assets
 		64,
 		Image.SCALE_SMOOTH);
 	
+	public static final ImageIcon	QR_ICON_LIGHT_16	= loadIcon("/assets/qr-icon-light_16.png");
+	public static final ImageIcon	QR_ICON_DARK_16		= loadIcon("/assets/qr-icon-dark_16.png");
+	
 	public static final ImageIcon	QR_ICON_LIGHT	= loadIcon("/assets/qr-icon-light.png");
 	public static final ImageIcon	QR_ICON_DARK	= loadIcon("/assets/qr-icon-dark.png");
 	
@@ -58,22 +61,35 @@ public class Assets
 	public static final ImageIcon	DELETE_LIGHT	= loadIcon("/assets/delete-light_24.png");
 	public static final ImageIcon	DELETE_DARK		= loadIcon("/assets/delete-dark_24.png");
 	
+	public static final ImageIcon	CAMERA_LIGHT	= loadIcon("/assets/camera-light.png");
+	public static final ImageIcon	CAMERA_DARK		= loadIcon("/assets/camera-dark.png");
+	
 	public static final ImageIcon COLOR_PICKER = loadIcon("/assets/color-picker.png");
 	
 	public static final BufferedImage ICON = loadImage("/assets/icon.png");
 	
+	public static ImageIcon getCameraByBackground(Color bgColor)
+	{
+		return Utils.getContrasting(bgColor, CAMERA_LIGHT, CAMERA_DARK);
+	}
+	
+	public static ImageIcon getQr16ByBackground(Color bgColor)
+	{
+		return Utils.getContrasting(bgColor, QR_ICON_LIGHT_16, QR_ICON_DARK_16);
+	}
+	
 	public static ImageIcon getQrByBackground(Color bgColor)
 	{
-		return ColorUtils.getContrasting(bgColor, QR_ICON_LIGHT, QR_ICON_DARK);
+		return Utils.getContrasting(bgColor, QR_ICON_LIGHT, QR_ICON_DARK);
 	}
 	
 	public static ImageIcon getEditByBackground(Color bgColor)
 	{
-		return ColorUtils.getContrasting(bgColor, EDIT_LIGHT, EDIT_DARK);
+		return Utils.getContrasting(bgColor, EDIT_LIGHT, EDIT_DARK);
 	}
 	
 	public static ImageIcon getDeleteByBackground(Color bgColor)
 	{
-		return ColorUtils.getContrasting(bgColor, DELETE_LIGHT, DELETE_DARK);
+		return Utils.getContrasting(bgColor, DELETE_LIGHT, DELETE_DARK);
 	}
 }

@@ -21,7 +21,7 @@ import org.apache.commons.codec.binary.Base32;
 import kryptonbutterfly.monads.opt.Opt;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
-import kryptonbutterfly.totp.misc.ImageUtils;
+import kryptonbutterfly.totp.misc.Utils;
 import kryptonbutterfly.totp.prefs.TotpCategory;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.totp.ui.misc.KeyTypedAdapter;
@@ -103,9 +103,10 @@ final class BL extends Logic<AddKey, char[]>
 	
 	private void setIcon(AddKey gui, String name, BufferedImage img)
 	{
-		final var icon = new ImageIcon(ImageUtils.scaleDownToMax(img, TotpConstants.ICON_WIDTH));
+		final var icon = new ImageIcon(Utils.scaleDownToMax(img, TotpConstants.ICON_WIDTH));
 		gui.iconName = name;
 		gui.lblIcon.setIcon(icon);
+		gui.lblIcon.setToolTipText(name);
 	}
 	
 	void abort(ActionEvent ae)

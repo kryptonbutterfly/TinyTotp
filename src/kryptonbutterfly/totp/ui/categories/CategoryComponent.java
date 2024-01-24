@@ -24,7 +24,7 @@ import kryptonbutterfly.totp.prefs.TotpCategory;
 import kryptonbutterfly.totp.ui.misc.color.ColorChooserMenu;
 
 @SuppressWarnings("serial")
-public class CategoryComponent extends JPanel implements TotpConstants
+public final class CategoryComponent extends JPanel implements TotpConstants
 {
 	private static final Dimension max = new Dimension(Integer.MAX_VALUE, CATEGORY_MAX_HEIGHT);
 	

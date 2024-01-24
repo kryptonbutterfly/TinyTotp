@@ -15,7 +15,7 @@ import kryptonbutterfly.util.swing.ObservableDialog;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 
 @SuppressWarnings("serial")
-public class ColorChooserMenu extends ObservableDialog<BL, Color, Color>
+public final class ColorChooserMenu extends ObservableDialog<BL, Color, Color>
 {
 	private static final int	WIDTH	= 320;
 	private static final int	HEIGHT	= 60;

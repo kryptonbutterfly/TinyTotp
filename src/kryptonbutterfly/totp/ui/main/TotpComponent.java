@@ -28,8 +28,8 @@ import kryptonbutterfly.math.vector._int.Vec2i;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.misc.Assets;
-import kryptonbutterfly.totp.misc.ImageUtils;
 import kryptonbutterfly.totp.misc.TotpGenerator;
+import kryptonbutterfly.totp.misc.Utils;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.totp.ui.add.manual.AddKey;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
@@ -204,26 +204,7 @@ public final class TotpComponent extends JPanel implements TotpConstants
 	
 	private UnaryOperator<BufferedImage> ensureScale(Vec2i maxSize)
 	{
-		return rawImage -> ImageUtils.scaleDownToMax(rawImage, maxSize);
-		
-		// final int maxHeight = maxWidth;
-		// return rawImage ->
-		// {
-		// if (maxWidth >= rawImage.getWidth() && maxHeight >= rawImage.getHeight())
-		// return rawImage;
-		// float imageAspect = rawImage.getWidth() / rawImage.getHeight();
-		//
-		// final float factor;
-		// if (imageAspect > 1)
-		// factor = ((float) maxWidth / rawImage.getWidth());
-		// else
-		// factor = ((float) maxHeight / rawImage.getHeight());
-		//
-		// final var transform = new AffineTransform();
-		// transform.scale(factor, factor);
-		// return new AffineTransformOp(transform, AffineTransformOp.TYPE_BICUBIC)
-		// .filter(rawImage, null);
-		// };
+		return rawImage -> Utils.scaleDownToMax(rawImage, maxSize);
 	}
 	
 	private void copyTotp(ActionEvent ae)
