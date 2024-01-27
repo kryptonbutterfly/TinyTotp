@@ -20,4 +20,7 @@ public final class TotpWindowStates
 	
 	@Expose
 	public GuiPrefs qrScan = new GuiPrefs(100, 100, 640, 400, JFrame.NORMAL);
+	
+	@Expose
+	public GuiPrefs qrExport = new GuiPrefs(100, 100, 230, 280, JFrame.NORMAL);
 }

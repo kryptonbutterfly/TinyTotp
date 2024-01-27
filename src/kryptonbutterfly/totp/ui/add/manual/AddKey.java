@@ -1,6 +1,7 @@
 package kryptonbutterfly.totp.ui.add.manual;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Window;
 import java.util.function.Consumer;
@@ -31,6 +32,7 @@ import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 @SuppressWarnings("serial")
 public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implements TotpConstants
 {
+	final JButton			btnExport			= new JButton("export");
 	final JTextField		txtAccountname		= new JTextField();
 	final JTextField		txtSecretkey		= new JTextField();
 	final JTextField		txtIssuer			= new JTextField();
@@ -118,6 +120,15 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		final var	gridPanel	= new JPanel(new GridLayout(0, 2, 5, 5));
 		
 		verticalBox.add(gridPanel);
+		
+		final var exportPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		getContentPane().add(exportPanel, BorderLayout.NORTH);
+		{
+			exportPanel.add(btnExport);
+			btnExport.setIcon(Assets.getQr16ByBackground(getBackground()));
+			btnExport.addActionListener(bl::exportQR);
+			btnExport.addKeyListener(bl.escapeListener);
+		}
 		
 		getContentPane().add(verticalBox, BorderLayout.CENTER);
 		{

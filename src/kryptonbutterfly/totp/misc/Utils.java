@@ -6,8 +6,17 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+import kryptonbutterfly.functions.bool_.BoolToIntFunction;
 import kryptonbutterfly.math.vector._int.Vec2i;
+import kryptonbutterfly.monads.failable.Failable;
+import kryptonbutterfly.monads.opt.Opt;
 
 public class Utils
 {
@@ -69,5 +78,33 @@ public class Utils
 				result.setRGB(width - x - 1, y, src.getRGB(x, y));
 			
 		return result;
+	}
+	
+	public static final Opt<BufferedImage> generateQr(
+		String data,
+		Color dark,
+		Color light,
+		int size,
+		ErrorCorrectionLevel level)
+	{
+		final BoolToIntFunction	colorConverter	= bit -> bit ? dark.getRGB() : light.getRGB();
+		final var				sizeRange		= range(size);
+		
+		return Failable.attempt(
+			() -> new MultiFormatWriter().encode(
+				data,
+				BarcodeFormat.QR_CODE,
+				size,
+				size,
+				Map.of(EncodeHintType.ERROR_CORRECTION, level.name())))
+			.toOpt(e -> e.printStackTrace())
+			.map(matrix ->
+			{
+				final var image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+				for (int y : sizeRange)
+					for (int x : sizeRange)
+						image.setRGB(x, y, colorConverter.apply(matrix.get(x, y)));
+				return image;
+			});
 	}
 }

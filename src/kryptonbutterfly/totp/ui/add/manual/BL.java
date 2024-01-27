@@ -1,5 +1,8 @@
 package kryptonbutterfly.totp.ui.add.manual;
 
+import java.awt.Color;
+import java.awt.Dialog.ModalityType;
+import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -21,13 +24,18 @@ import javax.swing.event.PopupMenuListener;
 
 import org.apache.commons.codec.binary.Base32;
 
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+import kryptonbutterfly.functions.void_.Consumer_;
 import kryptonbutterfly.monads.opt.Opt;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
+import kryptonbutterfly.totp.misc.UrlQueryParams;
 import kryptonbutterfly.totp.misc.Utils;
 import kryptonbutterfly.totp.prefs.TotpCategory;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.totp.ui.misc.KeyTypedAdapter;
+import kryptonbutterfly.totp.ui.qrexport.QrExportGui;
 import kryptonbutterfly.util.swing.Logic;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent.Result;
@@ -142,6 +150,20 @@ final class BL extends Logic<AddKey, char[]>
 		gui.iconName = name;
 		gui.lblIcon.setIcon(icon);
 		gui.lblIcon.setToolTipText(name);
+	}
+	
+	void exportQR(ActionEvent ae)
+	{
+		gui.if_(gui -> {
+			final var	account		= gui.txtAccountname.getText();
+			final var	secretKey	= gui.txtSecretkey.getText();
+			final var	issuer		= gui.txtIssuer.getText();
+			final var	url			= UrlQueryParams.toUrl(account, secretKey, issuer);
+			Utils.generateQr(url, Color.BLACK, Color.WHITE, 200, ErrorCorrectionLevel.H)
+				.if_(
+					qr -> EventQueue
+						.invokeLater(() -> new QrExportGui(gui, ModalityType.APPLICATION_MODAL, Consumer_.sink(), qr)));
+		});
 	}
 	
 	void abort(ActionEvent ae)
