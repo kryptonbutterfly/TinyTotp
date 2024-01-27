@@ -8,6 +8,7 @@ A Totp Client
 
 java version | app version | jar | deb
 :----------: | :---------: | :-: | :-:
+18+          | 3.2.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.2.0/TinyTotp.jar) | [TinyTotp-3.2.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.2.0/TinyTotp-3.2.0.deb)
 18+          | 3.1.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.1.0/TinyTotp.jar) | [TinyTotp-3.1.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.1.0/TinyTotp-3.1.0.deb)
 18+          | 3.0.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.0.0/TinyTotp.jar) | [TinyTotp-3.0.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.0.0/TinyTotp-3.0.0.deb)
 18+          | 2.0.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v2.0.0/TinyTotp.jar) | [TinyTotp-2.0.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v2.0.0/TinyTotp-2.0.0.deb)
@@ -22,4 +23,17 @@ This password is used to encryt/decrypt your totp secrets.
 ## Images
 
 ![](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Main.png)
-![](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/AddSecret.png)
+<details>
+<summary>more images</summary>
+
+![Categories](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Categories.png)
+
+![Import Secret](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Import-Secret.png)
+![Import Secret via webcam](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Import-Qr.png)
+
+![Add Totp Secret](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/AddSecret.png)
+
+![Edit Totp Secret](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Edit-Totp.png)
+
+![Export Secret](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Export-Secret.png)
+</details>
