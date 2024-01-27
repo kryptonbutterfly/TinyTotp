@@ -4,6 +4,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -15,6 +16,8 @@ import java.util.List;
 import java.util.function.Function;
 
 import javax.swing.ImageIcon;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 import org.apache.commons.codec.binary.Base32;
 
@@ -34,15 +37,8 @@ final class BL extends Logic<AddKey, char[]>
 {
 	private static final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 	
-	private char[] password;
-	
-	private final KeyListener cycleListener = new KeyTypedAdapter(
-		c -> gui.if_(gui -> c.transferFocus()),
-		KeyEvent.VK_ENTER);
-	
-	private final KeyListener escapeListener = new KeyTypedAdapter(
-		c -> gui.if_(AddKey::dispose),
-		KeyEvent.VK_ESCAPE);
+	private char[]	password;
+	private long	categoryPopupLastVisible	= 0L;
 	
 	BL(AddKey gui, char[] password)
 	{
@@ -50,12 +46,51 @@ final class BL extends Logic<AddKey, char[]>
 		this.password = password;
 	}
 	
-	KeyListener escapeListener()
-	{
-		return escapeListener;
-	}
+	final KeyListener enterListener = new KeyTypedAdapter(
+		c -> gui.if_(gui -> c.transferFocus()),
+		KeyEvent.VK_ENTER);
 	
-	MouseListener iconClickListener()
+	final KeyListener escapeListener = new KeyTypedAdapter(
+		c -> gui.if_(AddKey::dispose),
+		KeyEvent.VK_ESCAPE);
+	
+	final KeyListener categoryEnterListener = new KeyTypedAdapter(
+		c -> gui.if_(gui -> gui.btnApply.requestFocus()),
+		KeyEvent.VK_ENTER);
+	
+	final PopupMenuListener categoryPopupListener = new PopupMenuListener()
+	{
+		@Override
+		public void popupMenuWillBecomeVisible(PopupMenuEvent e)
+		{}
+		
+		@Override
+		public void popupMenuWillBecomeInvisible(PopupMenuEvent e)
+		{
+			categoryPopupLastVisible = System.currentTimeMillis();
+		}
+		
+		@Override
+		public void popupMenuCanceled(PopupMenuEvent e)
+		{}
+	};
+	
+	final KeyListener categoryEscapeListener = new KeyAdapter()
+	{
+		public void keyTyped(KeyEvent e)
+		{
+			final long tolerance = 10L;
+			if (e.getKeyChar() == KeyEvent.VK_ESCAPE)
+				gui.if_(gui -> {
+					if (Math.abs(e.getWhen() - categoryPopupLastVisible) < tolerance)
+						return;
+					e.consume();
+					gui.dispose();
+				});
+		};
+	};
+	
+	final MouseListener iconClickListener()
 	{
 		return new MouseAdapter()
 		{
@@ -134,11 +169,6 @@ final class BL extends Logic<AddKey, char[]>
 			
 			gui.dispose(new GuiCloseEvent<>(Result.SUCCESS, Opt.empty(), totpEntry));
 		});
-	}
-	
-	KeyListener cycleFocus()
-	{
-		return cycleListener;
 	}
 	
 	@Override

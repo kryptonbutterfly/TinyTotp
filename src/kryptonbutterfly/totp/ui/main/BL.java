@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import kryptonbutterfly.totp.TinyTotp;
-import kryptonbutterfly.totp.misc.SecretData;
+import kryptonbutterfly.totp.misc.UrlQueryParams;
 import kryptonbutterfly.totp.misc.TotpGenerator;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.totp.ui.add.manual.AddKey;
@@ -61,7 +61,7 @@ final class BL extends Logic<MainGui, char[]>
 						ModalityType.APPLICATION_MODAL,
 						gce -> gce.getReturnValue().if_(url ->
 						{
-							SecretData.parseUrl(url)
+							UrlQueryParams.parseUrl(url)
 								.if_(e -> createEntry(gui, e))
 								.else_(
 									() -> JOptionPane.showMessageDialog(
@@ -73,7 +73,7 @@ final class BL extends Logic<MainGui, char[]>
 						"Import Secret")));
 	}
 	
-	private void createEntry(MainGui gui, SecretData entry)
+	private void createEntry(MainGui gui, UrlQueryParams entry)
 	{
 		EventQueue.invokeLater(
 			() -> new AddKey(

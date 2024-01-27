@@ -38,6 +38,7 @@ public final class QrGui extends ObservableDialog<BL, String, Void>
 		super(owner, modality, closeListener);
 		TinyTotp.windowStates.qrScan.setBounds(this);
 		setTitle(title);
+		setIconImage(Assets.getQr16ByBackground(getBackground()).getImage());
 		getContentPane().setLayout(new BorderLayout());
 		
 		getContentPane().add(cardPanel, BorderLayout.CENTER);

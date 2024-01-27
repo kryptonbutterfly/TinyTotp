@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
@@ -20,7 +21,7 @@ import org.apache.commons.codec.binary.Base32;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.misc.Assets;
-import kryptonbutterfly.totp.misc.SecretData;
+import kryptonbutterfly.totp.misc.UrlQueryParams;
 import kryptonbutterfly.totp.prefs.TotpCategory;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.util.swing.ApplyAbortPanel;
@@ -41,6 +42,8 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 	
 	final JButton btnSecretKey = new JButton();
 	
+	JButton btnApply;
+	
 	public AddKey(
 		Window owner,
 		ModalityType modality,
@@ -55,7 +58,7 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		Window owner,
 		ModalityType modality,
 		Consumer<GuiCloseEvent<TotpEntry>> closeListener,
-		SecretData parsed,
+		UrlQueryParams parsed,
 		char[] password,
 		String title)
 	{
@@ -65,9 +68,9 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		
 		businessLogic.if_(this::init);
 		
-		txtAccountname.setText(parsed.account);
-		txtSecretkey.setText(parsed.secretKey);
-		txtIssuer.setText(parsed.issuer);
+		txtAccountname.setText(parsed.account());
+		txtSecretkey.setText(parsed.secretKey());
+		txtIssuer.setText(parsed.issuer());
 		
 		setVisible(true);
 	}
@@ -113,76 +116,87 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 	{
 		Box			verticalBox	= Box.createVerticalBox();
 		final var	gridPanel	= new JPanel(new GridLayout(0, 2, 5, 5));
-		verticalBox.add(gridPanel);
-		add(verticalBox, BorderLayout.CENTER);
 		
+		verticalBox.add(gridPanel);
+		
+		getContentPane().add(verticalBox, BorderLayout.CENTER);
 		{
-			JLabel lblAccountName = new JLabel(LABEL_ACCOUNT_NAME);
-			gridPanel.add(lblAccountName);
+			gridPanel.add(new JLabel(LABEL_ACCOUNT_NAME));
 			
 			gridPanel.add(txtAccountname);
 			txtAccountname.setColumns(10);
-			txtAccountname.addKeyListener(bl.cycleFocus());
-			txtAccountname.addKeyListener(bl.escapeListener());
+			txtAccountname.addKeyListener(bl.enterListener);
+			txtAccountname.addKeyListener(bl.escapeListener);
 		}
 		
 		{
-			JLabel lblIssuer = new JLabel(LABEL_ISSUER);
-			gridPanel.add(lblIssuer);
+			gridPanel.add(new JLabel(LABEL_ISSUER));
 			
 			gridPanel.add(txtIssuer);
 			txtIssuer.setColumns(10);
-			txtIssuer.addKeyListener(bl.cycleFocus());
-			txtIssuer.addKeyListener(bl.escapeListener());
+			txtIssuer.addKeyListener(bl.enterListener);
+			txtIssuer.addKeyListener(bl.escapeListener);
 		}
 		
 		{
-			final var lblSecretKey = new JLabel(LABEL_SECRET_KEY);
-			gridPanel.add(lblSecretKey, BorderLayout.CENTER);
+			gridPanel.add(new JLabel(LABEL_SECRET_KEY), BorderLayout.CENTER);
 			
 			gridPanel.add(txtSecretkey);
 			txtSecretkey.setColumns(10);
-			txtSecretkey.addKeyListener(bl.cycleFocus());
-			txtSecretkey.addKeyListener(bl.escapeListener());
+			txtSecretkey.addKeyListener(bl.enterListener);
+			txtSecretkey.addKeyListener(bl.escapeListener);
 		}
 		
 		{
 			gridPanel.add(new JLabel(LABEL_PASSWORD_INTERVAL));
-			gridPanel.add(spinnerTimeFrame);
-			spinnerTimeFrame.addKeyListener(bl.cycleFocus());
-			spinnerTimeFrame.addKeyListener(bl.escapeListener());
 			
-			gridPanel.add(new JLabel(LABEL_PASSWORD_LENGTH));
-			gridPanel.add(spinnerTotpLength);
-			spinnerTotpLength.addKeyListener(bl.cycleFocus());
-			spinnerTotpLength.addKeyListener(bl.escapeListener());
+			gridPanel.add(spinnerTimeFrame);
+			if (spinnerTimeFrame.getEditor() instanceof DefaultEditor editor)
+			{
+				editor.getTextField().addKeyListener(bl.enterListener);
+				editor.getTextField().addKeyListener(bl.escapeListener);
+			}
 		}
 		
 		{
-			JLabel lblCategory = new JLabel(LABEL_CATEGORY);
-			gridPanel.add(lblCategory);
+			gridPanel.add(new JLabel(LABEL_PASSWORD_LENGTH));
+			
+			gridPanel.add(spinnerTotpLength);
+			if (spinnerTotpLength.getEditor() instanceof DefaultEditor editor)
+			{
+				editor.getTextField().addKeyListener(bl.enterListener);
+				editor.getTextField().addKeyListener(bl.escapeListener);
+			}
+		}
+		
+		{
+			gridPanel.add(new JLabel(LABEL_CATEGORY));
 			
 			comboBoxCategory = new JComboBox<>(TinyTotp.config.categories.toArray(TotpCategory[]::new));
 			comboBoxCategory.setRenderer(new CategoryRenderer());
 			gridPanel.add(comboBoxCategory);
+			comboBoxCategory.addKeyListener(bl.categoryEscapeListener);
+			comboBoxCategory.addPopupMenuListener(bl.categoryPopupListener);
+			comboBoxCategory.addKeyListener(bl.categoryEnterListener);
 		}
 		
 		JPanel panel = new JPanel();
 		verticalBox.add(panel);
 		
+		panel.add(lblIcon);
 		lblIcon.setIcon(Assets.MISSING_ICON);
 		lblIcon.addMouseListener(bl.iconClickListener());
 		lblIcon.setToolTipText(TOOLTIP_ADDKEY_IMPORT_ICON);
-		panel.add(lblIcon);
 		
 		verticalBox.add(Box.createVerticalGlue());
 		
 		{
 			final var applyAbort = new ApplyAbortPanel(BUTTON_ABORT, bl::abort, BUTTON_APPLY, bl::apply);
-			add(applyAbort, BorderLayout.SOUTH);
+			getContentPane().add(applyAbort, BorderLayout.SOUTH);
+			btnApply = applyAbort.btnButton2;
 			
-			applyAbort.btnButton1.addKeyListener(bl.escapeListener());
-			applyAbort.btnButton2.addKeyListener(bl.escapeListener());
+			applyAbort.btnButton1.addKeyListener(bl.escapeListener);
+			applyAbort.btnButton2.addKeyListener(bl.escapeListener);
 		}
 	}
 }

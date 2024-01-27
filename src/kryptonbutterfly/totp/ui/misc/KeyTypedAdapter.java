@@ -19,7 +19,7 @@ public class KeyTypedAdapter extends KeyAdapter
 	@Override
 	public void keyTyped(KeyEvent e)
 	{
-		if (e.getKeyChar() == key)
+		if (!e.isConsumed() && e.getKeyChar() == key)
 		{
 			e.consume();
 			action.accept(e.getComponent());
