@@ -13,8 +13,11 @@ import java.util.Arrays;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 
 import kryptonbutterfly.monads.opt.Opt;
 import kryptonbutterfly.os.BaseDirectory;
@@ -29,6 +32,7 @@ import kryptonbutterfly.totp.ui.main.MainGui;
 import kryptonbutterfly.totp.ui.passwd.PasswdGui;
 import kryptonbutterfly.util.swing.ObservableGui;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
+import kryptonbutterfly.util.swing.state.PersistableValue;
 import lombok.SneakyThrows;
 
 public class TinyTotp implements TotpConstants
@@ -139,12 +143,24 @@ public class TinyTotp implements TotpConstants
 	
 	private static Gson createGson()
 	{
-		final var builder = new GsonBuilder();
-		builder.setPrettyPrinting();
-		builder.excludeFieldsWithoutExposeAnnotation();
-		builder.registerTypeAdapter(Color.class, new ColorAdapter());
-		
-		return builder.create();
+		return new GsonBuilder()
+			.setPrettyPrinting()
+			.registerTypeAdapter(Color.class, new ColorAdapter())
+			.setExclusionStrategies(new ExclusionStrategy()
+			{
+				@Override
+				public boolean shouldSkipField(FieldAttributes f)
+				{
+					return f.getAnnotation(PersistableValue.class) == null && f.getAnnotation(Expose.class) == null;
+				}
+				
+				@Override
+				public boolean shouldSkipClass(Class<?> clazz)
+				{
+					return false;
+				}
+			})
+			.create();
 	}
 	
 	private static final void backgroundInit()

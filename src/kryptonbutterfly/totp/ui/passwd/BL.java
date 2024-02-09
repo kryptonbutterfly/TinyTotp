@@ -8,17 +8,17 @@ import javax.swing.JOptionPane;
 
 import kryptonbutterfly.monads.opt.Opt;
 import kryptonbutterfly.totp.TinyTotp;
-import kryptonbutterfly.totp.prefs.GuiPrefs;
 import kryptonbutterfly.totp.ui.misc.KeyTypedAdapter;
 import kryptonbutterfly.util.swing.Logic;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent.Result;
+import kryptonbutterfly.util.swing.state.WindowState;
 
-final class BL extends Logic<PasswdGui, GuiPrefs>
+final class BL extends Logic<PasswdGui, WindowState>
 {
-	private final GuiPrefs guiPrefs;
+	private final WindowState guiPrefs;
 	
-	BL(PasswdGui gui, GuiPrefs prefs)
+	BL(PasswdGui gui, WindowState prefs)
 	{
 		super(gui);
 		this.guiPrefs = prefs;

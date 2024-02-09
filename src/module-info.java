@@ -5,7 +5,7 @@ module DesktopTOTP
 	requires transitive java.desktop;
 	requires kryptonbutterfly.mathUtils;
 	requires kryptonbutterfly.Monads;
-	requires kryptonbutterfly.SwingUtils;
+	requires transitive kryptonbutterfly.SwingUtils;
 	requires kryptonbutterfly.System;
 	requires kryptonbutterfly.ReflectionUtils;
 	requires kryptonbutterfly.Cache;

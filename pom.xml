@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kryptonbutterfly</groupId>
 	<artifactId>tiny_totp</artifactId>
-	<version>3.2.0</version>
+	<version>4.0.0</version>
 	<name>TinyTOTP</name>
 	<description>A TOTP client</description>
 
@@ -83,7 +83,7 @@
 		<dependency>
 			<groupId>kryptonbutterfly</groupId>
 			<artifactId>tiny_swing_utils</artifactId>
-			<version>3.0.0</version>
+			<version>3.1.0</version>
 		</dependency>
 		<!-- https://github.com/kryptonbutterfly/maven-repo/packages/2044808 -->
 		<dependency>
