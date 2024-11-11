@@ -3,3 +3,4 @@ Priority: optional
 Maintainer: tinycodecrank
 Description: Totp Client
 Architecture: all
+Depends: openjdk-21-jre | openjdk-21-jdk
