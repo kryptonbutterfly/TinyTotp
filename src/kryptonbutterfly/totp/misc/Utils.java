@@ -20,6 +20,9 @@ import kryptonbutterfly.monads.opt.Opt;
 
 public class Utils
 {
+	private static final int	ALPHA_MASK	= 0xFF00_0000;
+	private static final int	RGB_MASK	= ~ALPHA_MASK;
+	
 	private Utils()
 	{}
 	
@@ -56,15 +59,9 @@ public class Utils
 				return rawImage;
 			factor = 1F * maxWidth / rawImage.getWidth();
 		}
-		return scale(factor, rawImage);
-	}
-	
-	private static BufferedImage scale(float factor, BufferedImage rawImage)
-	{
-		final var transform = new AffineTransform();
-		transform.scale(factor, factor);
-		return new AffineTransformOp(transform, AffineTransformOp.TYPE_BICUBIC)
-			.filter(rawImage, null);
+		return new AffineTransformOp(
+			new AffineTransform(new float[] { factor, 0F, 0F, factor }),
+			AffineTransformOp.TYPE_BICUBIC).filter(rawImage, null);
 	}
 	
 	public static final BufferedImage mirror(BufferedImage src)
@@ -106,5 +103,47 @@ public class Utils
 						image.setRGB(x, y, colorConverter.apply(matrix.get(x, y)));
 				return image;
 			});
+	}
+	
+	public static final BufferedImage inverse(BufferedImage original)
+	{
+		final var	rangeY	= range(original.getHeight());
+		final var	rangeX	= range(original.getWidth());
+		final var	result	= new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		for (final int y : rangeY)
+			for (final int x : rangeX)
+				result.setRGB(x, y, original.getRGB(x, y) ^ 0x00FF_FFFF);
+		return result;
+	}
+	
+	public static final BufferedImage fromMask(BufferedImage mask, Color color)
+	{
+		final int	colorInt	= color.getRGB() & RGB_MASK;
+		final var	yRange		= range(mask.getHeight());
+		final var	xRange		= range(mask.getWidth());
+		final var	image		= new BufferedImage(xRange.stop, yRange.stop, BufferedImage.TYPE_INT_ARGB);
+		for (final int y : yRange)
+			for (final int x : xRange)
+			{
+				final int brightness = mask.getRGB(x, y) & 0xFF;
+				image.setRGB(x, y, colorInt | brightness << 24);
+			}
+		return image;
+	}
+	
+	public static final BufferedImage createFromMask(BufferedImage mask, Color color)
+	{
+		final int colorInt = color.getRGB() & RGB_MASK;
+		
+		final int type = mask.getType() != 0 ? mask.getType() : BufferedImage.TYPE_INT_ARGB;
+		
+		final var	yRange	= range(mask.getWidth());
+		final var	xRange	= range(mask.getHeight());
+		
+		final var result = new BufferedImage(xRange.stop, yRange.stop, type);
+		for (final int y : yRange)
+			for (final int x : xRange)
+				result.setRGB(x, y, mask.getRGB(x, y) & ALPHA_MASK | colorInt);
+		return result;
 	}
 }

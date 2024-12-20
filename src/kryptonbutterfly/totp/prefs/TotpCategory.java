@@ -15,6 +15,16 @@ import kryptonbutterfly.totp.misc.HtmlColors;
 
 public final class TotpCategory implements Cloneable
 {
+	private static final ImageIcon ALPHA_24x24;
+	static
+	{
+		final var	rX	= range(Assets.MARKER_MASK.getWidth());
+		final var	rY	= range(Assets.MARKER_MASK.getHeight());
+		final var	img	= new BufferedImage(rX.stop, rY.stop, BufferedImage.TYPE_INT_ARGB);
+		rY.forEach(y -> rX.forEach(x -> img.setRGB(x, y, 0)));
+		ALPHA_24x24 = new ImageIcon(img);
+	}
+	
 	@SuppressWarnings("removal")
 	private static final LRUCache<Color, ImageIcon> iconCache = new LRUCache<>(TotpCategory::generateColoredIcon, 0xFF);
 	
@@ -28,7 +38,7 @@ public final class TotpCategory implements Cloneable
 	public Color color = HtmlColors.LightGreen.color();
 	
 	private transient Color		last	= null;
-	private transient ImageIcon	icon	= Assets.ALPHA_24x24;
+	private transient ImageIcon	icon	= ALPHA_24x24;
 	
 	public ImageIcon getIcon()
 	{
