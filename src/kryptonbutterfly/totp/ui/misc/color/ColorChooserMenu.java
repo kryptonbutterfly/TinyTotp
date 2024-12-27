@@ -56,9 +56,11 @@ public final class ColorChooserMenu extends ObservableDialog<BL, Color, Color>
 	private void init(BL bl)
 	{
 		addWindowFocusListener(bl.focusListener());
+		
 		btnPickColor.addActionListener(bl::pickColor);
-		btnPickColor.addKeyListener(bl.escapeKeyListener());
 		htmlColor.addItemListener(bl::selectColor);
-		htmlColor.addKeyListener(bl.escapeKeyListener());
+		
+		btnPickColor.addKeyListener(bl.escapeKeyListener);
+		htmlColor.addKeyListener(bl.escapeKeyListener);
 	}
 }

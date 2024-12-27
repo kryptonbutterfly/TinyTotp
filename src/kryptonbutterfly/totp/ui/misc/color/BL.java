@@ -23,8 +23,8 @@ final class BL extends Logic<ColorChooserMenu, Color>
 	private final Color	currentColor;
 	private boolean		isFocusListenerActive	= true;
 	
-	private final KeyListener escapeKeyListener = new KeyTypedAdapter(
-		c -> gui.if_(gui -> gui.dispose()),
+	final KeyListener escapeKeyListener = new KeyTypedAdapter(
+		c -> gui.if_(ColorChooserMenu::dispose),
 		KeyEvent.VK_ESCAPE);
 	
 	BL(ColorChooserMenu gui, Color currentColor)
@@ -41,14 +41,9 @@ final class BL extends Logic<ColorChooserMenu, Color>
 			public void windowLostFocus(WindowEvent e)
 			{
 				if (isFocusListenerActive)
-					gui.if_(gui -> gui.dispose());
+					gui.if_(ColorChooserMenu::dispose);
 			}
 		};
-	}
-	
-	KeyListener escapeKeyListener()
-	{
-		return escapeKeyListener;
 	}
 	
 	void pickColor(ActionEvent ae)

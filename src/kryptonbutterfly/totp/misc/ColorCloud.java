@@ -38,10 +38,10 @@ final class ColorCloud<Col extends NamedColor, Vec extends IVecI<Vec>>
 		Col	closest		= null;
 		int	closestDist	= Integer.MAX_VALUE;
 		
+		final val vec = toVec.apply(color);
 		for (val c : colors)
 		{
-			val			vec		= toVec.apply(color);
-			final int	dist	= c.vec().sub(vec).lengthSQ();
+			final int dist = c.vec().sub(vec).lengthSQ();
 			if (dist < closestDist)
 			{
 				closest		= c.color();
