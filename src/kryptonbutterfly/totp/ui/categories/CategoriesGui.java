@@ -17,7 +17,6 @@ import javax.swing.ScrollPaneConstants;
 
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
-import kryptonbutterfly.totp.misc.HtmlColors;
 import kryptonbutterfly.util.swing.ApplyAbortPanel;
 import kryptonbutterfly.util.swing.ObservableDialog;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
@@ -75,7 +74,6 @@ public final class CategoriesGui extends ObservableDialog<BL, HashMap<String, St
 		final var btnAdd = new JButton(BUTTON_ADD);
 		bottomPanel.add(btnAdd, BorderLayout.EAST);
 		btnAdd.addActionListener(bl::add);
-		btnAdd.setForeground(HtmlColors.LightGreen.color());
 		btnAdd.addKeyListener(bl.escapeListener());
 		
 		final var applyAbort = new ApplyAbortPanel(BUTTON_ABORT, bl::abort, BUTTON_APPLY, bl::apply);

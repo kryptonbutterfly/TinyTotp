@@ -16,7 +16,6 @@ import javax.swing.ScrollPaneConstants;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.misc.Assets;
-import kryptonbutterfly.totp.misc.HtmlColors;
 import kryptonbutterfly.util.swing.ObservableGui;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 import lombok.val;
@@ -48,7 +47,6 @@ public final class MainGui extends ObservableGui<BL, Void, char[]> implements To
 		
 		JMenu addMenu = new JMenu(BUTTON_ADD);
 		menuBar.add(addMenu);
-		addMenu.setForeground(HtmlColors.LightGreen.color());
 		addMenu.setToolTipText("Add new Totp key.");
 		
 		JMenuItem addQrEntry = new JMenuItem(Assets.getQr16ByBackground(getBackground()));
