@@ -12,7 +12,7 @@ import kryptonbutterfly.totp.misc.HtmlColors;
 import kryptonbutterfly.totp.prefs.TotpCategory;
 
 @SuppressWarnings("serial")
-public class HtmlColorRenderer extends JLabel implements ListCellRenderer<HtmlColors>
+final class HtmlColorRenderer extends JLabel implements ListCellRenderer<HtmlColors>
 {
 	private final Sum2<HtmlColors, Color> currentColor;
 	
@@ -33,8 +33,7 @@ public class HtmlColorRenderer extends JLabel implements ListCellRenderer<HtmlCo
 	{
 		if (value != null)
 			return setHtmlColor(value);
-		return currentColor.fold(this::setHtmlColor, color ->
-		{
+		return currentColor.fold(this::setHtmlColor, color -> {
 			final var text = HtmlColors.getClosest(color)
 				.map(c -> "~ " + c.name())
 				.get(() -> "Custom Color");

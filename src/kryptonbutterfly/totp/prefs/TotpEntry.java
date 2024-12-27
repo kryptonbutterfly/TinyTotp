@@ -1,5 +1,6 @@
 package kryptonbutterfly.totp.prefs;
 
+import java.awt.Color;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Objects;
@@ -40,6 +41,12 @@ public class TotpEntry implements TotpConstants
 	
 	@Expose
 	public String icon = null;
+	
+	@Expose
+	public String userIcon = null;
+	
+	@Expose
+	public Color iconBG = null;
 	
 	@Expose
 	public String category = null;

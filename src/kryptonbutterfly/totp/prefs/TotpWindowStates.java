@@ -23,4 +23,10 @@ public final class TotpWindowStates
 	
 	@Expose
 	public WindowState qrExport = new WindowState(100, 100, 230, 280);
+	
+	@Expose
+	public WindowState setIcon = new WindowState(100, 100, 650, 450);
+	
+	@Expose
+	public WindowState chooseIcon = new WindowState(100, 100, 650, 450);
 }

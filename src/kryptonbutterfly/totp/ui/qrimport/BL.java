@@ -81,37 +81,37 @@ final class BL extends Logic<QrGui, Void>
 			chooser.setMultiSelectionEnabled(false);
 			switch (chooser.showOpenDialog(gui))
 			{
-			case JFileChooser.APPROVE_OPTION -> {
-				try
-				{
-					final var image = ImageIO.read(chooser.getSelectedFile());
+				case JFileChooser.APPROVE_OPTION -> {
 					try
 					{
-						gui.dispose(new GuiCloseEvent<>(Result.SUCCESS, Opt.empty(), decode(image)));
+						final var image = ImageIO.read(chooser.getSelectedFile());
+						try
+						{
+							gui.dispose(new GuiCloseEvent<>(Result.SUCCESS, Opt.empty(), decode(image)));
+						}
+						catch (NotFoundException e)
+						{
+							JOptionPane.showMessageDialog(
+								gui,
+								"Could not detect a qr code in the selected image.",
+								"No qr code found",
+								JOptionPane.INFORMATION_MESSAGE);
+						}
+						catch (ChecksumException e)
+						{
+							JOptionPane.showMessageDialog(gui, e, "Invalid qr code", JOptionPane.ERROR_MESSAGE);
+						}
+						catch (FormatException e)
+						{
+							JOptionPane.showMessageDialog(gui, e, "Invalid qr code format", JOptionPane.ERROR_MESSAGE);
+						}
 					}
-					catch (NotFoundException e)
+					catch (IOException e)
 					{
-						JOptionPane.showMessageDialog(
-							gui,
-							"Could not detect a qr code in the selected image.",
-							"No qr code found",
-							JOptionPane.INFORMATION_MESSAGE);
-					}
-					catch (ChecksumException e)
-					{
-						JOptionPane.showMessageDialog(gui, e, "Invalid qr code", JOptionPane.ERROR_MESSAGE);
-					}
-					catch (FormatException e)
-					{
-						JOptionPane.showMessageDialog(gui, e, "Invalid qr code format", JOptionPane.ERROR_MESSAGE);
+						e.printStackTrace();
 					}
 				}
-				catch (IOException e)
-				{
-					e.printStackTrace();
-				}
-			}
-			default -> {}
+				default -> {}
 			}
 		});
 	}

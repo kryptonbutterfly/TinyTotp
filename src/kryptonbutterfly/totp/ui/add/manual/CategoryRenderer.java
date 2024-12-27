@@ -9,7 +9,7 @@ import javax.swing.ListCellRenderer;
 import kryptonbutterfly.totp.prefs.TotpCategory;
 
 @SuppressWarnings("serial")
-public class CategoryRenderer extends JLabel implements ListCellRenderer<TotpCategory>
+final class CategoryRenderer extends JLabel implements ListCellRenderer<TotpCategory>
 {
 	@Override
 	public Component getListCellRendererComponent(

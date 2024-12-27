@@ -24,13 +24,13 @@ import kryptonbutterfly.totp.prefs.TotpCategory;
 import kryptonbutterfly.totp.ui.misc.color.ColorChooserMenu;
 
 @SuppressWarnings("serial")
-public final class CategoryComponent extends JPanel implements TotpConstants
+final class CategoryComponent extends JPanel implements TotpConstants
 {
 	private static final Dimension max = new Dimension(Integer.MAX_VALUE, CATEGORY_MAX_HEIGHT);
 	
 	private final TotpCategory category;
 	
-	final JLabel					lblIcon		= new JLabel();
+	private final JLabel			lblIcon		= new JLabel();
 	final JTextField				txtCategory	= new JTextField();
 	private final JButton			btnDelete	= new JButton(Assets.getDeleteByBackground(getBackground()));
 	private final RemoveListener	removeListener;
@@ -111,7 +111,7 @@ public final class CategoryComponent extends JPanel implements TotpConstants
 	}
 	
 	@FunctionalInterface
-	public static interface RemoveListener
+	static interface RemoveListener
 	{
 		void remove(CategoryComponent element);
 	}

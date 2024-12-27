@@ -3,9 +3,6 @@ package kryptonbutterfly.totp.ui.add.manual;
 import java.awt.Color;
 import java.awt.Dialog.ModalityType;
 import java.awt.EventQueue;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -13,12 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.List;
-import java.util.function.Function;
 
-import javax.swing.ImageIcon;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
@@ -29,22 +21,20 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import kryptonbutterfly.functions.void_.Consumer_;
 import kryptonbutterfly.monads.opt.Opt;
 import kryptonbutterfly.totp.TinyTotp;
-import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.misc.UrlQueryParams;
 import kryptonbutterfly.totp.misc.Utils;
 import kryptonbutterfly.totp.prefs.TotpCategory;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.totp.ui.misc.KeyTypedAdapter;
 import kryptonbutterfly.totp.ui.qrexport.QrExportGui;
+import kryptonbutterfly.totp.ui.seticon.IconData;
+import kryptonbutterfly.totp.ui.seticon.SetIcon;
 import kryptonbutterfly.util.swing.Logic;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent.Result;
-import lombok.SneakyThrows;
 
 final class BL extends Logic<AddKey, char[]>
 {
-	private static final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-	
 	private char[]	password;
 	private long	categoryPopupLastVisible	= 0L;
 	
@@ -102,54 +92,35 @@ final class BL extends Logic<AddKey, char[]>
 	{
 		return new MouseAdapter()
 		{
-			@SuppressWarnings("unchecked")
 			@Override
-			@SneakyThrows
 			public void mouseClicked(MouseEvent e)
 			{
-				if (getDataIfAvailable(DataFlavor.imageFlavor, img -> setIcon((BufferedImage) img), false))
-					return;
-				if (getDataIfAvailable(DataFlavor.javaFileListFlavor, f -> setIconFromFile((List<File>) f), false))
-					return;
-				getDataIfAvailable(DataFlavor.stringFlavor, string -> setIconFromUrl((String) string), false);
+				gui.if_(
+					gui ->
+					{
+						final var iconData = new IconData(
+							gui.iconName,
+							gui.comboIcon.getIssuerIcon(),
+							gui.userIconName,
+							gui.userIconName == null ? null : gui.comboIcon.getUserIcon(),
+							gui.comboIcon.getIconBG());
+						
+						EventQueue.invokeLater(
+							() -> new SetIcon(
+								gui,
+								ModalityType.APPLICATION_MODAL,
+								iconData,
+								gce -> gce.getReturnValue().if_(data ->
+								{
+									gui.comboIcon.setIconBG(data.bgColor());
+									gui.iconName = data.issuerName();
+									gui.comboIcon.setIssuerIcon(data.issuerImage());
+									gui.userIconName = data.userName();
+									gui.comboIcon.setUserIcon(data.userImage());
+								})));
+					});
 			}
 		};
-	}
-	
-	@SneakyThrows
-	private <Res> Res getDataIfAvailable(DataFlavor flavor, Function<Object, Res> action, Res fallback)
-	{
-		if (clipboard.isDataFlavorAvailable(flavor))
-			return action.apply(clipboard.getData(flavor));
-		return fallback;
-	}
-	
-	@SneakyThrows
-	private boolean setIconFromFile(List<File> files)
-	{
-		return setIconFromUrl(files.get(0).toURI().toURL().toString());
-	}
-	
-	private boolean setIconFromUrl(String address)
-	{
-		final var img = TinyTotp.imageCache.getImage(address);
-		return gui.map(gui -> img.if_(image -> setIcon(gui, address, image))).isPresent();
-	}
-	
-	private boolean setIcon(BufferedImage img)
-	{
-		return gui.flatmap(
-			gui -> TinyTotp.imageCache.addImage(img)
-				.if_(name -> setIcon(gui, name, img)))
-			.isPresent();
-	}
-	
-	private void setIcon(AddKey gui, String name, BufferedImage img)
-	{
-		final var icon = new ImageIcon(Utils.scaleDownToMax(img, TotpConstants.ICON_WIDTH));
-		gui.iconName = name;
-		gui.lblIcon.setIcon(icon);
-		gui.lblIcon.setToolTipText(name);
 	}
 	
 	void exportQR(ActionEvent ae)
@@ -158,7 +129,7 @@ final class BL extends Logic<AddKey, char[]>
 			final var	account		= gui.txtAccountname.getText();
 			final var	secretKey	= gui.txtSecretkey.getText();
 			final var	issuer		= gui.txtIssuer.getText();
-			final var	url			= UrlQueryParams.toUrl(account, secretKey, issuer);
+			final var	url			= new UrlQueryParams(issuer, secretKey, account).toUrl();
 			Utils.generateQr(url, Color.BLACK, Color.WHITE, 200, ErrorCorrectionLevel.H)
 				.if_(
 					qr -> EventQueue
@@ -184,7 +155,9 @@ final class BL extends Logic<AddKey, char[]>
 				totpEntry.category = null;
 			
 			totpEntry.encryptAndSetSecret(new Base32().decode(gui.txtSecretkey.getText()), password);
-			totpEntry.icon = gui.iconName;
+			totpEntry.icon		= gui.iconName;
+			totpEntry.userIcon	= gui.userIconName;
+			totpEntry.iconBG	= gui.comboIcon.getIconBG();
 			
 			totpEntry.totpLength			= (int) gui.spinnerTotpLength.getValue();
 			totpEntry.totpValidForSeconds	= (int) gui.spinnerTimeFrame.getValue();

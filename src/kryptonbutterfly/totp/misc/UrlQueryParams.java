@@ -16,7 +16,7 @@ public record UrlQueryParams(String issuer, String secretKey, String account)
 		return toUrl(account, secretKey, issuer);
 	}
 	
-	public static final String toUrl(String account, String secretKey, String issuer)
+	private static final String toUrl(String account, String secretKey, String issuer)
 	{
 		return "otpauth://totp/" + account + KEY_SECRET + secretKey + KEY_ISSUER + issuer;
 	}

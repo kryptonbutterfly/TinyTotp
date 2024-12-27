@@ -1,6 +1,7 @@
 package kryptonbutterfly.totp.ui.main;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -10,12 +11,9 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
-import java.util.function.UnaryOperator;
 
 import javax.swing.Box;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -24,14 +22,13 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingUtilities;
 
-import kryptonbutterfly.math.vector._int.Vec2i;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.misc.Assets;
 import kryptonbutterfly.totp.misc.TotpGenerator;
-import kryptonbutterfly.totp.misc.Utils;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.totp.ui.add.manual.AddKey;
+import kryptonbutterfly.totp.ui.components.ComboIcon;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 
 @SuppressWarnings("serial")
@@ -52,12 +49,13 @@ public final class TotpComponent extends JPanel implements TotpConstants
 	private final JPanel	categoryPanel	= new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 	private final JButton	buttonEdit		= new JButton(Assets.getEditByBackground(getBackground()));
 	private final JButton	buttonRemove	= new JButton(Assets.getDeleteByBackground(getBackground()));
-	private final JLabel	iconLabel		= new JLabel();
-	private final JButton	totp			= new JButton();
-	private final JLabel	userName		= new JLabel();
-	private final JLabel	issuerName		= new JLabel();
+	// private final JLabel iconLabel = new JLabel();
+	private final ComboIcon	comboIcon	= new ComboIcon();
+	private final JButton	totp		= new JButton();
+	private final JLabel	userName	= new JLabel();
+	private final JLabel	issuerName	= new JLabel();
 	
-	public TotpComponent(TotpEntry entry, RemoveListener removeListener, char[] password)
+	TotpComponent(TotpEntry entry, RemoveListener removeListener, char[] password)
 	{
 		this.entry			= entry;
 		this.removeListener	= removeListener;
@@ -76,7 +74,7 @@ public final class TotpComponent extends JPanel implements TotpConstants
 		
 		final var contentPanel = new JPanel(new BorderLayout(5, 5));
 		add(contentPanel, BorderLayout.CENTER);
-		contentPanel.add(iconLabel, BorderLayout.WEST);
+		contentPanel.add(comboIcon, BorderLayout.WEST);
 		
 		final var descriptionPanel = Box.createVerticalBox();
 		contentPanel.add(descriptionPanel, BorderLayout.CENTER);
@@ -96,7 +94,7 @@ public final class TotpComponent extends JPanel implements TotpConstants
 		init(entry, password);
 	}
 	
-	public void updateCategory(HashMap<String, String> renameMap)
+	void updateCategory(HashMap<String, String> renameMap)
 	{
 		final var newName = renameMap.getOrDefault(entry.category, entry.category);
 		TinyTotp.config.getCategoryByName(newName).if_(cat -> {
@@ -138,19 +136,23 @@ public final class TotpComponent extends JPanel implements TotpConstants
 		return timeFrame * 1000 * entry.totpValidForSeconds;
 	}
 	
-	public TotpEntry entry()
+	TotpEntry entry()
 	{
 		return entry;
 	}
 	
-	private void setIcon(String iconName)
+	private void setIcon(String iconName, String userIconName, Color iconBG)
 	{
-		this.entry.icon = iconName;
-		final var icon = TinyTotp.imageCache.getImage(iconName)
-			.map(this.ensureScale(ICON_WIDTH))
-			.map(ImageIcon::new)
-			.get(() -> Assets.MISSING_ICON);
-		iconLabel.setIcon(icon);
+		this.entry.icon		= iconName;
+		this.entry.userIcon	= userIconName;
+		this.entry.iconBG	= iconBG;
+		final var	icon		= TinyTotp.imageCache.getImage(iconName)
+			.get(() -> Assets.MISSING_ICON_IMG);
+		final var	userIcon	= TinyTotp.imageCache.getImage(userIconName)
+			.get(() -> null);
+		this.comboIcon.setIssuerIcon(icon);
+		this.comboIcon.setUserIcon(userIcon);
+		this.comboIcon.setIconBG(iconBG);
 	}
 	
 	private ActionListener edit(char[] password)
@@ -192,7 +194,7 @@ public final class TotpComponent extends JPanel implements TotpConstants
 		this.entry = entry;
 		this.userName.setText(entry.accountName);
 		this.issuerName.setText(entry.issuerName);
-		setIcon(entry.icon);
+		setIcon(entry.icon, entry.userIcon, entry.iconBG);
 		TinyTotp.config.getCategoryByName(entry.category)
 			.if_(c ->
 			{
@@ -200,11 +202,6 @@ public final class TotpComponent extends JPanel implements TotpConstants
 				categoryPanel.setToolTipText(c.name);
 			});
 		update(System.currentTimeMillis(), password);
-	}
-	
-	private UnaryOperator<BufferedImage> ensureScale(Vec2i maxSize)
-	{
-		return rawImage -> Utils.scaleDownToMax(rawImage, maxSize);
 	}
 	
 	private void copyTotp(ActionEvent ae)
@@ -217,7 +214,7 @@ public final class TotpComponent extends JPanel implements TotpConstants
 	}
 	
 	@FunctionalInterface
-	public static interface RemoveListener
+	static interface RemoveListener
 	{
 		void remove(TotpComponent element);
 	}

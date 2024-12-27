@@ -1,7 +1,6 @@
 package kryptonbutterfly.totp.misc;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
@@ -13,7 +12,7 @@ import lombok.SneakyThrows;
 public class Assets
 {
 	private static final Color	DARK	= new Color(0x505050);
-	private static final Color	LIGHT	= new Color(0xDD_DD_DD);
+	private static final Color	LIGHT	= new Color(0xDDDDDD);
 	
 	@SneakyThrows
 	private static BufferedImage loadImage(String image)
@@ -33,22 +32,15 @@ public class Assets
 		return new ImageIcon(loadImage(image));
 	}
 	
-	private static final ImageIcon scaleIcon(Image img, int size, int hints)
-	{
-		return new ImageIcon(img.getScaledInstance(size, size, hints));
-	}
-	
 	public static final BufferedImage MARKER_MASK = loadImage("/assets/marker-mask.png");
 	
-	public static final ImageIcon MISSING_ICON = scaleIcon(
-		loadImage("/assets/missingIcon.png"),
-		64,
-		Image.SCALE_SMOOTH);
+	public static final BufferedImage MISSING_ICON_IMG = loadImage("/assets/missingIcon.png");
 	
-	public static final ImageIcon	QR_ICON_LIGHT_16, QR_ICON_DARK_16;
-	public static final ImageIcon	EDIT_LIGHT, EDIT_DARK;
-	public static final ImageIcon	DELETE_LIGHT, DELETE_DARK;
-	public static final ImageIcon	CAMERA_LIGHT, CAMERA_DARK;
+	private static final ImageIcon	QR_ICON_LIGHT_16, QR_ICON_DARK_16;
+	private static final ImageIcon	EDIT_LIGHT, EDIT_DARK;
+	private static final ImageIcon	DELETE_LIGHT, DELETE_DARK;
+	private static final ImageIcon	CAMERA_LIGHT, CAMERA_DARK;
+	private static final ImageIcon	CLIPBOARD_DARK, CLIPBOARD_LIGHT;
 	static
 	{
 		final var qr_mask = loadImage("/assets/qr-mask.png");
@@ -66,6 +58,10 @@ public class Assets
 		final var camera_mask = loadImage("/assets/camera-mask.png");
 		CAMERA_DARK		= new ImageIcon(Utils.fromMask(camera_mask, DARK));
 		CAMERA_LIGHT	= new ImageIcon(Utils.fromMask(camera_mask, LIGHT));
+		
+		final var clipboard_mask = loadImage("/assets/clipboard-mask.png");
+		CLIPBOARD_DARK	= new ImageIcon(Utils.fromMask(clipboard_mask, DARK));
+		CLIPBOARD_LIGHT	= new ImageIcon(Utils.fromMask(clipboard_mask, LIGHT));
 	}
 	
 	public static final ImageIcon COLOR_PICKER = loadIcon("/assets/color-picker.png");
@@ -90,5 +86,10 @@ public class Assets
 	public static ImageIcon getDeleteByBackground(Color bgColor)
 	{
 		return Utils.getContrasting(bgColor, DELETE_LIGHT, DELETE_DARK);
+	}
+	
+	public static ImageIcon getClipboardByBackground(Color bgColor)
+	{
+		return Utils.getContrasting(bgColor, CLIPBOARD_LIGHT, CLIPBOARD_DARK);
 	}
 }

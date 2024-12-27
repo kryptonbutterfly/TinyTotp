@@ -8,7 +8,7 @@ import kryptonbutterfly.math.vector._int.IVecI;
 import kryptonbutterfly.monads.opt.Opt;
 import lombok.val;
 
-public final class ColorCloud<Col extends NamedColor, Vec extends IVecI<Vec>>
+final class ColorCloud<Col extends NamedColor, Vec extends IVecI<Vec>>
 {
 	private final Function<Color, Vec> toVec;
 	
@@ -27,7 +27,7 @@ public final class ColorCloud<Col extends NamedColor, Vec extends IVecI<Vec>>
 		return hasDuplicates;
 	}
 	
-	public boolean addColor(Col color)
+	private boolean addColor(Col color)
 	{
 		val vec = toVec.apply(color.color());
 		return colors.add(new VectorizedColor<>(vec, color));

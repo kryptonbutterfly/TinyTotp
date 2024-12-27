@@ -24,16 +24,19 @@ class ColorAdapter extends TypeAdapter<Color>
 	@Override
 	public void write(JsonWriter out, Color value) throws IOException
 	{
-		out.beginObject()
-			.name(RED)
-			.value(value.getRed())
-			.name(GREEN)
-			.value(value.getGreen())
-			.name(BLUE)
-			.value(value.getBlue())
-			.name(ALPHA)
-			.value(value.getAlpha())
-			.endObject();
+		if (value == null)
+			out.nullValue();
+		else
+			out.beginObject()
+				.name(RED)
+				.value(value.getRed())
+				.name(GREEN)
+				.value(value.getGreen())
+				.name(BLUE)
+				.value(value.getBlue())
+				.name(ALPHA)
+				.value(value.getAlpha())
+				.endObject();
 	}
 	
 	@Override
@@ -55,19 +58,19 @@ class ColorAdapter extends TypeAdapter<Color>
 			if (token.equals(JsonToken.NAME))
 				switch (in.nextName())
 				{
-				case RED -> {
-					red			= in.nextInt();
-					fieldMask	|= RED_MASK;
-				}
-				case GREEN -> {
-					green		= in.nextInt();
-					fieldMask	|= GREEN_MASK;
-				}
-				case BLUE -> {
-					blue		= in.nextInt();
-					fieldMask	|= BLUE_MASK;
-				}
-				case ALPHA -> alpha = in.nextInt();
+					case RED -> {
+						red			= in.nextInt();
+						fieldMask	|= RED_MASK;
+					}
+					case GREEN -> {
+						green		= in.nextInt();
+						fieldMask	|= GREEN_MASK;
+					}
+					case BLUE -> {
+						blue		= in.nextInt();
+						fieldMask	|= BLUE_MASK;
+					}
+					case ALPHA -> alpha = in.nextInt();
 				}
 		}
 		

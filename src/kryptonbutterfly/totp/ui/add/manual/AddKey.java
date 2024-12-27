@@ -7,7 +7,6 @@ import java.awt.Window;
 import java.util.function.Consumer;
 
 import javax.swing.Box;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -25,6 +24,7 @@ import kryptonbutterfly.totp.misc.Assets;
 import kryptonbutterfly.totp.misc.UrlQueryParams;
 import kryptonbutterfly.totp.prefs.TotpCategory;
 import kryptonbutterfly.totp.prefs.TotpEntry;
+import kryptonbutterfly.totp.ui.components.ComboIcon;
 import kryptonbutterfly.util.swing.ApplyAbortPanel;
 import kryptonbutterfly.util.swing.ObservableDialog;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
@@ -32,17 +32,18 @@ import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 @SuppressWarnings("serial")
 public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implements TotpConstants
 {
-	final JButton			btnExport			= new JButton("export");
-	final JTextField		txtAccountname		= new JTextField();
-	final JTextField		txtSecretkey		= new JTextField();
-	final JTextField		txtIssuer			= new JTextField();
+	private final JButton	btnExport		= new JButton("export");
+	final JTextField		txtAccountname	= new JTextField();
+	final JTextField		txtSecretkey	= new JTextField();
+	final JTextField		txtIssuer		= new JTextField();
 	JComboBox<TotpCategory>	comboBoxCategory;
-	final JLabel			lblIcon				= new JLabel();
-	String					iconName			= null;
-	final JSpinner			spinnerTimeFrame	= new JSpinner(new SpinnerNumberModel(30, 0, 180, 5));
-	final JSpinner			spinnerTotpLength	= new JSpinner(new SpinnerNumberModel(6, 6, 10, 1));
 	
-	final JButton btnSecretKey = new JButton();
+	final ComboIcon	comboIcon		= new ComboIcon();
+	String			iconName		= null;
+	String			userIconName	= null;
+	
+	final JSpinner	spinnerTimeFrame	= new JSpinner(new SpinnerNumberModel(30, 0, 180, 5));
+	final JSpinner	spinnerTotpLength	= new JSpinner(new SpinnerNumberModel(6, 6, 10, 1));
 	
 	JButton btnApply;
 	
@@ -97,13 +98,13 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 			txtSecretkey.setText(new Base32().encodeAsString(original.decryptSecret(password)));
 			txtIssuer.setText(original.issuerName);
 			TinyTotp.config.getCategoryByName(original.category).if_(comboBoxCategory::setSelectedItem);
-			iconName = original.icon;
-			TinyTotp.imageCache.getImage(iconName).map(ImageIcon::new).if_(lblIcon::setIcon);
+			iconName		= original.icon;
+			userIconName	= original.userIcon;
+			TinyTotp.imageCache.getImage(iconName).if_(comboIcon::setIssuerIcon);
+			TinyTotp.imageCache.getImage(userIconName).if_(comboIcon::setUserIcon);
+			comboIcon.setIconBG(original.iconBG);
 			spinnerTimeFrame.setValue(original.totpValidForSeconds);
 			spinnerTotpLength.setValue(original.totpLength);
-			
-			if (original.icon != null && !original.icon.isBlank())
-				lblIcon.setToolTipText(original.icon);
 		}
 		setVisible(true);
 	}
@@ -194,10 +195,10 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		JPanel panel = new JPanel();
 		verticalBox.add(panel);
 		
-		panel.add(lblIcon);
-		lblIcon.setIcon(Assets.MISSING_ICON);
-		lblIcon.addMouseListener(bl.iconClickListener());
-		lblIcon.setToolTipText(TOOLTIP_ADDKEY_IMPORT_ICON);
+		panel.add(comboIcon);
+		comboIcon.setIssuerIcon(Assets.MISSING_ICON_IMG);
+		comboIcon.addMouseListener(bl.iconClickListener());
+		comboIcon.setToolTipText(TOOLTIP_ADDKEY_IMPORT_ICON);
 		
 		verticalBox.add(Box.createVerticalGlue());
 		

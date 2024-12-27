@@ -17,7 +17,7 @@ public final class ImageLuminanceSource extends LuminanceSource
 		this(image, image.getWidth(), image.getHeight());
 	}
 	
-	public ImageLuminanceSource(BufferedImage image, int width, int height)
+	private ImageLuminanceSource(BufferedImage image, int width, int height)
 	{
 		super(width, height);
 		if (image.getType() == BufferedImage.TYPE_BYTE_GRAY)

@@ -14,6 +14,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import kryptonbutterfly.functions.bool_.BoolToIntFunction;
+import kryptonbutterfly.math.utils.Max;
 import kryptonbutterfly.math.vector._int.Vec2i;
 import kryptonbutterfly.monads.failable.Failable;
 import kryptonbutterfly.monads.opt.Opt;
@@ -131,19 +132,15 @@ public class Utils
 		return image;
 	}
 	
-	public static final BufferedImage createFromMask(BufferedImage mask, Color color)
+	public static Vec2i max(Vec2i first, Vec2i... other)
 	{
-		final int colorInt = color.getRGB() & RGB_MASK;
-		
-		final int type = mask.getType() != 0 ? mask.getType() : BufferedImage.TYPE_INT_ARGB;
-		
-		final var	yRange	= range(mask.getWidth());
-		final var	xRange	= range(mask.getHeight());
-		
-		final var result = new BufferedImage(xRange.stop, yRange.stop, type);
-		for (final int y : yRange)
-			for (final int x : xRange)
-				result.setRGB(x, y, mask.getRGB(x, y) & ALPHA_MASK | colorInt);
-		return result;
+		int	maxX	= first.x();
+		int	maxY	= first.y();
+		for (final var o : other)
+		{
+			maxX	= Max.max(maxX, o.x());
+			maxY	= Max.max(maxY, o.y());
+		}
+		return new Vec2i(maxX, maxY);
 	}
 }
