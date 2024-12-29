@@ -34,6 +34,7 @@ public final class ChooseIcon extends ObservableDialog<BL, Tuple<String, Buffere
 	{
 		super(owner, modality, closeListener);
 		TinyTotp.windowStates.chooseIcon.setBounds(this);
+		setTitle("Select Icon");
 		
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_INCREMENT);
