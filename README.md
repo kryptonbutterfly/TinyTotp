@@ -37,4 +37,8 @@ This password is used to encryt/decrypt your totp secrets.
 ![Edit Totp Secret](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Edit-Totp.png)
 
 ![Export Secret](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Export-Secret.png)
+
+![Set Icon](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Set-Icon.png)
+
+![Select Icon](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Select-Icon.png)
 </details>
