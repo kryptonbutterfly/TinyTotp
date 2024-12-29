@@ -249,12 +249,15 @@ final class BL extends Logic<SetIcon, IconData> implements TotpConstants
 			gui.btnBrowseUser.setEnabled(enabled);
 			gui.btnChooseUser.setEnabled(enabled);
 			if (!enabled)
+			{
 				this.icon = new IconData(
 					this.icon.issuerName(),
 					this.icon.issuerImage(),
 					null,
 					null,
 					this.icon.bgColor());
+				setIcon(this.icon);
+			}
 		});
 	}
 	
