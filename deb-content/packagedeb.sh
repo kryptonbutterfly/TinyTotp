@@ -40,8 +40,8 @@ echo "  * Rebuild" >> changelog
 echo " -- kryptonbutterfly <tinycodecrank@gmail.com> `date -R`" >> changelog
 gzip -9c changelog > $BUILD_DIR/usr/share/doc/$PACKAGE_NAME/changelog.gz
 
-cp *.svg $BUILD_DIR/usr/share/$PACKAGE_NAME/
-cp *.png $BUILD_DIR/usr/share/$PACKAGE_NAME/
+cp $SOURCE_DIR/src/assets/icon.svg $BUILD_DIR/usr/share/$PACKAGE_NAME/
+cp $SOURCE_DIR/src/assets/icon.png $BUILD_DIR/usr/share/$PACKAGE_NAME/
 
 chmod 0664 $BUILD_DIR/usr/share/$PACKAGE_NAME/*svg
 chmod 0664 $BUILD_DIR/usr/share/$PACKAGE_NAME/*png

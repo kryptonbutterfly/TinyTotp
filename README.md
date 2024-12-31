@@ -1,4 +1,4 @@
-<img width="82" align="left" src="https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/deb-content/icon.svg"/>
+<img width="82" align="left" src="https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/src/assets/icon.svg"/>
 
 # TinyTotp
 
