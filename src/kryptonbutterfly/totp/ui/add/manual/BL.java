@@ -56,6 +56,11 @@ final class BL extends Logic<AddKey, char[]>
 		c -> gui.if_(gui -> gui.btnApply.requestFocus()),
 		KeyEvent.VK_ENTER);
 	
+	final KeyListener editIconListener = new KeyTypedAdapter(
+		c -> editIcon(),
+		KeyEvent.VK_ENTER,
+		KeyEvent.VK_SPACE);
+	
 	final PopupMenuListener categoryPopupListener = new PopupMenuListener()
 	{
 		@Override
@@ -95,32 +100,37 @@ final class BL extends Logic<AddKey, char[]>
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				gui.if_(
-					gui ->
-					{
-						final var iconData = new IconData(
-							gui.iconName,
-							gui.comboIcon.getIssuerIcon(),
-							gui.userIconName,
-							gui.userIconName == null ? null : gui.comboIcon.getUserIcon(),
-							gui.comboIcon.getIconBG());
-						
-						EventQueue.invokeLater(
-							() -> new SetIcon(
-								gui,
-								ModalityType.APPLICATION_MODAL,
-								iconData,
-								gce -> gce.getReturnValue().if_(data ->
-								{
-									gui.comboIcon.setIconBG(data.bgColor());
-									gui.iconName = data.issuerName();
-									gui.comboIcon.setIssuerIcon(data.issuerImage());
-									gui.userIconName = data.userName();
-									gui.comboIcon.setUserIcon(data.userImage());
-								})));
-					});
+				editIcon();
 			}
 		};
+	}
+	
+	private void editIcon()
+	{
+		gui.if_(
+			gui ->
+			{
+				final var iconData = new IconData(
+					gui.iconName,
+					gui.comboIcon.getIssuerIcon(),
+					gui.userIconName,
+					gui.userIconName == null ? null : gui.comboIcon.getUserIcon(),
+					gui.comboIcon.getIconBG());
+				
+				EventQueue.invokeLater(
+					() -> new SetIcon(
+						gui,
+						ModalityType.APPLICATION_MODAL,
+						iconData,
+						gce -> gce.getReturnValue().if_(data ->
+						{
+							gui.comboIcon.setIconBG(data.bgColor());
+							gui.iconName = data.issuerName();
+							gui.comboIcon.setIssuerIcon(data.issuerImage());
+							gui.userIconName = data.userName();
+							gui.comboIcon.setUserIcon(data.userImage());
+						})));
+			});
 	}
 	
 	void exportQR(ActionEvent ae)

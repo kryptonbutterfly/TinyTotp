@@ -196,8 +196,11 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		verticalBox.add(panel);
 		
 		panel.add(comboIcon);
+		comboIcon.setFocusable(true);
 		comboIcon.setIssuerIcon(Assets.MISSING_ICON_IMG);
 		comboIcon.addMouseListener(bl.iconClickListener());
+		comboIcon.addKeyListener(bl.editIconListener);
+		comboIcon.addKeyListener(bl.escapeListener);
 		comboIcon.setToolTipText(TOOLTIP_ADDKEY_IMPORT_ICON);
 		
 		verticalBox.add(Box.createVerticalGlue());

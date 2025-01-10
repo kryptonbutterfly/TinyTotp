@@ -8,21 +8,26 @@ import java.util.function.Consumer;
 public class KeyTypedAdapter extends KeyAdapter
 {
 	private final Consumer<Component>	action;
-	private final int					key;
+	private final int[]					keys;
 	
-	public KeyTypedAdapter(Consumer<Component> action, int key)
+	public KeyTypedAdapter(Consumer<Component> action, int... keys)
 	{
 		this.action	= action;
-		this.key	= key;
+		this.keys	= keys;
 	}
 	
 	@Override
 	public void keyTyped(KeyEvent e)
 	{
-		if (!e.isConsumed() && e.getKeyChar() == key)
+		if (e.isConsumed())
+			return;
+		for (int key : keys)
 		{
-			e.consume();
-			action.accept(e.getComponent());
+			if (e.getKeyChar() == key)
+			{
+				e.consume();
+				action.accept(e.getComponent());
+			}
 		}
 	}
 }

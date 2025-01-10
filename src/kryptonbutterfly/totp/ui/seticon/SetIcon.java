@@ -262,6 +262,7 @@ public final class SetIcon extends ObservableDialog<BL, IconData, IconData> impl
 	
 	private void init(BL bl, IconData data)
 	{
+		
 		btnChoose.addActionListener(bl::chooseIssuerIcon);
 		btnPaste.addActionListener(bl::pasteImage);
 		btnBrowse.addActionListener(bl::browse);
@@ -271,6 +272,9 @@ public final class SetIcon extends ObservableDialog<BL, IconData, IconData> impl
 		btnBrowseUser.addActionListener(bl::browseUser);
 		
 		chckbxUserIcon.addActionListener(bl::userIconEnabled);
+		
+		txtUrl.addKeyListener(bl.escapeListener);
+		txtUserUrl.addKeyListener(bl.escapeListener);
 		
 		btnChoose.addKeyListener(bl.escapeListener);
 		btnChooseUser.addKeyListener(bl.escapeListener);
