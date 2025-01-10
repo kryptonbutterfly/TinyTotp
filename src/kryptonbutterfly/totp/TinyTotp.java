@@ -125,6 +125,7 @@ public class TinyTotp implements TotpConstants
 			| SecurityException e)
 		{
 			e.printStackTrace();
+			System.err.println("Failed setting program dock name. — Ignoring");
 		}
 		
 		try
@@ -138,6 +139,7 @@ public class TinyTotp implements TotpConstants
 			| UnsupportedLookAndFeelException e)
 		{
 			e.printStackTrace();
+			System.err.println("Failed to apply System look and feel. – Ignoring");
 		}
 	}
 	

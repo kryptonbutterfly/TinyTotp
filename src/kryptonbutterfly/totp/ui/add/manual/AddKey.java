@@ -21,7 +21,8 @@ import org.apache.commons.codec.binary.Base32;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.misc.Assets;
-import kryptonbutterfly.totp.misc.UrlQueryParams;
+import kryptonbutterfly.totp.misc.otp.OtpUri;
+import kryptonbutterfly.totp.prefs.OtpAlgo;
 import kryptonbutterfly.totp.prefs.TotpCategory;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.totp.ui.components.ComboIcon;
@@ -45,6 +46,8 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 	final JSpinner	spinnerTimeFrame	= new JSpinner(new SpinnerNumberModel(30, 0, 180, 5));
 	final JSpinner	spinnerTotpLength	= new JSpinner(new SpinnerNumberModel(6, 6, 10, 1));
 	
+	final JComboBox<OtpAlgo> cbAlgo = new JComboBox<>(OtpAlgo.values());
+	
 	JButton btnApply;
 	
 	public AddKey(
@@ -61,7 +64,7 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		Window owner,
 		ModalityType modality,
 		Consumer<GuiCloseEvent<TotpEntry>> closeListener,
-		UrlQueryParams parsed,
+		OtpUri otpUri,
 		char[] password,
 		String title)
 	{
@@ -71,9 +74,9 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		
 		businessLogic.if_(this::init);
 		
-		txtAccountname.setText(parsed.account());
-		txtSecretkey.setText(parsed.secretKey());
-		txtIssuer.setText(parsed.issuer());
+		txtAccountname.setText(otpUri.account());
+		txtSecretkey.setText(otpUri.secret());
+		txtIssuer.setText(otpUri.issuer());
 		
 		setVisible(true);
 	}
@@ -103,6 +106,7 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 			TinyTotp.imageCache.getImage(iconName).if_(comboIcon::setIssuerIcon);
 			TinyTotp.imageCache.getImage(userIconName).if_(comboIcon::setUserIcon);
 			comboIcon.setIconBG(original.iconBG);
+			cbAlgo.setSelectedItem(original.algorithm);
 			spinnerTimeFrame.setValue(original.totpValidForSeconds);
 			spinnerTotpLength.setValue(original.totpLength);
 		}
@@ -157,6 +161,13 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 			txtSecretkey.setColumns(10);
 			txtSecretkey.addKeyListener(bl.enterListener);
 			txtSecretkey.addKeyListener(bl.escapeListener);
+		}
+		
+		{
+			gridPanel.add(new JLabel(LABEL_HASH_ALGO), BorderLayout.CENTER);
+			
+			gridPanel.add(cbAlgo);
+			cbAlgo.addKeyListener(bl.escapeListener);
 		}
 		
 		{

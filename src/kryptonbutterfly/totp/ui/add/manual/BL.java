@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Objects;
 
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
@@ -21,8 +22,9 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import kryptonbutterfly.functions.void_.Consumer_;
 import kryptonbutterfly.monads.opt.Opt;
 import kryptonbutterfly.totp.TinyTotp;
-import kryptonbutterfly.totp.misc.UrlQueryParams;
 import kryptonbutterfly.totp.misc.Utils;
+import kryptonbutterfly.totp.misc.otp.TotpUri;
+import kryptonbutterfly.totp.prefs.OtpAlgo;
 import kryptonbutterfly.totp.prefs.TotpCategory;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.totp.ui.misc.KeyTypedAdapter;
@@ -139,8 +141,10 @@ final class BL extends Logic<AddKey, char[]>
 			final var	account		= gui.txtAccountname.getText();
 			final var	secretKey	= gui.txtSecretkey.getText();
 			final var	issuer		= gui.txtIssuer.getText();
-			final var	url			= new UrlQueryParams(issuer, secretKey, account).toUrl();
-			Utils.generateQr(url, Color.BLACK, Color.WHITE, 200, ErrorCorrectionLevel.H)
+			final int	digits		= (int) gui.spinnerTotpLength.getValue();
+			final int	period		= (int) gui.spinnerTimeFrame.getValue();
+			final var	url			= new TotpUri(issuer, account, secretKey, digits, period);
+			Utils.generateQr(url.toStringUrl(), Color.BLACK, Color.WHITE, 200, ErrorCorrectionLevel.H)
 				.if_(
 					qr -> EventQueue
 						.invokeLater(() -> new QrExportGui(gui, ModalityType.APPLICATION_MODAL, Consumer_.sink(), qr)));
@@ -169,6 +173,7 @@ final class BL extends Logic<AddKey, char[]>
 			totpEntry.userIcon	= gui.userIconName;
 			totpEntry.iconBG	= gui.comboIcon.getIconBG();
 			
+			totpEntry.algorithm				= Objects.requireNonNull((OtpAlgo) gui.cbAlgo.getSelectedItem());
 			totpEntry.totpLength			= (int) gui.spinnerTotpLength.getValue();
 			totpEntry.totpValidForSeconds	= (int) gui.spinnerTimeFrame.getValue();
 			

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kryptonbutterfly</groupId>
 	<artifactId>tiny_totp</artifactId>
-	<version>4.1.0</version>
+	<version>4.2.0</version>
 	<name>TinyTOTP</name>
 	<description>A TOTP client</description>
 
@@ -89,7 +89,7 @@
 		<dependency>
 			<groupId>kryptonbutterfly</groupId>
 			<artifactId>linear_algebra</artifactId>
-			<version>3.0.0</version>
+			<version>4.0.0</version>
 		</dependency>
 	</dependencies>
 

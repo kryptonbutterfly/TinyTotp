@@ -49,11 +49,10 @@ public final class TotpComponent extends JPanel implements TotpConstants
 	private final JPanel	categoryPanel	= new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 	private final JButton	buttonEdit		= new JButton(Assets.getEditByBackground(getBackground()));
 	private final JButton	buttonRemove	= new JButton(Assets.getDeleteByBackground(getBackground()));
-	// private final JLabel iconLabel = new JLabel();
-	private final ComboIcon	comboIcon	= new ComboIcon();
-	private final JButton	totp		= new JButton();
-	private final JLabel	userName	= new JLabel();
-	private final JLabel	issuerName	= new JLabel();
+	private final ComboIcon	comboIcon		= new ComboIcon();
+	private final JButton	totp			= new JButton();
+	private final JLabel	userName		= new JLabel();
+	private final JLabel	issuerName		= new JLabel();
 	
 	TotpComponent(TotpEntry entry, RemoveListener removeListener, char[] password)
 	{

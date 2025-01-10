@@ -42,6 +42,7 @@ public interface TotpConstants
 	
 	public static final String	LABEL_ACCOUNT_NAME		= "Account Name";
 	public static final String	LABEL_SECRET_KEY		= "Secret Key";
+	public static final String	LABEL_HASH_ALGO			= "Hash Algorithm";
 	public static final String	LABEL_ISSUER			= "Issuer";
 	public static final String	LABEL_CATEGORY			= "Category";
 	public static final String	LABEL_PASSWORD_INTERVAL	= "Password interval in s";

@@ -5,13 +5,15 @@ import static kryptonbutterfly.math.utils.range.Range.*;
 import java.awt.Dialog.ModalityType;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 import kryptonbutterfly.totp.TinyTotp;
-import kryptonbutterfly.totp.misc.UrlQueryParams;
 import kryptonbutterfly.totp.misc.TotpGenerator;
+import kryptonbutterfly.totp.misc.otp.OtpUri;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.totp.ui.add.manual.AddKey;
 import kryptonbutterfly.totp.ui.categories.CategoriesGui;
@@ -61,26 +63,31 @@ final class BL extends Logic<MainGui, char[]>
 						ModalityType.APPLICATION_MODAL,
 						gce -> gce.getReturnValue().if_(url ->
 						{
-							UrlQueryParams.parseUrl(url)
-								.if_(e -> createEntry(gui, e))
-								.else_(
-									() -> JOptionPane.showMessageDialog(
-										gui,
-										"Unable to import secret.\nUnexpected qr content.",
-										"Import failed",
-										JOptionPane.ERROR_MESSAGE));
+							try
+							{
+								final var uri = OtpUri.parseOtpUrl(url);
+								createEntry(gui, uri);
+							}
+							catch (MalformedURLException | URISyntaxException e)
+							{
+								JOptionPane.showMessageDialog(
+									gui,
+									"Unable to import secret.\n\n%s".formatted(e),
+									"Import failed",
+									JOptionPane.ERROR_MESSAGE);
+							}
 						}),
 						"Import Secret")));
 	}
 	
-	private void createEntry(MainGui gui, UrlQueryParams entry)
+	private void createEntry(MainGui gui, OtpUri uri)
 	{
 		EventQueue.invokeLater(
 			() -> new AddKey(
 				gui,
 				ModalityType.APPLICATION_MODAL,
 				this::addEntry,
-				entry,
+				uri,
 				password,
 				"Add TOTP Secret"));
 	}

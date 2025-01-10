@@ -66,7 +66,7 @@ public final class TotpGenerator extends Thread
 			entry.decryptSecret(password),
 			steps,
 			entry.totpLength,
-			"HmacSHA1");
+			"Hmac" + entry.algorithm);
 	}
 	
 	@SneakyThrows

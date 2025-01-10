@@ -14,6 +14,7 @@ import javax.crypto.spec.SecretKeySpec;
 import com.google.gson.annotations.Expose;
 
 import kryptonbutterfly.totp.TotpConstants;
+import kryptonbutterfly.totp.misc.otp.OtpUri;
 import lombok.SneakyThrows;
 
 public class TotpEntry implements TotpConstants
@@ -25,10 +26,16 @@ public class TotpEntry implements TotpConstants
 	public String encryptedSecret = null;
 	
 	@Expose
+	public OtpAlgo algorithm = OtpUri.DEFAULT_ALGO;
+	
+	@Expose
 	public String salt = createSalt();
 	
 	@Expose
 	public int totpLength = 6;
+	
+	@Expose
+	public Integer counter = null;
 	
 	@Expose
 	public int totpValidForSeconds = 30;
