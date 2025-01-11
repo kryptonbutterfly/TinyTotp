@@ -22,6 +22,30 @@ When starting the application you'll be prompted to enter a password.
 This password is used to encryt/decrypt your totp secrets.
 </br>**```Don't lose it!```**
 
+## Issues & Solutions
+
+<details>
+    <summary>The generated password doesn't work.</summary>
+    <p>
+        <ul>
+            <li>Ensure your system time is correct. If it's off by more than a couple of seconds the generated passwords will be wrong.</li>
+        </ul>
+    </p>
+</details>
+
+<details>
+    <summary>Could not find main class: kryptonbutterfly.totp.TinyTotp.</summary>
+    <p>
+        <img height="159px" weight="423px" src="https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/issues_and_solutions/java_no_main_class.png" alt="Error message"/>
+        <h4>Solutions:</h4>
+        <ul>
+            <li>Ensure environment variable <code>PATH</code> is set correctly.</li>
+            <li>Ensure environment varialbe <code>JAVA_HOME</code> is set correctly.</li>
+            <li>Uninstall java, then install it again.</li>
+        <ul>
+    <p>
+</details>
+
 
 ## Images
 
