@@ -34,6 +34,7 @@ public class PreferencesGui extends ObservableDialog<BL, Void, Void> implements 
 	public PreferencesGui(Window owner, ModalityType modality, Consumer<GuiCloseEvent<Void>> closeListener)
 	{
 		super(owner, modality, closeListener);
+		setTitle("Preferences");
 		TinyTotp.windowStates.prefsWindow.setBounds(this);
 		
 		JSplitPane splitPane = new JSplitPane();
