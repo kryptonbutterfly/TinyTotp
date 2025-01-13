@@ -21,6 +21,9 @@ public final class TotpConfig
 	@Expose
 	public String ntpServer = "";
 	
+	@Expose
+	public long ntpTimeoutMillis = 5000;
+	
 	{
 		final var other = new TotpCategory();
 		other.name	= "Other";

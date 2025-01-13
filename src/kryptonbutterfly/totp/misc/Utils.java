@@ -157,7 +157,7 @@ public class Utils
 		try (final var timeClient = new NTPUDPClient())
 		{
 			final var inetAddress = InetAddress.getByName(address);
-			timeClient.setDefaultTimeout(Duration.ofSeconds(5));
+			timeClient.setDefaultTimeout(Duration.ofMillis(TinyTotp.config.ntpTimeoutMillis));
 			final var timeInfo = timeClient.getTime(inetAddress);
 			timeInfo.computeDetails();
 			final long offset = timeInfo.getOffset();
