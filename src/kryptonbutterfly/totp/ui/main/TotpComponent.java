@@ -26,6 +26,7 @@ import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.misc.Assets;
 import kryptonbutterfly.totp.misc.TotpGenerator;
+import kryptonbutterfly.totp.misc.Utils;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.totp.ui.add.manual.AddKey;
 import kryptonbutterfly.totp.ui.components.ComboIcon;
@@ -200,7 +201,7 @@ public final class TotpComponent extends JPanel implements TotpConstants
 				categoryPanel.setBackground(c.color);
 				categoryPanel.setToolTipText(c.name);
 			});
-		update(System.currentTimeMillis(), password);
+		update(Utils.getUnixTime(), password);
 	}
 	
 	private void copyTotp(ActionEvent ae)
@@ -210,6 +211,11 @@ public final class TotpComponent extends JPanel implements TotpConstants
 			return;
 		final var selection = new StringSelection(passwd);
 		clipboard.setContents(selection, selection);
+	}
+	
+	public void invalidateNextUpdate()
+	{
+		this.nextUpdate = Long.MIN_VALUE;
 	}
 	
 	@FunctionalInterface

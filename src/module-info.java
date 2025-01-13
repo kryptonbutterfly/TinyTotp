@@ -17,4 +17,5 @@ module DesktopTOTP
 	requires lombok;
 	requires webcam.capture;
 	requires com.google.zxing;
+	requires org.apache.commons.net;
 }

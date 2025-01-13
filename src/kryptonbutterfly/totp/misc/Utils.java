@@ -6,7 +6,12 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.time.Duration;
 import java.util.Map;
+
+import org.apache.commons.net.ntp.NTPUDPClient;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -18,11 +23,14 @@ import kryptonbutterfly.math.utils.Max;
 import kryptonbutterfly.math.vector._int.Vec2i;
 import kryptonbutterfly.monads.failable.Failable;
 import kryptonbutterfly.monads.opt.Opt;
+import kryptonbutterfly.totp.TinyTotp;
 
 public class Utils
 {
 	private static final int	ALPHA_MASK	= 0xFF00_0000;
 	private static final int	RGB_MASK	= ~ALPHA_MASK;
+	
+	private static Opt<Long> ntpTimeOffset = Opt.empty();
 	
 	private Utils()
 	{}
@@ -142,5 +150,38 @@ public class Utils
 			maxY	= Max.max(maxY, o.y());
 		}
 		return new Vec2i(maxX, maxY);
+	}
+	
+	public static long getNtpTimeOffset(String address) throws IOException
+	{
+		try (final var timeClient = new NTPUDPClient())
+		{
+			final var inetAddress = InetAddress.getByName(address);
+			timeClient.setDefaultTimeout(Duration.ofSeconds(5));
+			final var timeInfo = timeClient.getTime(inetAddress);
+			timeInfo.computeDetails();
+			final long offset = timeInfo.getOffset();
+			ntpTimeOffset = Opt.of(offset);
+			return offset;
+		}
+	}
+	
+	public static long getUnixTime()
+	{
+		final long time = System.currentTimeMillis();
+		if (!TinyTotp.config.useTimeServer)
+			return time;
+		
+		if (!ntpTimeOffset.isPresent())
+			try
+			{
+				return time + getNtpTimeOffset(TinyTotp.config.ntpServer);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		
+		return time + ntpTimeOffset.get(() -> 0L);
 	}
 }

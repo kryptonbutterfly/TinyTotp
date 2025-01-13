@@ -17,6 +17,7 @@ import kryptonbutterfly.totp.misc.otp.OtpUri;
 import kryptonbutterfly.totp.prefs.TotpEntry;
 import kryptonbutterfly.totp.ui.add.manual.AddKey;
 import kryptonbutterfly.totp.ui.categories.CategoriesGui;
+import kryptonbutterfly.totp.ui.prefs.PreferencesGui;
 import kryptonbutterfly.totp.ui.qrimport.QrGui;
 import kryptonbutterfly.util.swing.Logic;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
@@ -110,6 +111,18 @@ final class BL extends Logic<MainGui, char[]>
 					((TotpComponent) comp).updateCategory(mapping);
 			});
 		})));
+	}
+	
+	void preferences(ActionEvent ae)
+	{
+		gui.if_(
+			gui -> EventQueue.invokeLater(() -> new PreferencesGui(gui, ModalityType.APPLICATION_MODAL, gce ->
+			{
+				range(gui.contentBox.getComponents()).element()
+					.stream()
+					.map(c -> (TotpComponent) c)
+					.forEach(TotpComponent::invalidateNextUpdate);
+			})));
 	}
 	
 	void remove(TotpComponent entry)

@@ -32,7 +32,7 @@ public final class TotpGenerator extends Thread
 	{
 		while (!terminate)
 		{
-			final long currentTime = System.currentTimeMillis();
+			final long currentTime = Utils.getUnixTime();
 			
 			if (range(contentBox.getComponents()).element()
 				.stream()

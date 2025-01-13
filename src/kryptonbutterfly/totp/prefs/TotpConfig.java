@@ -14,6 +14,13 @@ public final class TotpConfig
 	
 	@Expose
 	public ArrayList<TotpCategory> categories = new ArrayList<TotpCategory>();
+	
+	@Expose
+	public boolean useTimeServer = false;
+	
+	@Expose
+	public String ntpServer = "";
+	
 	{
 		final var other = new TotpCategory();
 		other.name	= "Other";

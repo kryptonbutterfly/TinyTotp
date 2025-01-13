@@ -61,9 +61,16 @@ public final class MainGui extends ObservableGui<BL, Void, char[]> implements To
 		addMenu.add(addEntryItem);
 		addEntryItem.addActionListener(logic::addEntry);
 		
+		final var settingsItem = new JMenu("Settings");
+		menuBar.add(settingsItem);
+		
 		val categoriesItem = new JMenuItem("Categories");
-		menuBar.add(categoriesItem);
+		settingsItem.add(categoriesItem);
 		categoriesItem.addActionListener(logic::categories);
+		
+		val preferencesItem = new JMenuItem("Preferences");
+		settingsItem.add(preferencesItem);
+		preferencesItem.addActionListener(logic::preferences);
 		
 		val scrollPane = new JScrollPane(contentBox);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);

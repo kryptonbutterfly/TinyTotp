@@ -29,4 +29,7 @@ public final class TotpWindowStates
 	
 	@Expose
 	public WindowState chooseIcon = new WindowState(100, 100, 650, 450);
+	
+	@Expose
+	public WindowState prefsWindow = new WindowState();
 }
