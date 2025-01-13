@@ -8,6 +8,7 @@ A Totp Client
 
 java version | app version | jar | deb
 :----------: | :---------: | :-: | :-:
+18+          | 4.3.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.3.0/TinyTotp.jar) | [TinyTotp-4.3.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.3.0/TinyTotp-4.3.0.deb)
 18+          | 4.2.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.2.0/TinyTotp.jar) | [TinyTotp-4.2.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.2.0/TinyTotp-4.2.0.deb)
 18+          | 4.1.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.1.0/TinyTotp.jar) | [TinyTotp-4.1.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.1.0/TinyTotp-4.1.0.deb)
 18+          | 4.0.1       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.0.1/TinyTotp.jar) | [TinyTotp-4.0.1.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.0.1/TinyTotp-4.0.1.deb)
@@ -29,6 +30,10 @@ This password is used to encryt/decrypt your totp secrets.
     <p>
         <ul>
             <li>Ensure your system time is correct. If it's off by more than a couple of seconds the generated passwords will be wrong.</li>
+            <li>
+                Enable and configure a NTP server.<br/>
+                <img src="https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/TimeServerExample.webp" alt="NTP Server settings"/>
+            </li>
         </ul>
     </p>
 </details>
@@ -56,6 +61,9 @@ This password is used to encryt/decrypt your totp secrets.
 ![Categories](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Categories.png)
 
 ![Import Secret](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Import-Secret.png)
+
+![Preferences](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Preferences.webp)
+
 ![Import Secret via webcam](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Import-Qr.png)
 
 ![Add Totp Secret](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/AddSecret.png)
