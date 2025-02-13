@@ -36,8 +36,6 @@ public interface TotpConstants
 	public static final int		AES_KEY_LENGTH			= 0x100;
 	public static final String	AES						= "AES";
 	
-	public static final String IMG_CACHE_MAPPINGS = "mappings.json";
-	
 	public static final int SCROLL_INCREMENT = 128;
 	
 	public static final String	LABEL_ACCOUNT_NAME		= "Account Name";

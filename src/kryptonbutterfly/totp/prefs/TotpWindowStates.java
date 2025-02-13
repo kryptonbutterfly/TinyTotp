@@ -32,4 +32,7 @@ public final class TotpWindowStates
 	
 	@Expose
 	public WindowState prefsWindow = new WindowState();
+	
+	@Expose
+	public WindowState updateAvailableWindow = new WindowState();
 }

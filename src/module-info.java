@@ -6,6 +6,7 @@ module DesktopTOTP
 	requires kryptonbutterfly.mathUtils;
 	requires kryptonbutterfly.Monads;
 	requires transitive kryptonbutterfly.SwingUtils;
+	requires transitive kryptonbutterfly.checkRelease;
 	requires kryptonbutterfly.System;
 	requires kryptonbutterfly.ReflectionUtils;
 	requires kryptonbutterfly.Cache;

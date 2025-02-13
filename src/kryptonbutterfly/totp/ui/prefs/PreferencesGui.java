@@ -19,6 +19,7 @@ import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.ui.prefs.cat.PrefsCat;
 import kryptonbutterfly.totp.ui.prefs.cat.Time;
+import kryptonbutterfly.totp.ui.prefs.cat.Updates;
 import kryptonbutterfly.util.swing.ApplyAbortPanel;
 import kryptonbutterfly.util.swing.ObservableDialog;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
@@ -68,6 +69,7 @@ public class PreferencesGui extends ObservableDialog<BL, Void, Void> implements 
 					{
 						{
 							add(addCategory(this, new Time()));
+							add(addCategory(this, new Updates()));
 						}
 					}));
 			scrollPane.setViewportView(tree);
