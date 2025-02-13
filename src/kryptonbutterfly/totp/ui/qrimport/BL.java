@@ -1,5 +1,6 @@
 package kryptonbutterfly.totp.ui.qrimport;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -9,7 +10,6 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -38,6 +38,7 @@ final class BL extends Logic<QrGui, Void>
 	
 	private boolean			keepScanning	= true;
 	private final Webcam	webcam			= Webcam.getDefault();
+	private final Dimension	maxViewSize;
 	
 	final KeyListener	escapeScanListener	= new KeyTypedAdapter(c -> abortScan(null), KeyEvent.VK_ESCAPE);
 	final KeyListener	escapeMenuListener	= new KeyTypedAdapter(c -> abort(null), KeyEvent.VK_ESCAPE);
@@ -45,6 +46,23 @@ final class BL extends Logic<QrGui, Void>
 	BL(QrGui gui)
 	{
 		super(gui);
+		this.maxViewSize = maxViewSize();
+	}
+	
+	private Dimension maxViewSize()
+	{
+		int			max		= 0;
+		Dimension	maxDim	= null;
+		for (final var d : webcam.getViewSizes())
+		{
+			final int size = d.width * d.height;
+			if (size > max)
+			{
+				max		= size;
+				maxDim	= d;
+			}
+		}
+		return maxDim;
 	}
 	
 	void abort(ActionEvent ae)
@@ -121,10 +139,13 @@ final class BL extends Logic<QrGui, Void>
 		try
 		{
 			if (!webcam.isOpen())
+			{
+				webcam.setViewSize(maxViewSize);
 				webcam.open();
+			}
 			
 			final var image = webcam.getImage();
-			gui.cameraDisplay.setIcon(new ImageIcon(Utils.mirror(image)));
+			gui.cameraDisplay.setIcon(Utils.mirror(image));
 			final var result = decode(image);
 			
 			keepScanning = false;

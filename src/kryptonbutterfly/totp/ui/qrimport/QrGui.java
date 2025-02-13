@@ -3,16 +3,19 @@ package kryptonbutterfly.totp.ui.qrimport;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Window;
 import java.util.function.Consumer;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.misc.Assets;
+import kryptonbutterfly.totp.misc.Margin;
 import kryptonbutterfly.util.swing.ObservableDialog;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 
@@ -31,7 +34,7 @@ public final class QrGui extends ObservableDialog<BL, String, Void>
 	private final JButton	btnScanFile		= new JButton("open File");
 	final JButton			btnScanCamera	= new JButton("scan Camera");
 	
-	final JLabel cameraDisplay = new JLabel();
+	final AutoScalingImage cameraDisplay = new AutoScalingImage(new Margin(5));
 	
 	public QrGui(Window owner, ModalityType modality, Consumer<GuiCloseEvent<String>> closeListener, String title)
 	{
@@ -56,17 +59,25 @@ public final class QrGui extends ObservableDialog<BL, String, Void>
 			
 			final var abortPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 			abortPanel.add(btnAbort);
-			menuPanel.add(abortPanel, BorderLayout.SOUTH);
+			final var bottomPanel = new JPanel(new BorderLayout());
+			bottomPanel.add(abortPanel, BorderLayout.CENTER);
+			bottomPanel.add(new JSeparator(), BorderLayout.NORTH);
+			menuPanel.add(bottomPanel, BorderLayout.SOUTH);
 		}
 		
 		{
 			final var scanPanel = new JPanel(new BorderLayout());
 			cardPanel.add(scanPanel);
 			cardLayout.addLayoutComponent(scanPanel, SCAN_CARD);
+			cameraDisplay.setHorizontalAlignment(SwingConstants.CENTER);
+			cameraDisplay.setAlignmentX(Component.CENTER_ALIGNMENT);
 			scanPanel.add(cameraDisplay, BorderLayout.CENTER);
 			final var abortPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 			abortPanel.add(btnAbortScan);
-			scanPanel.add(abortPanel, BorderLayout.SOUTH);
+			final var bottomPanel = new JPanel(new BorderLayout());
+			bottomPanel.add(abortPanel, BorderLayout.CENTER);
+			bottomPanel.add(new JSeparator(), BorderLayout.NORTH);
+			scanPanel.add(bottomPanel, BorderLayout.SOUTH);
 		}
 		
 		businessLogic.if_(this::init);

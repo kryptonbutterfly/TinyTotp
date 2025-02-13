@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import kryptonbutterfly.math.vector._int.Vec2i;
 import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.misc.Assets;
+import kryptonbutterfly.totp.misc.Rect;
 
 @SuppressWarnings("serial")
 public class ComboIcon extends JPanel implements TotpConstants
@@ -159,62 +160,6 @@ public class ComboIcon extends JPanel implements TotpConstants
 				userIcon.getWidth(),
 				userIcon.getHeight(),
 				this);
-		}
-	}
-	
-	private static class Rect
-	{
-		private int	x	= 0, y = 0;
-		private int	width, height;
-		
-		Rect(Vec2i size)
-		{
-			this.width	= size.x();
-			this.height	= size.y();
-		}
-		
-		int x1()
-		{
-			return x;
-		}
-		
-		int y1()
-		{
-			return y;
-		}
-		
-		int x2()
-		{
-			return x + width;
-		}
-		
-		int y2()
-		{
-			return y + height;
-		}
-		
-		Rect scaleWidth(float factor)
-		{
-			this.width *= factor;
-			return this;
-		}
-		
-		Rect scaleHeight(float factor)
-		{
-			this.height *= factor;
-			return this;
-		}
-		
-		Rect moveX(int x)
-		{
-			this.x += x;
-			return this;
-		}
-		
-		Rect moveY(int y)
-		{
-			this.y += y;
-			return this;
 		}
 	}
 }
