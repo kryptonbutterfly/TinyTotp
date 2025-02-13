@@ -99,7 +99,7 @@
 		</dependency>
 		<dependency>
 			<groupId>kryptonbutterfly</groupId>
-			<artifactId>checkRelease</artifactId>
+			<artifactId>check_release</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
