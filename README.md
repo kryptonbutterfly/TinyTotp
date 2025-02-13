@@ -8,6 +8,7 @@ A Totp Client
 
 java version | app version | jar | deb
 :----------: | :---------: | :-: | :-:
+18+          | 4.4.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.0/TinyTotp.jar) | [TinyTotp-4.4.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.0/TinyTotp-4.4.0.deb)
 18+          | 4.3.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.3.0/TinyTotp.jar) | [TinyTotp-4.3.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.3.0/TinyTotp-4.3.0.deb)
 18+          | 4.2.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.2.0/TinyTotp.jar) | [TinyTotp-4.2.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.2.0/TinyTotp-4.2.0.deb)
 18+          | 4.1.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.1.0/TinyTotp.jar) | [TinyTotp-4.1.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.1.0/TinyTotp-4.1.0.deb)
@@ -54,7 +55,7 @@ This password is used to encryt/decrypt your totp secrets.
 
 ## Images
 
-![](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Main.png)
+![Main Window](https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/Main.png)
 <details>
 <summary>more images</summary>
 
