@@ -15,4 +15,7 @@ public class ReleaseState
 	
 	@Expose
 	public ReleaseInfo latestVersion = null;
+	
+	@Expose
+	public boolean showUpdateNotification = true;
 }

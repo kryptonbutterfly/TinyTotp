@@ -92,7 +92,8 @@ public class TinyTotp implements TotpConstants
 	
 	private static Lock updateAvailable()
 	{
-		if (currentVersion != null
+		if (releaseState.showUpdateNotification
+				&& currentVersion != null
 				&& -1 == currentVersion.compareTo(SemVer.fromGitTag(releaseState.latestVersion.tag_name)))
 		{
 			final var lock = new Lock(true);

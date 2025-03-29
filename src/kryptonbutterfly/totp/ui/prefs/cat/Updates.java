@@ -5,9 +5,11 @@ import java.awt.Dialog.ModalityType;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.Objects;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -15,21 +17,27 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import kryptonbutterfly.checkRelease.Cadence;
 import kryptonbutterfly.checkRelease.SemVer;
 import kryptonbutterfly.functions.void_.Consumer_;
 import kryptonbutterfly.totp.TinyTotp;
+import kryptonbutterfly.totp.TotpConstants;
+import kryptonbutterfly.totp.misc.Assets;
 import kryptonbutterfly.totp.ui.update.UpdateAvailable;
 
 public class Updates implements PrefsCat
 {
 	private final JScrollPane scrollPane;
 	
-	private final JComboBox<Cadence>	comboCadence		= new JComboBox<>(Cadence.values());
-	private final JTextField			textCurrentVersion	= new JTextField();
+	private final JLabel lblAppVerison = new JLabel(Assets.ICON_48);
+	
+	private final JComboBox<Cadence>	comboCadence					= new JComboBox<>(Cadence.values());
+	private final JCheckBox				chckbxShowUpdateNotification	= new JCheckBox("Update notifications");
+	
+	private final JLabel lblCheckForUpdates;
 	
 	public Updates()
 	{
@@ -39,22 +47,24 @@ public class Updates implements PrefsCat
 		final var verticalBox = Box.createVerticalBox();
 		panel.add(verticalBox, BorderLayout.NORTH);
 		
-		final var panel_1 = new JPanel();
+		final var panel_3 = new JPanel();
+		verticalBox.add(panel_3);
+		
+		panel_3.add(lblAppVerison);
+		
+		final var panel_1 = new JPanel(new GridLayout(0, 2, 0, 0));
 		verticalBox.add(panel_1);
-		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		final var lblCheckForUpdates = new JLabel("Check for updates:");
+		chckbxShowUpdateNotification.setToolTipText("Show update notification on application startup.");
+		panel_1.add(chckbxShowUpdateNotification);
+		
+		chckbxShowUpdateNotification.addActionListener(this::toggleShowUpdateNotification);
+		chckbxShowUpdateNotification.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		panel_1.add(Box.createGlue());
+		lblCheckForUpdates = new JLabel("Check for updates:");
 		panel_1.add(lblCheckForUpdates);
-		
 		panel_1.add(comboCadence);
-		
-		final var lblCurrentVersion = new JLabel("Current Version:");
-		panel_1.add(lblCurrentVersion);
-		
-		textCurrentVersion.setEditable(false);
-		textCurrentVersion.setEnabled(false);
-		panel_1.add(textCurrentVersion);
-		textCurrentVersion.setColumns(10);
 		
 		verticalBox.add(new JSeparator());
 		
@@ -78,23 +88,34 @@ public class Updates implements PrefsCat
 	public void init()
 	{
 		comboCadence.setSelectedItem(TinyTotp.releaseState.cadence);
+		chckbxShowUpdateNotification.setSelected(TinyTotp.releaseState.showUpdateNotification);
 		
-		if (TinyTotp.currentVersion == null)
-			textCurrentVersion.setText("");
-		else
-			textCurrentVersion.setText(TinyTotp.currentVersion.toString());
+		setTitleAndVersion();
 	}
 	
 	@Override
 	public void persist()
 	{
-		TinyTotp.releaseState.cadence = (Cadence) comboCadence.getSelectedItem();
+		TinyTotp.releaseState.cadence					= (Cadence) comboCadence.getSelectedItem();
+		TinyTotp.releaseState.showUpdateNotification	= chckbxShowUpdateNotification.isSelected();
 	}
 	
 	@Override
 	public String prefsPath()
 	{
 		return "Updates";
+	}
+	
+	private void setTitleAndVersion()
+	{
+		final var version = Objects.toString(TinyTotp.currentVersion, "?.?.?");
+		lblAppVerison.setText("%s %s".formatted(TotpConstants.PROGRAM_NAME, version));
+	}
+	
+	private void toggleShowUpdateNotification(ActionEvent ae)
+	{
+		lblCheckForUpdates.setEnabled(chckbxShowUpdateNotification.isSelected());
+		comboCadence.setEnabled(chckbxShowUpdateNotification.isSelected());
 	}
 	
 	private void checkUpdate(ActionEvent ae)

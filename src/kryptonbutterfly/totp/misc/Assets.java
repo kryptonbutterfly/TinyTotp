@@ -66,7 +66,9 @@ public class Assets
 	
 	public static final ImageIcon COLOR_PICKER = loadIcon("/assets/color-picker.png");
 	
-	public static final BufferedImage ICON = loadImage("/assets/icon.png");
+	public static final BufferedImage	ICON	= loadImage("/assets/icon.png");
+	public static final ImageIcon		ICON_48	= new ImageIcon(
+		ICON.getScaledInstance(48, 48, BufferedImage.SCALE_SMOOTH));
 	
 	public static ImageIcon getCameraByBackground(Color bgColor)
 	{
