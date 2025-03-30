@@ -34,7 +34,7 @@ This password is used to encryt/decrypt your totp secrets.
         <ul>
             <li>Ensure your system time is correct. If it's off by more than a couple of seconds the generated passwords will be wrong.</li>
             <li>
-                Enable and configure a NTP server.<br/>
+                Enable and configure an NTP server.<br/>
                 <img src="https://raw.githubusercontent.com/kryptonbutterfly/TinyTotp/master/md/TimeServerExample.webp" alt="NTP Server settings"/>
             </li>
         </ul>
@@ -48,7 +48,7 @@ This password is used to encryt/decrypt your totp secrets.
         <h4>Solutions:</h4>
         <ul>
             <li>Ensure environment variable <code>PATH</code> is set correctly.</li>
-            <li>Ensure environment varialbe <code>JAVA_HOME</code> is set correctly.</li>
+            <li>Ensure environment variable <code>JAVA_HOME</code> is set correctly.</li>
             <li>Uninstall java, then install it again.</li>
         <ul>
     <p>
