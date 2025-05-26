@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.misc.Assets;
 import kryptonbutterfly.totp.misc.Margin;
+import kryptonbutterfly.totp.ui.misc.AutoScalingImage;
 import kryptonbutterfly.util.swing.ObservableDialog;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 

@@ -3,16 +3,21 @@ package kryptonbutterfly.totp.misc;
 import static kryptonbutterfly.math.utils.range.Range.*;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.commons.net.ntp.NTPUDPClient;
 
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamException;
+import com.github.sarxos.webcam.WebcamResolution;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -183,5 +188,69 @@ public class Utils
 			}
 		
 		return time + ntpTimeOffset.get(() -> 0L);
+	}
+	
+	public static int dimensionComparator(Dimension a, Dimension b)
+	{
+		return switch (Integer.signum(a.width - b.width))
+		{
+			case -1 -> -1;
+			case 1 -> 1;
+			default -> Integer.signum(a.height - b.height);
+		};
+	}
+	
+	public static int webcamResolutionComparator(WebcamResolution a, WebcamResolution b)
+	{
+		return dimensionComparator(a.getSize(), b.getSize());
+	}
+	
+	public static ArrayList<WebcamResolution> getSupportedResolution(Webcam cam)
+	{
+		final var supported = new ArrayList<WebcamResolution>();
+		
+		for (final var r : WebcamResolution.values())
+		{
+			final var dim = r.getSize();
+			if (cam.isOpen())
+				cam.close();
+			cam.setCustomViewSizes(dim);
+			cam.setViewSize(dim);
+			if (!cam.isOpen())
+				cam.open();
+			
+			final var img = cam.getImage();
+			if (dim.width == img.getWidth() && dim.height == img.getHeight())
+				supported.add(r);
+			
+			cam.close();
+		}
+		return supported;
+	}
+	
+	public static Webcam[] initCams()
+	{
+		final var missing = new ArrayList<Webcam>();
+		
+		for (final var cam : Webcam.getWebcams())
+			if (!TinyTotp.webcamCache.supportedResolutions.containsKey(cam.getName()))
+				missing.add(cam);
+			
+		for (final var cam : missing)
+		{
+			try
+			{
+				TinyTotp.webcamCache.supportedResolutions.put(cam.getName(), getSupportedResolution(cam));
+			}
+			catch (WebcamException e)
+			{
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		return Webcam.getWebcams()
+			.stream()
+			.filter(w -> TinyTotp.webcamCache.supportedResolutions.containsKey(w.getName()))
+			.toArray(Webcam[]::new);
 	}
 }

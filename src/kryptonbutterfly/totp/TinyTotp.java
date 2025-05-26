@@ -15,6 +15,7 @@ import java.util.Arrays;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.github.sarxos.webcam.Webcam;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
@@ -37,6 +38,7 @@ import kryptonbutterfly.totp.prefs.ReleaseState;
 import kryptonbutterfly.totp.prefs.TotpConfig;
 import kryptonbutterfly.totp.prefs.TotpImageCache;
 import kryptonbutterfly.totp.prefs.TotpWindowStates;
+import kryptonbutterfly.totp.prefs.WebcamSettings;
 import kryptonbutterfly.totp.ui.main.MainGui;
 import kryptonbutterfly.totp.ui.passwd.PasswdGui;
 import kryptonbutterfly.totp.ui.update.UpdateAvailable;
@@ -53,6 +55,7 @@ public class TinyTotp implements TotpConstants
 	
 	private static final File	CONFIG			= new File(BASE_DIR.dataHome(), "config.json");
 	private static final File	CACHE			= new File(BASE_DIR.cacheHome(), "mappings.json");
+	private static final File	WEBCAM_CACHE	= new File(BASE_DIR.cacheHome(), "webcam.json");
 	private static final File	WINDOW_STATES	= new File(BASE_DIR.stateHome(), "windowStates.json");
 	private static final File	VERSION_STATE	= new File(BASE_DIR.stateHome(), "versionState.json");
 	
@@ -60,6 +63,10 @@ public class TinyTotp implements TotpConstants
 	public static final TotpWindowStates	windowStates	= loadWindowStates();
 	public static final TotpImageCache		imageCache		= loadImageCache();
 	public static final ReleaseState		releaseState	= loadReleaseState();
+	public static final WebcamSettings		webcamCache		= loadWebcamCache();
+	
+	public static Webcam[]		supportedCams;
+	public static final Lock	webcamLock	= new Lock(true);
 	
 	private static final Checker checker = new Checker(
 		ORG_NAME,
@@ -72,16 +79,18 @@ public class TinyTotp implements TotpConstants
 	
 	public static void main(String[] args)
 	{
+		new Thread(() -> {
+			supportedCams = Utils.initCams();
+			webcamLock.notifyThread();
+		}).start();
 		queryNewest(false);
 		ObservableGui.setDefaultAppImage(Opt.of(Assets.ICON));
 		setLookAndFeel();
 		
-		final var lock = updateAvailable();
-		
+		final var lock2 = updateAvailable();
 		backgroundInit();
 		imageCache.loadFromCache();
-		
-		lock.await();
+		lock2.await();
 		
 		EventQueue.invokeLater(() -> new PasswdGui(gce -> {
 			gce.getReturnValue()
@@ -97,13 +106,13 @@ public class TinyTotp implements TotpConstants
 				&& -1 == currentVersion.compareTo(SemVer.fromGitTag(releaseState.latestVersion.tag_name)))
 		{
 			final var lock = new Lock(true);
-			EventQueue.invokeLater(() -> {
+			new Thread(() -> {
 				new UpdateAvailable(
 					null,
 					ModalityType.MODELESS,
 					releaseState.latestVersion,
 					_gce -> lock.notifyThread());
-			});
+			}).start();
 			return lock;
 		}
 		return new Lock(false);
@@ -181,12 +190,21 @@ public class TinyTotp implements TotpConstants
 		return cache;
 	}
 	
+	@SneakyThrows
+	private static WebcamSettings loadWebcamCache()
+	{
+		if (!WEBCAM_CACHE.exists())
+			return new WebcamSettings();
+		return GSON.fromJson(Files.readString(WEBCAM_CACHE.toPath()), WebcamSettings.class);
+	}
+	
 	private static void terminateListener(GuiCloseEvent<Void> gce)
 	{
 		writeToFileAsJson(config, CONFIG);
 		writeToFileAsJson(windowStates, WINDOW_STATES);
 		writeToFileAsJson(imageCache, CACHE);
 		writeToFileAsJson(releaseState, VERSION_STATE);
+		writeToFileAsJson(webcamCache, WEBCAM_CACHE);
 	}
 	
 	@SneakyThrows

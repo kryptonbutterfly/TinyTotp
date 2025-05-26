@@ -16,7 +16,7 @@ module DesktopTOTP
 	requires java.base;
 	requires com.google.gson;
 	requires lombok;
-	requires webcam.capture;
+	requires transitive webcam.capture;
 	requires com.google.zxing;
 	requires org.apache.commons.net;
 }

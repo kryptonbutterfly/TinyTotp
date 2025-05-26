@@ -1,6 +1,5 @@
 package kryptonbutterfly.totp.ui.qrimport;
 
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -36,9 +35,7 @@ final class BL extends Logic<QrGui, Void>
 {
 	private static final Map<DecodeHintType, ?> HINTS = Map.of(DecodeHintType.TRY_HARDER, true);
 	
-	private boolean			keepScanning	= true;
-	private final Webcam	webcam			= Webcam.getDefault();
-	private final Dimension	maxViewSize;
+	private boolean keepScanning = true;
 	
 	final KeyListener	escapeScanListener	= new KeyTypedAdapter(c -> abortScan(null), KeyEvent.VK_ESCAPE);
 	final KeyListener	escapeMenuListener	= new KeyTypedAdapter(c -> abort(null), KeyEvent.VK_ESCAPE);
@@ -46,23 +43,6 @@ final class BL extends Logic<QrGui, Void>
 	BL(QrGui gui)
 	{
 		super(gui);
-		this.maxViewSize = maxViewSize();
-	}
-	
-	private Dimension maxViewSize()
-	{
-		int			max		= 0;
-		Dimension	maxDim	= null;
-		for (final var d : webcam.getViewSizes())
-		{
-			final int size = d.width * d.height;
-			if (size > max)
-			{
-				max		= size;
-				maxDim	= d;
-			}
-		}
-		return maxDim;
 	}
 	
 	void abort(ActionEvent ae)
@@ -136,11 +116,17 @@ final class BL extends Logic<QrGui, Void>
 	
 	private void scan(QrGui gui)
 	{
+		Webcam webcam = Webcam.getWebcamByName(TinyTotp.webcamCache.preferredWebcam);
+		if (webcam == null)
+			webcam = Webcam.getDefault();
+		
 		try
 		{
 			if (!webcam.isOpen())
 			{
-				webcam.setViewSize(maxViewSize);
+				final var dim = TinyTotp.webcamCache.getMaxResolution(webcam.getName());
+				webcam.setCustomViewSizes(dim.getSize());
+				webcam.setViewSize(dim.getSize());
 				webcam.open();
 			}
 			

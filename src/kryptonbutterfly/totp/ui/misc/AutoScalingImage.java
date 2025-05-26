@@ -1,4 +1,4 @@
-package kryptonbutterfly.totp.ui.qrimport;
+package kryptonbutterfly.totp.ui.misc;
 
 import static java.awt.RenderingHints.*;
 
