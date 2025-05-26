@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kryptonbutterfly</groupId>
 	<artifactId>tiny_totp</artifactId>
-	<version>4.6.0</version>
+	<version>4.6.1</version>
 	<name>TinyTOTP</name>
 	<description>A TOTP client</description>
 
@@ -100,7 +100,7 @@
 		<dependency>
 			<groupId>kryptonbutterfly</groupId>
 			<artifactId>check_release</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 	</dependencies>
 

@@ -126,7 +126,7 @@ public class Updates implements PrefsCat
 		{
 			final var	latestVersion	= SemVer.fromGitTag(latest.tag_name);
 			final var	isNewer			= TinyTotp.currentVersion != null
-					&& -1 == TinyTotp.currentVersion.compareTo(latestVersion);
+					&& 1 == TinyTotp.currentVersion.compareTo(latestVersion);
 			
 			if (isNewer)
 			{
