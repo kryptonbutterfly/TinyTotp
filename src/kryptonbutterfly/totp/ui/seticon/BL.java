@@ -178,7 +178,6 @@ final class BL extends Logic<SetIcon, IconData> implements TotpConstants
 		return setUserIconFromUrl(files.get(0).toURI().toURL().toString());
 	}
 	
-	@SuppressWarnings("deprecation")
 	private boolean setIconFromUrl(String address)
 	{
 		try
@@ -192,7 +191,6 @@ final class BL extends Logic<SetIcon, IconData> implements TotpConstants
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	private boolean setUserIconFromUrl(String address)
 	{
 		try

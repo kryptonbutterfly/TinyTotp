@@ -8,7 +8,7 @@ A Totp Client
 
 java version | app version | jar | deb
 :----------: | :---------: | :-: | :-:
-18+          | 4.6.1       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.6.1/TinyTotp.jar) | [TinyTotp-4.6.1.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.6.1/TinyTotp-4.6.1.deb)
+18+          | 4.6.2       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.6.2/TinyTotp.jar) | [TinyTotp-4.6.2.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.6.2/TinyTotp-4.6.2.deb)
 18+          | 4.5.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.5.0/TinyTotp.jar) | [TinyTotp-4.5.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.5.0/TinyTotp-4.5.0.deb)
 18+          | 4.4.1       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.1/TinyTotp.jar) | [TinyTotp-4.4.1.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.1/TinyTotp-4.4.1.deb)
 18+          | 4.4.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.0/TinyTotp.jar) | [TinyTotp-4.4.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.0/TinyTotp-4.4.0.deb)

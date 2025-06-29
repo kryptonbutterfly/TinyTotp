@@ -78,7 +78,6 @@ public final class TotpImageCache implements TotpConstants
 		final var imgFile = new File(configFile.getParentFile(), name + "." + PNG);
 		try
 		{
-			@SuppressWarnings("deprecation")
 			final var	url		= new URL(address);
 			final var	image	= Utils.scaleDownToMax(ImageIO.read(url), CACHED_IMAGE_MAX_SIZE);
 			ImageIO.write(image, PNG, imgFile);

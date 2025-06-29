@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.Date;
 
@@ -36,7 +37,7 @@ public class Time implements PrefsCat
 	private final Component	glue			= Box.createGlue();
 	private final Component	glue_1			= Box.createGlue();
 	
-	public Time()
+	public Time(KeyListener escapeKeyListener)
 	{
 		final var panel = new JPanel(new BorderLayout(5, 5));
 		this.scrollPane = new JScrollPane(panel);
@@ -50,6 +51,8 @@ public class Time implements PrefsCat
 		
 		chckbxUseTimeServer.setToolTipText("Use a timeserver instead of the system time to generate totp passwords.");
 		panel_1.add(chckbxUseTimeServer, BorderLayout.NORTH);
+		chckbxUseTimeServer.addActionListener(this::toggleTimeServer);
+		
 		panelTimeServer
 			.setBorder(new TitledBorder(null, "Timeserver", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
@@ -65,11 +68,14 @@ public class Time implements PrefsCat
 		textServerAddress.setColumns(10);
 		panel_2.add(btnTestServer, BorderLayout.EAST);
 		
+		chckbxUseTimeServer.addKeyListener(escapeKeyListener);
+		textServerAddress.addKeyListener(escapeKeyListener);
+		btnTestServer.addKeyListener(escapeKeyListener);
+		
 		panelTimeServer.add(glue_1, BorderLayout.EAST);
 		btnTestServer.addActionListener(this::testServer);
 		
 		panel_1.add(new JSeparator(), BorderLayout.SOUTH);
-		chckbxUseTimeServer.addActionListener(this::toggleTimeServer);
 		
 		final var verticalGlue = Box.createVerticalGlue();
 		panel.add(verticalGlue, BorderLayout.CENTER);

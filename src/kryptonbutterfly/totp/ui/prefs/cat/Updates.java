@@ -5,6 +5,7 @@ import java.awt.Dialog.ModalityType;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyListener;
 import java.util.Objects;
 
 import javax.swing.Box;
@@ -39,7 +40,7 @@ public class Updates implements PrefsCat
 	
 	private final JLabel lblCheckForUpdates;
 	
-	public Updates()
+	public Updates(KeyListener escapeKeyListener)
 	{
 		final var panel = new JPanel(new BorderLayout(5, 5));
 		this.scrollPane = new JScrollPane(panel);
@@ -76,6 +77,10 @@ public class Updates implements PrefsCat
 		panel_2.add(btnCheckVersion);
 		
 		panel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
+		
+		comboCadence.addKeyListener(escapeKeyListener);
+		chckbxShowUpdateNotification.addKeyListener(escapeKeyListener);
+		btnCheckVersion.addKeyListener(escapeKeyListener);
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -33,7 +34,7 @@ public final class WebcamCat implements PrefsCat
 	
 	private boolean keepRunning = true;
 	
-	public WebcamCat(PreferencesGui gui)
+	public WebcamCat(PreferencesGui gui, KeyListener escapeKeyListener)
 	{
 		this.gui = gui;
 		final var panel = new JPanel(new BorderLayout(5, 5));
@@ -51,6 +52,8 @@ public final class WebcamCat implements PrefsCat
 		
 		resolutionLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(resolutionLabel, BorderLayout.SOUTH);
+		
+		webcams.addKeyListener(escapeKeyListener);
 	}
 	
 	@Override

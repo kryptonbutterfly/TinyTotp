@@ -3,6 +3,8 @@ package kryptonbutterfly.totp.ui.prefs;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Window;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -17,6 +19,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
+import kryptonbutterfly.totp.ui.misc.KeyTypedAdapter;
 import kryptonbutterfly.totp.ui.prefs.cat.PrefsCat;
 import kryptonbutterfly.totp.ui.prefs.cat.Time;
 import kryptonbutterfly.totp.ui.prefs.cat.Updates;
@@ -28,10 +31,13 @@ import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 @SuppressWarnings("serial")
 public class PreferencesGui extends ObservableDialog<BL, Void, Void> implements TotpConstants
 {
+	private final KeyListener escapeListener = new KeyTypedAdapter(c -> this.dispose(), KeyEvent.VK_ESCAPE);
+	
 	final ArrayList<PrefsCat>	prefsCategories	= new ArrayList<>();
 	private final JPanel		cards			= new JPanel();
 	
-	private final JPanel bottomPanel = new JPanel(new BorderLayout(0, 0));
+	private final JPanel	bottomPanel	= new JPanel(new BorderLayout(0, 0));
+	private final JTree		tree		= new JTree();
 	
 	public PreferencesGui(Window owner, ModalityType modality, Consumer<GuiCloseEvent<Void>> closeListener)
 	{
@@ -51,7 +57,6 @@ public class PreferencesGui extends ObservableDialog<BL, Void, Void> implements 
 		splitPane.setRightComponent(cards);
 		
 		{
-			final var tree = new JTree();
 			tree.addTreeSelectionListener(e -> {
 				if (e.getPath() == null)
 					return;
@@ -69,9 +74,9 @@ public class PreferencesGui extends ObservableDialog<BL, Void, Void> implements 
 					new DefaultMutableTreeNode("Root")
 					{
 						{
-							add(addCategory(this, new Time()));
-							add(addCategory(this, new Updates()));
-							add(addCategory(this, new WebcamCat(PreferencesGui.this)));
+							add(addCategory(this, new Time(escapeListener)));
+							add(addCategory(this, new Updates(escapeListener)));
+							add(addCategory(this, new WebcamCat(PreferencesGui.this, escapeListener)));
 						}
 					}));
 			scrollPane.setViewportView(tree);
@@ -90,8 +95,9 @@ public class PreferencesGui extends ObservableDialog<BL, Void, Void> implements 
 	{
 		final var applyAbort = new ApplyAbortPanel(BUTTON_ABORT, bl::abort, BUTTON_APPLY, bl::apply);
 		bottomPanel.add(applyAbort, BorderLayout.SOUTH);
-		applyAbort.btnButton1.addKeyListener(bl.escapeListener);
-		applyAbort.btnButton2.addKeyListener(bl.escapeListener);
+		applyAbort.btnButton1.addKeyListener(escapeListener);
+		applyAbort.btnButton2.addKeyListener(escapeListener);
+		tree.addKeyListener(escapeListener);
 	}
 	
 	@Override
