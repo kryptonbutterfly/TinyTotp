@@ -103,7 +103,7 @@ public class TinyTotp implements TotpConstants
 	{
 		if (releaseState.showUpdateNotification
 				&& currentVersion != null
-				&& -1 == currentVersion.compareTo(SemVer.fromGitTag(releaseState.latestVersion.tag_name)))
+				&& currentVersion.isOlderThan(SemVer.fromGitTag(releaseState.latestVersion.tag_name)))
 		{
 			final var lock = new Lock(true);
 			new Thread(() -> {
@@ -142,7 +142,7 @@ public class TinyTotp implements TotpConstants
 				return null;
 			
 			final var latestVersion = SemVer.fromGitTag(latestRelease.tag_name);
-			if (currentVersion == null || -1 == currentVersion.compareTo(latestVersion))
+			if (currentVersion == null || currentVersion.isOlderThan(latestVersion))
 				releaseState.latestVersion = latestRelease;
 			
 			return latestRelease;
