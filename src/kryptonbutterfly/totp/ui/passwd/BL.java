@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import kryptonbutterfly.monads.opt.Opt;
 import kryptonbutterfly.totp.TinyTotp;
+import kryptonbutterfly.totp.misc.Password;
 import kryptonbutterfly.totp.ui.misc.KeyTypedAdapter;
 import kryptonbutterfly.util.swing.Logic;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
@@ -29,11 +30,12 @@ final class BL extends Logic<PasswdGui, WindowState>
 		gui.if_(
 			gui ->
 			{
-				final char[] passwd = gui.passwordField.getPassword();
+				final Password passwd = new Password(gui.passwordField.getPassword());
 				if (isValid(passwd))
-					gui.dispose(new GuiCloseEvent<char[]>(Result.SUCCESS, Opt.empty(), passwd));
+					gui.dispose(new GuiCloseEvent<Password>(Result.SUCCESS, Opt.empty(), passwd));
 				else
 				{
+					passwd.close();
 					gui.passwordField.setText("");
 					JOptionPane.showMessageDialog(
 						gui,
@@ -44,14 +46,14 @@ final class BL extends Logic<PasswdGui, WindowState>
 			});
 	}
 	
-	private boolean isValid(char[] password)
+	private boolean isValid(Password password)
 	{
 		if (TinyTotp.config.entries.isEmpty())
 			return true;
 		final var entry = TinyTotp.config.entries.get(0);
 		try
 		{
-			entry.decryptSecret(password);
+			entry.decryptSecret(password.password());
 			return true;
 		}
 		catch (Exception e)

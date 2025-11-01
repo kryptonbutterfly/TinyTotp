@@ -16,16 +16,17 @@ import javax.swing.ScrollPaneConstants;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.misc.Assets;
+import kryptonbutterfly.totp.misc.Password;
 import kryptonbutterfly.util.swing.ObservableGui;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 import lombok.val;
 
 @SuppressWarnings("serial")
-public final class MainGui extends ObservableGui<BL, Void, char[]> implements TotpConstants
+public final class MainGui extends ObservableGui<BL, Void, Password> implements TotpConstants
 {
 	final Box contentBox = Box.createVerticalBox();
 	
-	public MainGui(Consumer<GuiCloseEvent<Void>> closeListener, char[] password)
+	public MainGui(Consumer<GuiCloseEvent<Void>> closeListener, Password password)
 	{
 		super(closeListener, password);
 		TinyTotp.windowStates.mainWindow.setBoundsAndState(this);
@@ -35,7 +36,7 @@ public final class MainGui extends ObservableGui<BL, Void, char[]> implements To
 	}
 	
 	@Override
-	protected BL createBusinessLogic(char[] passwd)
+	protected BL createBusinessLogic(Password passwd)
 	{
 		return new BL(this, passwd);
 	}

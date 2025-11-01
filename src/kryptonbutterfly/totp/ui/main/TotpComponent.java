@@ -25,6 +25,7 @@ import javax.swing.SwingUtilities;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.misc.Assets;
+import kryptonbutterfly.totp.misc.Password;
 import kryptonbutterfly.totp.misc.TotpGenerator;
 import kryptonbutterfly.totp.misc.Utils;
 import kryptonbutterfly.totp.prefs.TotpEntry;
@@ -55,7 +56,7 @@ public final class TotpComponent extends JPanel implements TotpConstants
 	private final JLabel	userName		= new JLabel();
 	private final JLabel	issuerName		= new JLabel();
 	
-	TotpComponent(TotpEntry entry, RemoveListener removeListener, char[] password)
+	TotpComponent(TotpEntry entry, RemoveListener removeListener, Password password)
 	{
 		this.entry			= entry;
 		this.removeListener	= removeListener;
@@ -111,7 +112,7 @@ public final class TotpComponent extends JPanel implements TotpConstants
 	 *            The password used to encrypt the Totp secret keys.
 	 * @return true if the ui content has been updated, otherwise false.
 	 */
-	public boolean update(final long currentTime, char[] password)
+	public boolean update(final long currentTime, Password password)
 	{
 		final long currentTimeFrame = calcTimeFrame(currentTime);
 		if (nextUpdate < currentTime)
@@ -155,7 +156,7 @@ public final class TotpComponent extends JPanel implements TotpConstants
 		this.comboIcon.setIconBG(iconBG);
 	}
 	
-	private ActionListener edit(char[] password)
+	private ActionListener edit(Password password)
 	{
 		return ae -> EventQueue.invokeLater(() -> {
 			final var owner = SwingUtilities.getWindowAncestor(this);
@@ -181,12 +182,12 @@ public final class TotpComponent extends JPanel implements TotpConstants
 		}
 	}
 	
-	private void editResult(GuiCloseEvent<TotpEntry> result, char[] password)
+	private void editResult(GuiCloseEvent<TotpEntry> result, Password password)
 	{
 		result.getReturnValue().if_(e -> init(e, password));
 	}
 	
-	private void init(TotpEntry entry, char[] password)
+	private void init(TotpEntry entry, Password password)
 	{
 		this.dirty		= true;
 		this.nextUpdate	= Long.MIN_VALUE;
@@ -201,6 +202,11 @@ public final class TotpComponent extends JPanel implements TotpConstants
 				categoryPanel.setBackground(c.color);
 				categoryPanel.setToolTipText(c.name);
 			});
+		password.addChangeListener((oldPW, newPW) -> {
+			final var secret = entry.decryptSecret(oldPW);
+			entry.encryptAndSetSecret(secret, newPW);
+			
+		});
 		update(Utils.getUnixTime(), password);
 	}
 	

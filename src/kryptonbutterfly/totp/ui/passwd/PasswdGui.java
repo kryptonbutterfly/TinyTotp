@@ -8,12 +8,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
+import kryptonbutterfly.totp.misc.Password;
 import kryptonbutterfly.util.swing.ObservableGui;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 import kryptonbutterfly.util.swing.state.WindowState;
 
 @SuppressWarnings("serial")
-public final class PasswdGui extends ObservableGui<BL, char[], WindowState>
+public final class PasswdGui extends ObservableGui<BL, Password, WindowState>
 {
 	final JPasswordField passwordField = new JPasswordField();
 	
@@ -32,7 +33,7 @@ public final class PasswdGui extends ObservableGui<BL, char[], WindowState>
 		panel.add(btnUnlock);
 	}
 	
-	public PasswdGui(Consumer<GuiCloseEvent<char[]>> closeListener, WindowState prefs)
+	public PasswdGui(Consumer<GuiCloseEvent<Password>> closeListener, WindowState prefs)
 	{
 		super(closeListener, prefs);
 		

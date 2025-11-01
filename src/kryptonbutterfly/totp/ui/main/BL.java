@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import kryptonbutterfly.totp.TinyTotp;
+import kryptonbutterfly.totp.misc.Password;
 import kryptonbutterfly.totp.misc.TotpGenerator;
 import kryptonbutterfly.totp.misc.otp.OtpUri;
 import kryptonbutterfly.totp.prefs.TotpEntry;
@@ -22,12 +23,12 @@ import kryptonbutterfly.totp.ui.qrimport.QrGui;
 import kryptonbutterfly.util.swing.Logic;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 
-final class BL extends Logic<MainGui, char[]>
+final class BL extends Logic<MainGui, Password>
 {
-	private char[]			password;
+	private Password		password;
 	private TotpGenerator	generator;
 	
-	BL(MainGui gui, char[] password)
+	BL(MainGui gui, Password password)
 	{
 		super(gui);
 		this.password = password;
@@ -122,7 +123,7 @@ final class BL extends Logic<MainGui, char[]>
 					.stream()
 					.map(c -> (TotpComponent) c)
 					.forEach(TotpComponent::invalidateNextUpdate);
-			})));
+			}, password)));
 	}
 	
 	void remove(TotpComponent entry)
@@ -149,15 +150,8 @@ final class BL extends Logic<MainGui, char[]>
 				list.add(((TotpComponent) c).entry());
 			TinyTotp.config.entries = list;
 		});
-		clearPassword();
+		password.close();
 		
 		gui.if_(TinyTotp.windowStates.mainWindow::persistBoundsAndState);
-	}
-	
-	private void clearPassword()
-	{
-		for (int i : range(password.length))
-			password[i] = (char) 0xFFFF;
-		password = null;
 	}
 }

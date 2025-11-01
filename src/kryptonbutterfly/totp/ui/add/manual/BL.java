@@ -22,6 +22,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import kryptonbutterfly.functions.void_.Consumer_;
 import kryptonbutterfly.monads.opt.Opt;
 import kryptonbutterfly.totp.TinyTotp;
+import kryptonbutterfly.totp.misc.Password;
 import kryptonbutterfly.totp.misc.Utils;
 import kryptonbutterfly.totp.misc.otp.TotpUri;
 import kryptonbutterfly.totp.prefs.OtpAlgo;
@@ -35,12 +36,12 @@ import kryptonbutterfly.util.swing.Logic;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent.Result;
 
-final class BL extends Logic<AddKey, char[]>
+final class BL extends Logic<AddKey, Password>
 {
-	private char[]	password;
-	private long	categoryPopupLastVisible	= 0L;
+	private Password	password;
+	private long		categoryPopupLastVisible	= 0L;
 	
-	BL(AddKey gui, char[] password)
+	BL(AddKey gui, Password password)
 	{
 		super(gui);
 		this.password = password;
@@ -168,7 +169,7 @@ final class BL extends Logic<AddKey, char[]>
 			else
 				totpEntry.category = null;
 			
-			totpEntry.encryptAndSetSecret(new Base32().decode(gui.txtSecretkey.getText()), password);
+			totpEntry.encryptAndSetSecret(new Base32().decode(gui.txtSecretkey.getText()), password.password());
 			totpEntry.icon		= gui.iconName;
 			totpEntry.userIcon	= gui.userIconName;
 			totpEntry.iconBG	= gui.comboIcon.getIconBG();

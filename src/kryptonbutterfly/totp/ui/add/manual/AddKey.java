@@ -21,6 +21,7 @@ import org.apache.commons.codec.binary.Base32;
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
 import kryptonbutterfly.totp.misc.Assets;
+import kryptonbutterfly.totp.misc.Password;
 import kryptonbutterfly.totp.misc.otp.OtpUri;
 import kryptonbutterfly.totp.prefs.OtpAlgo;
 import kryptonbutterfly.totp.prefs.TotpCategory;
@@ -31,7 +32,7 @@ import kryptonbutterfly.util.swing.ObservableDialog;
 import kryptonbutterfly.util.swing.events.GuiCloseEvent;
 
 @SuppressWarnings("serial")
-public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implements TotpConstants
+public final class AddKey extends ObservableDialog<BL, TotpEntry, Password> implements TotpConstants
 {
 	private final JButton	btnExport		= new JButton("export");
 	final JTextField		txtAccountname	= new JTextField();
@@ -54,7 +55,7 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		Window owner,
 		ModalityType modality,
 		Consumer<GuiCloseEvent<TotpEntry>> closeListener,
-		char[] password,
+		Password password,
 		String title)
 	{
 		this(owner, modality, closeListener, password, title, null);
@@ -65,7 +66,7 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		ModalityType modality,
 		Consumer<GuiCloseEvent<TotpEntry>> closeListener,
 		OtpUri otpUri,
-		char[] password,
+		Password password,
 		String title)
 	{
 		super(owner, modality, closeListener, password);
@@ -85,7 +86,7 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		Window owner,
 		ModalityType modality,
 		Consumer<GuiCloseEvent<TotpEntry>> closeListener,
-		char[] password,
+		Password password,
 		String title,
 		TotpEntry original)
 	{
@@ -98,7 +99,7 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 		if (original != null)
 		{
 			txtAccountname.setText(original.accountName);
-			txtSecretkey.setText(new Base32().encodeAsString(original.decryptSecret(password)));
+			txtSecretkey.setText(new Base32().encodeAsString(original.decryptSecret(password.password())));
 			txtIssuer.setText(original.issuerName);
 			TinyTotp.config.getCategoryByName(original.category).if_(comboBoxCategory::setSelectedItem);
 			iconName		= original.icon;
@@ -114,7 +115,7 @@ public final class AddKey extends ObservableDialog<BL, TotpEntry, char[]> implem
 	}
 	
 	@Override
-	protected BL createBusinessLogic(char[] password)
+	protected BL createBusinessLogic(Password password)
 	{
 		return new BL(this, password);
 	}

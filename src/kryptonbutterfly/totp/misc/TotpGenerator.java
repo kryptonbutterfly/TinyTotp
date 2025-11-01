@@ -19,9 +19,9 @@ public final class TotpGenerator extends Thread
 	private volatile boolean	terminate	= false;
 	private Box					contentBox;
 	private Runnable			refreshUI;
-	private char[]				password;
+	private Password			password;
 	
-	public TotpGenerator(Runnable refreshUI, Box contentBox, char[] password)
+	public TotpGenerator(Runnable refreshUI, Box contentBox, Password password)
 	{
 		this.contentBox	= contentBox;
 		this.password	= password;
@@ -59,11 +59,11 @@ public final class TotpGenerator extends Thread
 		terminate = true;
 	}
 	
-	public static String generateTotp(TotpEntry entry, char[] password, long currentTimeFrame)
+	public static String generateTotp(TotpEntry entry, Password password, long currentTimeFrame)
 	{
 		final var steps = Long.toHexString(currentTimeFrame).toUpperCase();
 		return generateTOTP(
-			entry.decryptSecret(password),
+			entry.decryptSecret(password.password()),
 			steps,
 			entry.totpLength,
 			"Hmac" + entry.algorithm);

@@ -6,6 +6,7 @@ import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.function.Consumer;
 
 import javax.swing.JPanel;
@@ -19,7 +20,9 @@ import javax.swing.tree.TreeSelectionModel;
 
 import kryptonbutterfly.totp.TinyTotp;
 import kryptonbutterfly.totp.TotpConstants;
+import kryptonbutterfly.totp.misc.Password;
 import kryptonbutterfly.totp.ui.misc.KeyTypedAdapter;
+import kryptonbutterfly.totp.ui.prefs.cat.PasswordCat;
 import kryptonbutterfly.totp.ui.prefs.cat.PrefsCat;
 import kryptonbutterfly.totp.ui.prefs.cat.Time;
 import kryptonbutterfly.totp.ui.prefs.cat.Updates;
@@ -39,7 +42,13 @@ public class PreferencesGui extends ObservableDialog<BL, Void, Void> implements 
 	private final JPanel	bottomPanel	= new JPanel(new BorderLayout(0, 0));
 	private final JTree		tree		= new JTree();
 	
-	public PreferencesGui(Window owner, ModalityType modality, Consumer<GuiCloseEvent<Void>> closeListener)
+	private final HashSet<Runnable> treeSelectionListeners = new HashSet<>();
+	
+	public PreferencesGui(
+		Window owner,
+		ModalityType modality,
+		Consumer<GuiCloseEvent<Void>> closeListener,
+		Password password)
 	{
 		super(owner, modality, closeListener);
 		setTitle("Preferences");
@@ -56,6 +65,8 @@ public class PreferencesGui extends ObservableDialog<BL, Void, Void> implements 
 		cards.setLayout(cardLayout);
 		splitPane.setRightComponent(cards);
 		
+		tree.addTreeSelectionListener(tsl -> treeSelectionListeners.forEach(Runnable::run));
+		tree.addTreeSelectionListener(null);
 		{
 			tree.addTreeSelectionListener(e -> {
 				if (e.getPath() == null)
@@ -77,6 +88,7 @@ public class PreferencesGui extends ObservableDialog<BL, Void, Void> implements 
 							add(addCategory(this, new Time(escapeListener)));
 							add(addCategory(this, new Updates(escapeListener)));
 							add(addCategory(this, new WebcamCat(PreferencesGui.this, escapeListener)));
+							add(addCategory(this, new PasswordCat(escapeListener, password, treeSelectionListeners::add)));
 						}
 					}));
 			scrollPane.setViewportView(tree);
