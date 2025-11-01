@@ -98,27 +98,52 @@ public final class WebcamCat implements PrefsCat
 	
 	private void scan()
 	{
-		final var webcam = (Webcam) webcams.getSelectedItem();
-		if (webcam != null)
-		{
-			if (!webcam.isOpen())
+		final long INTERVAL = 1000 / 60;
+		
+		final var worker = new Thread(() -> {
+			Webcam webcam = null;
+			
+			long last = System.currentTimeMillis();
+			while (keepRunning)
 			{
-				final var dims = TinyTotp.webcamCache.getMaxResolution(webcam.getName());
-				webcam.setCustomViewSizes(dims.getSize());
-				webcam.setViewSize(dims.getSize());
-				resolutionLabel.setText(dims.toString());
-				
-				webcam.open();
+				webcam = (Webcam) webcams.getSelectedItem();
+				if (webcam != null)
+				{
+					if (!webcam.isOpen())
+					{
+						final var dims = TinyTotp.webcamCache.getMaxResolution(webcam.getName());
+						webcam.setCustomViewSizes(dims.getSize());
+						webcam.setViewSize(dims.getSize());
+						resolutionLabel.setText(dims.toString());
+						
+						webcam.open();
+					}
+					
+					final var image = Utils.mirror(webcam.getImage());
+					EventQueue.invokeLater(() -> {
+						cameraDisplay.setIcon(image);
+						cameraDisplay.repaint();
+					});
+				}
+				long		end		= System.currentTimeMillis();
+				final long	sleep	= INTERVAL - end + last;
+				last = end;
+				if (sleep > 0)
+				{
+					try
+					{
+						Thread.sleep(sleep);
+					}
+					catch (InterruptedException e)
+					{}
+				}
 			}
 			
-			final var image = webcam.getImage();
-			cameraDisplay.setIcon(Utils.mirror(image));
-			cameraDisplay.repaint();
-		}
-		if (keepRunning)
-			EventQueue.invokeLater(this::scan);
-		else if (webcam.isOpen())
-			webcam.close();
+			if (webcam != null && webcam.isOpen())
+				webcam.close();
+		});
+		worker.setDaemon(true);
+		worker.start();
 	}
 	
 	@Override
