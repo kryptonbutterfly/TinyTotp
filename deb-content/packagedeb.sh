@@ -37,7 +37,7 @@ cp $SOURCE_DIR/target/$ARTIFACT_NAME-$PACKAGE_VERSION.jar $BUILD_DIR/usr/share/$
 
 echo "$PACKAGE_NAME ($PACKAGE_VERSION) trusty; urgency=low" > changelog
 echo "  * Rebuild" >> changelog
-echo " -- kryptonbutterfly <tinycodecrank@gmail.com> `date -R`" >> changelog
+echo " -- kryptonbutterfly <kryptonbutterfly@gmail.com> `date -R`" >> changelog
 gzip -9c changelog > $BUILD_DIR/usr/share/doc/$PACKAGE_NAME/changelog.gz
 
 cp $SOURCE_DIR/src/assets/icon.svg $BUILD_DIR/usr/share/$PACKAGE_NAME/
