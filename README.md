@@ -6,20 +6,94 @@ A Totp Client
 
 ## Downloads
 
-java version | app version | jar | deb
-:----------: | :---------: | :-: | :-:
-18+          | 4.6.3       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.6.3/TinyTotp.jar) | [TinyTotp-4.6.3.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.6.3/TinyTotp-4.6.3.deb)
-18+          | 4.5.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.5.0/TinyTotp.jar) | [TinyTotp-4.5.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.5.0/TinyTotp-4.5.0.deb)
-18+          | 4.4.1       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.1/TinyTotp.jar) | [TinyTotp-4.4.1.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.1/TinyTotp-4.4.1.deb)
-18+          | 4.4.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.0/TinyTotp.jar) | [TinyTotp-4.4.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.0/TinyTotp-4.4.0.deb)
-18+          | 4.3.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.3.0/TinyTotp.jar) | [TinyTotp-4.3.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.3.0/TinyTotp-4.3.0.deb)
-18+          | 4.2.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.2.0/TinyTotp.jar) | [TinyTotp-4.2.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.2.0/TinyTotp-4.2.0.deb)
-18+          | 4.1.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.1.0/TinyTotp.jar) | [TinyTotp-4.1.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.1.0/TinyTotp-4.1.0.deb)
-18+          | 4.0.1       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.0.1/TinyTotp.jar) | [TinyTotp-4.0.1.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.0.1/TinyTotp-4.0.1.deb)
-18+          | 3.2.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.2.0/TinyTotp.jar) | [TinyTotp-3.2.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.2.0/TinyTotp-3.2.0.deb)
-18+          | 3.1.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.1.0/TinyTotp.jar) | [TinyTotp-3.1.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.1.0/TinyTotp-3.1.0.deb)
-18+          | 3.0.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.0.0/TinyTotp.jar) | [TinyTotp-3.0.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.0.0/TinyTotp-3.0.0.deb)
-18+          | 2.0.0       | [TinyTotp.jar](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v2.0.0/TinyTotp.jar) | [TinyTotp-2.0.0.deb](https://github.com/kryptonbutterfly/TinyTotp/releases/download/v2.0.0/TinyTotp-2.0.0.deb)
+<table>
+    <tr><th>java version</th><th>app version</th><th>jar</th><th>deb</th></tr>
+    <tr>
+        <td>18+</td>
+        <td>4.6.4</td>
+        <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.6.4/TinyTotp.jar">TinyTotp.jar</a></td>
+        <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.6.4/TinyTotp-4.6.4.deb">TinyTotp-4.6.4.deb</a></td>
+    </tr>
+</table>
+
+<details>
+    <summary>Old versions</summary>
+    <table>
+        <tr><th>java version</th><th>app version</th><th>jar</th><th>deb</th></tr>
+        <tr>
+            <td>18+</td>
+            <td>4.6.3</td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.6.3/TinyTotp.jar">TinyTotp.jar</a></td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.6.3/TinyTotp-4.6.3.deb">TinyTotp-4.6.3.deb</a></td>
+        </tr>
+        <tr>
+            <td>18+</td>
+            <td>4.5.0</td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.5.0/TinyTotp.jar">TinyTotp.jar</a></td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.5.0/TinyTotp-4.5.0.deb">TinyTotp-4.5.0.deb</a></td>
+        </tr>
+        <tr>
+            <td>18+</td>
+            <td>4.4.1</td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.1/TinyTotp.jar">TinyTotp.jar</td></td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.1/TinyTotp-4.4.1.deb">TinyTotp-4.4.1.deb</a></td>
+        </tr>
+        <tr>
+            <td>18+</td>
+            <td>4.4.0</td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.0/TinyTotp.jar">TinyTotp.jar</a></td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.4.0/TinyTotp-4.4.0.deb">TinyTotp-4.4.0.deb</td>
+        </tr>
+        <tr>
+            <td>18+</td>
+            <td>4.3.0</td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.3.0/TinyTotp.jar">TinyTotp.jar</a></td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.3.0/TinyTotp-4.3.0.deb">TinyTotp-4.3.0.deb</a></td>
+        </tr>
+        <tr>
+            <td>18+</td>
+            <td>4.2.0</td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.2.0/TinyTotp.jar">TinyTotp.jar</a></td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.2.0/TinyTotp-4.2.0.deb">TinyTotp-4.2.0.deb</a></td>
+        </tr>
+        <tr>
+            <td>18+</td>
+            <td>4.1.0</td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.1.0/TinyTotp.jar">TinyTotp.jar</a></td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.1.0/TinyTotp-4.1.0.deb">TinyTotp-4.1.0.deb</a></td>
+        </tr>
+        <tr>
+            <td>18+</td>
+            <td>4.0.1</td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.0.1/TinyTotp.jar">TinyTotp.jar</a></td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v4.0.1/TinyTotp-4.0.1.deb">TinyTotp-4.0.1.deb</a></td>
+        </tr>
+        <tr>
+            <td>18+</td>
+            <td>3.2.0</td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.2.0/TinyTotp.jar">TinyTotp.jar</a></td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.2.0/TinyTotp-3.2.0.deb">TinyTotp-3.2.0.deb</a></td>
+        </tr>
+        <tr>
+            <td>18+</td>
+            <td>3.1.0</td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.1.0/TinyTotp.jar">TinyTotp.jar</a></td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.1.0/TinyTotp-3.1.0.deb">TinyTotp-3.1.0.deb</a></td>
+        </tr>
+        <tr>
+            <td>18+</td>
+            <td>3.0.0</td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.0.0/TinyTotp.jar">TinyTotp.jar</a></td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v3.0.0/TinyTotp-3.0.0.deb">TinyTotp-3.0.0.deb</a></td>
+        </tr>
+        <tr>
+            <td>18+</td>
+            <td>2.0.0</td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v2.0.0/TinyTotp.jar">TinyTotp.jar</a></td>
+            <td><a href="https://github.com/kryptonbutterfly/TinyTotp/releases/download/v2.0.0/TinyTotp-2.0.0.deb">TinyTotp-2.0.0.deb</a></td>
+        </tr>
+    </table>
+</details>
 
 ## Important
 
